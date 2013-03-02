@@ -1,4 +1,3 @@
-template = require 'views/templates/home'
 View = require 'views/base/view'
 TILEDMap = require 'models/TILEDMap'
 
@@ -6,7 +5,6 @@ module.exports = class HomePageView extends View
   autoRender: yes
   className: 'home-page'
   container: '#page-container'
-  template: template
 
   initialize: (options) ->
     super
