@@ -1,0 +1,36 @@
+{
+  "author": "Danny Arnold, Christopher Pape",
+  "name": "shiny-wight",
+  "description": "HTML5 Game",
+  "version": "0.0.1",
+  "homepage": "https://github.com/despairblue/shiny-wight",
+  "license": "CC BY-NC-SA",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/despairblue/shiny-wight"
+  },
+  "engines": {
+    "node": "~0.6.10 || 0.8 || 0.9"
+  },
+  "scripts": {
+    "start": "brunch watch --server",
+    "test": "brunch test"
+  },
+  "dependencies": {
+    "javascript-brunch": ">= 1.0 < 1.6",
+    "coffee-script-brunch": ">= 1.0 < 1.6",
+
+    "css-brunch": ">= 1.0 < 1.6",
+    "stylus-brunch": ">= 1.0 < 1.6",
+
+    "handlebars-brunch": ">= 1.0 < 1.6",
+
+    "uglify-js-brunch": ">= 1.0 < 1.6",
+    "clean-css-brunch": ">= 1.0 < 1.6"
+  },
+  "devDependencies": {
+    "chai": "1.2.0",
+    "sinon": "1.4.2",
+    "sinon-chai": "2.1.2"
+  }
+}
