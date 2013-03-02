@@ -46,6 +46,7 @@ module.exports = class TILEDMap extends Model
       @imgLoadCount++
       if @imgLoadCount == @currMapData.tilesets.length
         @fullyLoaded = true
+        @publishEvent 'map:fullyLoaded'
     img.src = 'atlases/' + tileset.image.replace /^.*[\\\/]/, ''
 
     ts =

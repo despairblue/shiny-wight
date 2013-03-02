@@ -9,8 +9,9 @@ module.exports = class HomePageView extends View
   initialize: (options) ->
     super
     @gMap = new TILEDMap()
+    @subscribeEvent 'map:fullyLoaded', () ->
+      setInterval @draw, 1000/16
     @gMap.load('map/level1.json')
-    setInterval @draw, 1000/16
 
   render: ->
     @canvas = document.createElement 'canvas'
