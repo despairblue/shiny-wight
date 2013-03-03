@@ -32,4 +32,4 @@ exports.config =
       joinTo: 'javascripts/app.js'
 
   modules:
-    addSourceUrls: true
+    addSourceURLs: true
