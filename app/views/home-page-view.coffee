@@ -9,8 +9,8 @@ module.exports = class HomePageView extends View
   initialize: (options) ->
     super
     @gMap = new TILEDMap()
-    @subscribeEvent 'map:fullyLoaded', () ->
-      setInterval @draw, 1000/16
+    @listenTo @gMap, 'change:fullyLoaded', (gMap, fullyLoaded) ->
+      setInterval @draw, 1000/25 if fullyLoaded
     @gMap.load('map/level1.json')
 
   render: ->
@@ -19,19 +19,21 @@ module.exports = class HomePageView extends View
     @el.appendChild @canvas
 
   draw: () =>
-    return unless @gMap.fullyLoaded
-
     @canvas.width = window.innerWidth
     @canvas.height = window.innerHeight
+    currMapData = @gMap.get 'currMapData'
+    tileSize = @gMap.get 'tileSize'
+    numXTiles = @gMap.get 'numXTiles'
+    numYTiles = @gMap.get 'numYTiles'
 
-    for layer in @gMap.currMapData.layers
+    for layer in currMapData.layers
       continue if layer.type isnt 'tilelayer'
 
       for tID, tileIDX in layer.data
         continue if tID is 0
 
         tPKT = @gMap.getTilePacket tID
-        x = (tileIDX % @gMap.numXTiles) * @gMap.tileSize.x
-        y = Math.floor(tileIDX / @gMap.numYTiles) * @gMap.tileSize.y
+        x = (tileIDX % numXTiles) * tileSize.x
+        y = Math.floor(tileIDX / numYTiles) * tileSize.y
 
-        @ctx.drawImage(tPKT.img, tPKT.px, tPKT.py, @gMap.tileSize.x, @gMap.tileSize.y, x, y, @gMap.tileSize.x, @gMap.tileSize.y)
+        @ctx.drawImage tPKT.img, tPKT.px, tPKT.py, tileSize.x, tileSize.y, x, y, tileSize.x, tileSize.y
