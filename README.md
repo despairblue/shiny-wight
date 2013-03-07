@@ -10,8 +10,9 @@ This will be an HTML 5 game for [this](https://www.udacity.com/wiki/CS255/contes
   - [npm](https://npmjs.org/) (should be part of node)
 
 1. Checkout the repository.
-2. In the root dir run `npm install`
-3. In the root dir run `npm start`.
+2. In the project root dir run `npm install`
+3. In the project root dir run `npm up`
+3. In the project root dir run `npm start`.
 4. Open Browser at `localhost:3333`
 
 ## Used Assets
