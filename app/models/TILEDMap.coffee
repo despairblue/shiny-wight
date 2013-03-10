@@ -66,7 +66,7 @@ module.exports = class TILEDMap extends Model
     img.src = 'atlases/' + tileset.image.replace /^.*[\\\/]/, ''
 
     ts =
-      firstgid: tileset.firstgid;
+      firstgid: tileset.firstgid
       image: img
       imageheight: tileset.imageheight
       imagewidth: tileset.imagewidth
