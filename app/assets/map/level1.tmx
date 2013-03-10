@@ -32,4 +32,9 @@
    eJztzLcRgFAQA1HN0X9pmAYwDWAa+ICo4JIj2zezgRJJUh/S4EY3Rb6rzP5a3Oq2yHeV3V+HO90V+a7S/HW75/vs8g0AAAAAf3oB7QsonA==
   </data>
  </layer>
+ <objectgroup name="oj" width="30" height="30">
+  <object name="StartPoint" x="33" y="218">
+   <ellipse/>
+  </object>
+ </objectgroup>
 </map>

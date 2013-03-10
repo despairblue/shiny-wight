@@ -43,6 +43,31 @@
          "width":30,
          "x":0,
          "y":0
+        }, 
+        {
+         "height":30,
+         "name":"oj",
+         "objects":[
+                {
+                 "ellipse":true,
+                 "height":0,
+                 "name":"StartPoint",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":33,
+                 "y":218
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":30,
+         "x":0,
+         "y":0
         }],
  "orientation":"orthogonal",
  "properties":
