@@ -4,7 +4,7 @@ This will be an HTML 5 game for [this](https://www.udacity.com/wiki/CS255/contes
 ## Getting started
 - Dependencies
   - [git](http://git-scm.com/)
-  - [gitflow](https://github.com/petervanderdoes/gitflow/wiki) (optional)
+  - [git-flow-avh](https://github.com/petervanderdoes/gitflow/wiki) (optional)
   - [Tiled Map Editor](http://www.mapeditor.org/) (only needed for level design)
   - [node](http://nodejs.org/)
 
