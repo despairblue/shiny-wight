@@ -7,13 +7,13 @@ This will be an HTML 5 game for [this](https://www.udacity.com/wiki/CS255/contes
   - [gitflow](https://github.com/petervanderdoes/gitflow/wiki) (optional)
   - [Tiled Map Editor](http://www.mapeditor.org/) (only needed for level design)
   - [node](http://nodejs.org/)
-  - [npm](https://npmjs.org/) (should be part of node)
 
 1. Checkout the repository.
-2. In the project root dir run `npm install`
-3. In the project root dir run `npm up`
-3. In the project root dir run `npm start`.
-4. Open Browser at `localhost:3333`
+2. Run `npm install -g brunch`
+3. In the project root dir run `npm install`
+4. In the project root dir run `npm up`
+5. In the project root dir run `npm start`.
+6. Open Browser at `localhost:3333`
 
 ## Used Assets
 [PathAndObjects_0.png](http://opengameart.org/content/rpg-tiles-cobble-stone-paths-town-objects)
