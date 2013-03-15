@@ -1,5 +1,7 @@
 View = require 'views/base/view'
 TILEDMap = require 'models/TILEDMap'
+Player = require 'models/Player'
+InputManager = require 'models/InputManager'
 
 module.exports = class HomePageView extends View
   autoRender: yes
@@ -9,31 +11,67 @@ module.exports = class HomePageView extends View
   initialize: (options) ->
     super
     @gMap = new TILEDMap()
+    @player = new Player()
+    @inputManager = new InputManager()
+
     @listenTo @gMap, 'change:fullyLoaded', (gMap, fullyLoaded) ->
-      setInterval @draw, 1000/25 if fullyLoaded
+      setInterval @doTheWork, 1000/25 if fullyLoaded
     @gMap.load('map/level1.json')
+
+    position =
+      x: 2
+      y: 7
+
+    @player.set 'position':position
 
   render: ->
     @canvas = document.createElement 'canvas'
     @ctx = @canvas.getContext '2d'
     @el.appendChild @canvas
 
-  draw: () =>
-    @canvas.width = window.innerWidth
+
+  doTheWork: =>
+    debugger
+    @handleInput()
+    @draw()
+
+  handleInput: =>
+    # get attributes
+    actions = @inputManager.get 'actions'
+    position = @player.get 'position'
+
+    if actions['move-up']
+      @player.moveUp()
+
+    if actions['move-down']
+      @player.moveDown()
+
+    if actions['move-left']
+      @player.moveLeft()
+
+    if actions['move-right']
+      @player.moveRight()
+
+    # set attributes
+    # @player.set 'position':position
+
+  draw: =>
+    # Resize canvas to window size
+    @canvas.width  = window.innerWidth
     @canvas.height = window.innerHeight
-    currMapData = @gMap.get 'currMapData'
+
+    # get attributes
     tileSize = @gMap.get 'tileSize'
-    numXTiles = @gMap.get 'numXTiles'
-    numYTiles = @gMap.get 'numYTiles'
+    pos      = @player.get 'position'
 
-    for layer in currMapData.layers
-      continue if layer.type isnt 'tilelayer'
+    sx = (pos.x - 5) * tileSize.x
+    sy = (pos.y - 5) * tileSize.y
+    sw = dw = 5 * 2 * tileSize.x
+    sh = dh = 5 * 2 * tileSize.y
+    dx = 0
+    dy = 0
 
-      for tID, tileIDX in layer.data
-        continue if tID is 0
+    sx = 0 if sx < 0
+    sy = 0 if sy < 0
 
-        tPKT = @gMap.getTilePacket tID
-        x = (tileIDX % numXTiles) * tileSize.x
-        y = Math.floor(tileIDX / numYTiles) * tileSize.y
-
-        @ctx.drawImage tPKT.img, tPKT.px, tPKT.py, tileSize.x, tileSize.y, x, y, tileSize.x, tileSize.y
+    @ctx.drawImage (@gMap.get 'canvas'), sx, sy, sw, sh, dx, dy, dw, dh

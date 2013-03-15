@@ -33,3 +33,8 @@ exports.config =
 
   modules:
     addSourceURLs: true
+
+  coffeelint:
+    options:
+      max_line_length:
+        level: "ignore"

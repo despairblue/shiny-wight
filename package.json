@@ -26,7 +26,8 @@
     "handlebars-brunch": ">= 1.0 < 1.6",
 
     "uglify-js-brunch": ">= 1.0 < 1.6",
-    "clean-css-brunch": ">= 1.0 < 1.6"
+    "clean-css-brunch": ">= 1.0 < 1.6",
+    "coffeelint-brunch": "1.4.x"
   },
   "devDependencies": {
     "chai": "1.2.0",

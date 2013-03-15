@@ -13,10 +13,17 @@ module.exports = class TILEDMap extends Model
       x: 64
       y: 64
     fullyLoaded: false
+    canvas: null
+    ctx: null
 
   initialize: ->
     super
     @imgLoadCount = 0
+    canvas = document.createElement 'canvas'
+    ctx = canvas.getContext '2d'
+    @set 'canvas':canvas
+    @set 'ctx':ctx
+    @listenTo @, 'change:fullyLoaded', @render
 
   xhrGet: (reqUri, callback) =>
     xhr = new XMLHttpRequest()
@@ -62,7 +69,6 @@ module.exports = class TILEDMap extends Model
       @imgLoadCount++
       if @imgLoadCount == currMapData.tilesets.length
         @set 'fullyLoaded': true
-        @publishEvent 'map:fullyLoaded'
     img.src = 'atlases/' + tileset.image.replace /^.*[\\\/]/, ''
 
     ts =
@@ -95,3 +101,28 @@ module.exports = class TILEDMap extends Model
     pkt.py = lTileY * tileSize.y
 
     pkt
+
+  render: () =>
+    currMapData = @get 'currMapData'
+    tileSize = @get 'tileSize'
+    numXTiles = @get 'numXTiles'
+    numYTiles = @get 'numYTiles'
+    canvas = @get 'canvas'
+    ctx = @get 'ctx'
+
+    canvas.width = numXTiles * tileSize.x
+    canvas.height = numYTiles * tileSize.y
+
+    for layer in currMapData.layers
+      continue if layer.type isnt 'tilelayer'
+
+      for tID, tileIDX in layer.data
+        continue if tID is 0
+
+        tPKT = @getTilePacket tID
+        coords =
+          x: (tileIDX % numXTiles) * tileSize.x
+          y: Math.floor(tileIDX / numYTiles) * tileSize.y
+
+        debugger
+        ctx.drawImage tPKT.img, tPKT.px, tPKT.py, tileSize.x, tileSize.y, coords.x, coords.y, tileSize.x, tileSize.y
