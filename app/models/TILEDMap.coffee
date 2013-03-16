@@ -115,6 +115,7 @@ module.exports = class TILEDMap extends Model
 
     for layer in currMapData.layers
       continue if layer.type isnt 'tilelayer'
+      continue if layer.name is 'sound'
 
       for tID, tileIDX in layer.data
         continue if tID is 0
