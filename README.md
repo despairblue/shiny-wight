@@ -8,7 +8,7 @@ This will be an HTML 5 game for [this](https://www.udacity.com/wiki/CS255/contes
   - [Tiled Map Editor](http://www.mapeditor.org/) (only needed for level design)
   - [node](http://nodejs.org/)
 
-1. Checkout the repository.
+1. ```git clone https://github.com/despairblue/shiny-wight.git```
 2. Run `npm install -g brunch`
 3. In the project root dir run `npm install`
 4. In the project root dir run `npm up`
