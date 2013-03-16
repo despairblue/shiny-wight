@@ -31,6 +31,9 @@ This will be an HTML 5 game for [this](https://www.udacity.com/wiki/CS255/contes
 [magic_torrentacle.png](http://opengameart.org/content/farming-tilesets-magic-animations-and-ui-elements)
 ![](http://i.creativecommons.org/l/by-sa/3.0/80x15.png)
 
+[warrior_*.png](http://opengameart.org/content/antifareas-rpg-sprite-set-1-enlarged-w-transparent-background)
+![](http://i.creativecommons.org/l/by/3.0/80x15.png)
+
 ## Features
 * renders a map…
 
