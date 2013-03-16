@@ -35,7 +35,10 @@ This will be an HTML 5 game for [this](https://www.udacity.com/wiki/CS255/contes
 ![](http://i.creativecommons.org/l/by/3.0/80x15.png)
 
 ## Features
-* renders a map…
+* renders a map
+* renders character
+* char can move (wasd)
+* char can't leave map
 
 ## License
 For the code only. For the assets see `Used Assets`
