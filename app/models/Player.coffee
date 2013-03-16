@@ -1,7 +1,9 @@
 Person = require 'models/Person'
+mediator = require 'mediator'
 
 module.exports = class Player extends Person
-  # what does the Player class need?
+  # register entity
+  mediator.factory['Player'] = this
 
   animationState : [0, 1, 2, 1]
 

@@ -77,5 +77,6 @@ module.exports = class Application extends Chaplin.Application
     # Add additional application-specific properties and methods
     # e.g. mediator.prop = null
     mediator.map = null
+    mediator.factory = {}
     # Seal the mediator
     mediator.seal()
