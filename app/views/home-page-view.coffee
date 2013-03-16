@@ -14,7 +14,7 @@ module.exports = class HomePageView extends View
     @gMap = new TILEDMap()
     @skipFrame = true
 
-    @listenTo @gMap, 'change:fullyLoaded', (gMap, fullyLoaded) ->
+    @listenTo @gMap, 'change:fullyLoaded', (gMap, fullyLoaded) =>
       @setup() if fullyLoaded
 
     @gMap.load('map/level1.json')

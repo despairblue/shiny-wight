@@ -7,8 +7,8 @@ module.exports = class Entity extends Model
       x: 0
       y: 0
 
-    animationStep: 0
-    viewDirection: 0
+  animationStep: 0
+  viewDirection: 0
 
 
   # moveDirection and moveState

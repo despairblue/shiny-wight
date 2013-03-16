@@ -3,6 +3,8 @@ Person = require 'models/Person'
 module.exports = class Player extends Person
   # what does the Player class need?
 
+  animationState : [0, 1, 2, 1]
+
 # overwrite render method
   render: (ctx, cx, cy) ->
 
@@ -18,11 +20,9 @@ module.exports = class Player extends Person
     # determine what tile to use (by viewDirection)
     # iterate through the three walkingStates
 
-    # order of tiles that form the animation
-    animationState = [0, 1, 2, 1]
 
 
-    sx = (animationState[@animationStep % animationState.length])*tileSet.tilewidth
+    sx = (@animationState[@animationStep % @animationState.length])*tileSet.tilewidth
     sy = (@viewDirection)*tileSet.tileheight
     # with and height of tile in atlas
     sw = tileSet.tilewidth
