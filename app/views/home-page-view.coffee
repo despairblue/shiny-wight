@@ -12,15 +12,17 @@ module.exports = class HomePageView extends View
   initialize: (options) ->
     super
     @gMap = new TILEDMap()
-    @inputManager = new InputManager()
     @skipFrame = true
 
     @listenTo @gMap, 'change:fullyLoaded', (gMap, fullyLoaded) ->
-      window.requestAnimationFrame @doTheWork
+      @setup() if fullyLoaded
+
     @gMap.load('map/level1.json')
 
     mediator.map = @gMap
 
+  setup: =>
+    @inputManager = new InputManager()
     @player = new Player()
 
     position =
@@ -40,6 +42,7 @@ module.exports = class HomePageView extends View
     @player.set 'tileSet':tileSet
     @player.load()
 
+    window.requestAnimationFrame @doTheWork
 
   render: ->
     @canvas = document.createElement 'canvas'
