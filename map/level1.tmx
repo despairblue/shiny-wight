@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="30" height="30" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="PathAndObjects_1" tilewidth="32" tileheight="32">
+  <image source="../atlases/PathAndObjects_0.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="257" name="Castle2" tilewidth="32" tileheight="32">
+  <image source="../atlases/Castle2.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="513" name="wood_tileset_3" tilewidth="32" tileheight="32">
+  <image source="../atlases/wood_tileset_3.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="769" name="mountain_landscape_23" tilewidth="32" tileheight="32">
+  <image source="../atlases/mountain_landscape_23.png" width="512" height="512"/>
+ </tileset>
+ <layer name="Ground1" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztlOENgjAQRm9LdQJ1AnUDN9C/AgsIEwATVBeyJG3ycVzJASVq0i95MUHb17uelERURkaT2M7k/S3v7kveo2UT2a/JzXJ3n97dOKa4cI0mB6CrvbK8HM+RvRG+ZqrX15xbCksNrnbkPJX7fTHTizV3exhwvd2zR6DemF6JekVvt5fvNcfQOn3Guc4ChOr1d6DJGbiCe0v9/3TDkLy+D5rg+j0Ne85nWZrppd4Tq/9C/VlG0Nsu9EqE5svPdQXniukNuY1ztzTsQSwvzmsG5zAkv0804XMqwe9P6gF+pwmfUwl+f/xdMcebkpLyv/kAYus0Og==
+  </data>
+ </layer>
+ <layer name="Ground2" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztzTEKg1AURNGPX+0jxhUY+2QHEU2vmPQRddcuwSUEvJDW+okyA4cpr3Oaph15gXcuRITY2zQvdBKkuCIz6t7pPJDjhsKo+6RTokKNl1G3odOiwxsfo+6XTo8BIyaj7tbmHdo/mov/v6ZpmqadfSsPOgpT
+  </data>
+ </layer>
+ <layer name="Objects" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztlD0OgkAQRtfxvNpJh4kF3grwAoAXULyAPxdAfNqjDpOlYV7yiq+Y+RY22UJCKPGAORaKbKFmvsEjVqLLFs7Mt3jBk+iyhRvzd3zgVXTZwpP5/r1jGUInuvxxhpSLOHs3/M8EdwP7m0i9GZ37L3fZRup1HOc/Vry5a+NbP6Yvxe2EvUN9U3//r/M4juPMjRekG0hj
+  </data>
+ </layer>
+ <layer name="Objects2" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztzLcRgFAQA1HN0X9pmAYwDWAa+ICo4JIj2zezgRJJUh/S4EY3Rb6rzP5a3Oq2yHeV3V+HO90V+a7S/HW75/vs8g0AAAAAf3oB7QsonA==
+  </data>
+ </layer>
+ <objectgroup name="oj" width="30" height="30">
+  <object name="StartPoint" x="33" y="218">
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>
