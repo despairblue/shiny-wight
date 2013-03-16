@@ -14,9 +14,10 @@ module.exports = class HomePageView extends View
     @gMap = new TILEDMap()
     @player = new Player()
     @inputManager = new InputManager()
+    @skipFrame = true
 
     @listenTo @gMap, 'change:fullyLoaded', (gMap, fullyLoaded) ->
-      setInterval @doTheWork, 1000/25 if fullyLoaded
+      window.requestAnimationFrame @doTheWork
     @gMap.load('map/level1.json')
 
     @mediator.map = @gMap
@@ -34,8 +35,12 @@ module.exports = class HomePageView extends View
 
 
   doTheWork: =>
-    @handleInput()
-    @draw()
+    setTimeout =>
+      window.requestAnimationFrame @doTheWork
+      @handleInput()
+      @draw()
+    , 1000/25
+
 
   handleInput: =>
     # get attributes
