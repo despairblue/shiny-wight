@@ -9,6 +9,7 @@ module.exports = class VisibleEntity extends Entity
       name: ""
       tileheight: 0
       tilewidth: 0
+      moveState: [0, 1, 2, 1]
 
   getSprite: =>
     # get sprite

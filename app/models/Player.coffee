@@ -15,8 +15,15 @@ module.exports = class Player extends Person
     img = @get 'atlas'
 
     # position of first pixel at [sx, sy] in atlas
-    sx = 0
-    sy = 0
+    # determine what tile to use (by viewDirection)
+    # iterate through the three walkingStates
+
+    # order of tiles that form the animation
+    animationState = [0, 1, 2, 1]
+
+
+    sx = (animationState[@animationStep % animationState.length])*tileSet.tilewidth
+    sy = (@viewDirection)*tileSet.tileheight
     # with and height of tile in atlas
     sw = tileSet.tilewidth
     sh = tileSet.tileheight
