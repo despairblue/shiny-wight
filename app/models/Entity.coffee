@@ -1,4 +1,5 @@
 Model = require 'models/base/model'
+mediator = require 'mediator'
 
 module.exports = class Entity extends Model
   defaults:

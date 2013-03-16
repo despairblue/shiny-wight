@@ -2,6 +2,7 @@ View = require 'views/base/view'
 TILEDMap = require 'models/TILEDMap'
 Player = require 'models/Player'
 InputManager = require 'models/InputManager'
+mediator = require 'mediator'
 
 module.exports = class HomePageView extends View
   autoRender: yes
@@ -17,6 +18,8 @@ module.exports = class HomePageView extends View
     @listenTo @gMap, 'change:fullyLoaded', (gMap, fullyLoaded) ->
       setInterval @doTheWork, 1000/25 if fullyLoaded
     @gMap.load('map/level1.json')
+
+    @mediator.map = @gMap
 
     position =
       x: 2
