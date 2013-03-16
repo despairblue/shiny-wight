@@ -7,6 +7,11 @@ module.exports = class Entity extends Model
       x: 0
       y: 0
 
+
+  initialize: ->
+    @set 'mediator': (require 'mediator')
+    @map = (@get 'mediator').map
+
     # what about sounds?
 
   onAction: (Object) =>
@@ -25,14 +30,20 @@ module.exports = class Entity extends Model
 
   moveDown: =>
     # get attributes
+    numYTiles = @map.get 'numYTiles'
+
     position = @get 'position'
     position.y++
+    position.y = numYTiles if position.y > numYTiles
     @set position
 
   moveRight: =>
     # get attributes
+    numXTiles = @map.get 'numXTiles'
+
     position = @get 'position'
     position.x++
+    position.x = numXTiles if position.x > numXTiles
     @set position
 
   moveLeft: =>

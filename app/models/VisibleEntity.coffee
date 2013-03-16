@@ -22,5 +22,5 @@ module.exports = class VisibleEntity extends Entity
 
     @set 'atlas':img
 
-  render: (ctx) ->
+  render: (ctx, cx, cy) ->
     # render method to be overloaded

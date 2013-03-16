@@ -12,7 +12,6 @@ module.exports = class HomePageView extends View
   initialize: (options) ->
     super
     @gMap = new TILEDMap()
-    @player = new Player()
     @inputManager = new InputManager()
     @skipFrame = true
 
@@ -20,7 +19,9 @@ module.exports = class HomePageView extends View
       window.requestAnimationFrame @doTheWork
     @gMap.load('map/level1.json')
 
-    @mediator.map = @gMap
+    mediator.map = @gMap
+
+    @player = new Player()
 
     position =
       x: 2
@@ -29,12 +30,12 @@ module.exports = class HomePageView extends View
     @player.set 'position':position
 
     tileSet =
-      image: "atlases/grab_sheet.png"
-      imageheight: 384
-      imagewidth: 256
+      image: "atlases/warrior_m.png"
+      imageheight: 96
+      imagewidth: 144
       name: "player"
-      tileheight: 64
-      tilewidth: 64
+      tileheight: 32
+      tilewidth: 32
 
     @player.set 'tileSet':tileSet
     @player.load()
@@ -81,17 +82,21 @@ module.exports = class HomePageView extends View
 
     # get attributes
     tileSize = @gMap.get 'tileSize'
+    numXTiles = @gMap.get 'numXTiles'
+    numYTiles = @gMap.get 'numYTiles'
     pos      = @player.get 'position'
 
     sx = (pos.x - 5) * tileSize.x
     sy = (pos.y - 5) * tileSize.y
-    sw = dw = 5 * 2 * tileSize.x
-    sh = dh = 5 * 2 * tileSize.y
+    sw = dw = 11 * tileSize.x
+    sh = dh = 11 * tileSize.y
     dx = 0
     dy = 0
 
     sx = 0 if sx < 0
     sy = 0 if sy < 0
+    sx = numXTiles*tileSize.x if sx > numXTiles*tileSize.x
+    sy = numYTiles*tileSize.y if sy > numYTiles*tileSize.y
 
     @ctx.drawImage (@gMap.get 'canvas'), sx, sy, sw, sh, dx, dy, dw, dh
-    @player.render(@ctx)
+    @player.render(@ctx, sx, sy)
