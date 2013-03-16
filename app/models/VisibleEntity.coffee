@@ -12,3 +12,15 @@ module.exports = class VisibleEntity extends Entity
 
   getSprite: =>
     # get sprite
+
+  load: ->
+
+    tileSet = @get 'tileSet'
+
+    img = new Image()
+    img.src = tileSet.image
+
+    @set 'atlas':img
+
+  render: (ctx) ->
+    # render method to be overloaded

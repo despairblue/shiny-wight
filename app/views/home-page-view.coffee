@@ -28,6 +28,18 @@ module.exports = class HomePageView extends View
 
     @player.set 'position':position
 
+    tileSet =
+      image: "atlases/grab_sheet.png"
+      imageheight: 384
+      imagewidth: 256
+      name: "player"
+      tileheight: 64
+      tilewidth: 64
+
+    @player.set 'tileSet':tileSet
+    @player.load()
+
+
   render: ->
     @canvas = document.createElement 'canvas'
     @ctx = @canvas.getContext '2d'
@@ -82,3 +94,4 @@ module.exports = class HomePageView extends View
     sy = 0 if sy < 0
 
     @ctx.drawImage (@gMap.get 'canvas'), sx, sy, sw, sh, dx, dy, dw, dh
+    @player.render(@ctx)
