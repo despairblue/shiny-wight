@@ -31,7 +31,6 @@ module.exports = class HomePageView extends View
 
 
   doTheWork: =>
-    debugger
     @handleInput()
     @draw()
 

@@ -124,5 +124,4 @@ module.exports = class TILEDMap extends Model
           x: (tileIDX % numXTiles) * tileSize.x
           y: Math.floor(tileIDX / numYTiles) * tileSize.y
 
-        debugger
         ctx.drawImage tPKT.img, tPKT.px, tPKT.py, tileSize.x, tileSize.y, coords.x, coords.y, tileSize.x, tileSize.y

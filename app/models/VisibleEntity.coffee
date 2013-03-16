@@ -1,6 +1,6 @@
 Entity = require 'models/Entity'
 
-mudule.exports = class VisibleEntity extends Entity
+module.exports = class VisibleEntity extends Entity
   defaults:
     tileSet:
       image: ""
