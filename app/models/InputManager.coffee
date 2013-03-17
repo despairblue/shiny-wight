@@ -14,6 +14,10 @@ module.exports = class InputManager extends Model
       'w': 87
       'd': 68
       's': 83
+      'enter': 13
+      'escape': 27
+      'space': 32
+
 
   initialize: () =>
     # get attributes
@@ -24,6 +28,9 @@ module.exports = class InputManager extends Model
     @bind keyCodes['a'], 'move-left'
     @bind keyCodes['s'], 'move-down'
     @bind keyCodes['d'], 'move-right'
+    @bind keyCodes['enter'], 'interact'
+    @bind keyCodes['space'], 'interact'
+    @bind keyCodes['escape'], 'cancle'
 
     # register event listener
     window.addEventListener 'keydown', @onKeyDownEvent

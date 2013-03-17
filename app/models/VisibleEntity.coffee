@@ -1,14 +1,13 @@
 Entity = require 'models/Entity'
 
 module.exports = class VisibleEntity extends Entity
-  defaults:
-    tileSet:
-      image: ""
-      imageheight: 0
-      imagewidth: 0
-      name: ""
-      tileheight: 0
-      tilewidth: 0
+
+  tileSet:
+    image: ""
+    imageheight: 0
+    imagewidth: 0
+    tileheight: 0
+    tilewidth: 0
   # order of tiles that form the animation
   animationState: 0
 

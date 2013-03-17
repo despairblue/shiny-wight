@@ -7,12 +7,19 @@ module.exports = class Player extends Person
 
   animationState : [0, 1, 2, 1]
 
+  tileSet =
+    image: "atlas/warrior_m.png"
+    imageheight: 96
+    imagewidth: 144
+    tileheight: 32
+    tilewidth: 32
+
 # overwrite render method
   render: (ctx, cx, cy) ->
 
-    map = (@get 'mediator').map
+    #map = (@get 'mediator').map
 
-    tileSet = @get 'tileSet'
+    tileSet = @tileSet
 
     pos = @get 'position'
 

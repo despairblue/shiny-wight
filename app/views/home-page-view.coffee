@@ -17,30 +17,30 @@ module.exports = class HomePageView extends View
     @listenTo @gMap, 'change:fullyLoaded', (gMap, fullyLoaded) =>
       @setup() if fullyLoaded
 
+
     @gMap.load('map/level1.json')
 
     mediator.map = @gMap
 
   setup: =>
     @inputManager = new InputManager()
-    @player = new Player()
+   ## @player = new Player()
 
-    position =
-      x: 2
-      y: 7
+    #position =
+    #  x: 2
+    #  y: 7
 
-    @player.set 'position':position
+    #@player.set 'position':position
 
-    tileSet =
-      image: "atlases/warrior_m.png"
-      imageheight: 96
-      imagewidth: 144
-      name: "player"
-      tileheight: 32
-      tilewidth: 32
+    #tileSet =
+    #  image: "atlases/warrior_m.png"
+    #  imageheight: 96
+    #  imagewidth: 144
+    #  tileheight: 32
+    #  tilewidth: 32
 
-    @player.set 'tileSet':tileSet
-    @player.load()
+    #@player.set 'tileSet':tileSet
+    #@player.load()
 
     window.requestAnimationFrame @doTheWork
 
@@ -61,7 +61,7 @@ module.exports = class HomePageView extends View
   handleInput: =>
     # get attributes
     actions = @inputManager.get 'actions'
-    position = @player.get 'position'
+    #position = @player.get 'position'
 
     if actions['move-up']
       @player.moveUp()
@@ -75,6 +75,14 @@ module.exports = class HomePageView extends View
     if actions['move-right']
       @player.moveRight()
 
+    if actions['interact']
+      placeholder = true
+      # code
+
+    if actions['cancle']
+      placeholder = true
+      # code
+
     # set attributes
     # @player.set 'position':position
 
@@ -87,6 +95,7 @@ module.exports = class HomePageView extends View
     tileSize = @gMap.get 'tileSize'
     numXTiles = @gMap.get 'numXTiles'
     numYTiles = @gMap.get 'numYTiles'
+
     pos      = @player.get 'position'
 
     sx = (pos.x - 5) * tileSize.x
@@ -102,4 +111,6 @@ module.exports = class HomePageView extends View
     sy = numYTiles*tileSize.y if sy > numYTiles*tileSize.y
 
     @ctx.drawImage (@gMap.get 'canvas'), sx, sy, sw, sh, dx, dy, dw, dh
-    @player.render(@ctx, sx, sy)
+    for entity in mediator.entities
+      entity.load()
+      entity.render(@ctx, sx, sy)
