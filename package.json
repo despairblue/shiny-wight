@@ -1,5 +1,19 @@
 {
-  "author": "Danny Arnold, Christopher Pape",
+  "author": "d-bug entertainment",
+  "contributors":[
+    {
+      "name": "Christopher Pape",
+      "email": ""
+    },
+    {
+      "name": "Robert Baruck",
+      "email": ""
+    },
+    {
+      "name": "Danny Arnold",
+      "email": "despairblue@gmail.com"
+    }
+  ]
   "name": "shiny-wight",
   "description": "HTML5 Game",
   "version": "0.0.1",
