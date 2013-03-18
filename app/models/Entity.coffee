@@ -35,6 +35,8 @@ module.exports = class Entity extends Model
     position.y--
     position.y = 0 if position.y < 0
 
+    mediator.publish 'play', 'test'
+
     # moveDirection and moveState
     @updateViewAndMove(0)
 

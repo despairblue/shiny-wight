@@ -2,6 +2,7 @@ View = require 'views/base/view'
 TILEDMap = require 'models/TILEDMap'
 Player = require 'models/Player'
 InputManager = require 'models/InputManager'
+SoundManager = require 'models/SoundManager'
 mediator = require 'mediator'
 MapInitialEntitySpawnManager = require 'models/MapInitialEntitySpawnManager'
 
@@ -25,6 +26,7 @@ module.exports = class HomePageView extends View
     mediator.map = @gMap
 
   setup: =>
+    @soundManager = new SoundManager()
     @inputManager = new InputManager()
 
     @MapInitialEntitySpawnManager = new MapInitialEntitySpawnManager()
@@ -36,6 +38,7 @@ module.exports = class HomePageView extends View
       break
 
     window.requestAnimationFrame @doTheWork
+    mediator.publish 'play', 'test'
 
   render: ->
     @canvas = document.createElement 'canvas'
