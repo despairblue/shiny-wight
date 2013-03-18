@@ -5,10 +5,14 @@ module.exports = class Player extends Person
   # register entity
   mediator.factory['Player'] = this
 
+  #initialize: ->
+   # @set 'mediator': (require 'mediator')
+   # @map = (@get 'mediator').map
   animationState : [0, 1, 2, 1]
 
-  tileSet =
-    image: "atlas/warrior_m.png"
+  tileSet:
+    name: "Player"
+    image: "atlases/warrior_m.png"
     imageheight: 96
     imagewidth: 144
     tileheight: 32
@@ -21,7 +25,9 @@ module.exports = class Player extends Person
 
     tileSet = @tileSet
 
-    pos = @get 'position'
+    animationState = @animationState
+
+    pos = @position
 
     img = @get 'atlas'
 
@@ -31,7 +37,7 @@ module.exports = class Player extends Person
 
 
 
-    sx = (@animationState[@animationStep % @animationState.length])*tileSet.tilewidth
+    sx = (animationState[@animationStep % animationState.length])*tileSet.tilewidth
     sy = (@viewDirection)*tileSet.tileheight
     # with and height of tile in atlas
     sw = tileSet.tilewidth

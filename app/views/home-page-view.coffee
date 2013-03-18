@@ -3,6 +3,8 @@ TILEDMap = require 'models/TILEDMap'
 Player = require 'models/Player'
 InputManager = require 'models/InputManager'
 mediator = require 'mediator'
+MapInitialEntitySpawnManager = require 'models/MapInitialEntitySpawnManager'
+
 
 module.exports = class HomePageView extends View
   autoRender: yes
@@ -24,23 +26,14 @@ module.exports = class HomePageView extends View
 
   setup: =>
     @inputManager = new InputManager()
-   ## @player = new Player()
 
-    #position =
-    #  x: 2
-    #  y: 7
+    @MapInitialEntitySpawnManager = new MapInitialEntitySpawnManager()
+    @MapInitialEntitySpawnManager.spawn()
 
-    #@player.set 'position':position
-
-    #tileSet =
-    #  image: "atlases/warrior_m.png"
-    #  imageheight: 96
-    #  imagewidth: 144
-    #  tileheight: 32
-    #  tilewidth: 32
-
-    #@player.set 'tileSet':tileSet
-    #@player.load()
+    for entity in mediator.entities
+      continue if entity.tileSet.name isnt "Player"
+      @player = entity
+      break
 
     window.requestAnimationFrame @doTheWork
 
@@ -96,7 +89,7 @@ module.exports = class HomePageView extends View
     numXTiles = @gMap.get 'numXTiles'
     numYTiles = @gMap.get 'numYTiles'
 
-    pos      = @player.get 'position'
+    pos = @player.position
 
     sx = (pos.x - 5) * tileSize.x
     sy = (pos.y - 5) * tileSize.y
@@ -112,5 +105,4 @@ module.exports = class HomePageView extends View
 
     @ctx.drawImage (@gMap.get 'canvas'), sx, sy, sw, sh, dx, dy, dw, dh
     for entity in mediator.entities
-      entity.load()
       entity.render(@ctx, sx, sy)

@@ -3,6 +3,7 @@ Entity = require 'models/Entity'
 module.exports = class VisibleEntity extends Entity
 
   tileSet:
+    name: ""
     image: ""
     imageheight: 0
     imagewidth: 0
@@ -17,7 +18,7 @@ module.exports = class VisibleEntity extends Entity
 
   load: ->
 
-    tileSet = @get 'tileSet'
+    tileSet = @tileSet
 
     img = new Image()
     img.src = tileSet.image
