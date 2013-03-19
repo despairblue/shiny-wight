@@ -7,13 +7,13 @@
     },
     {
       "name": "Robert Baruck",
-      "email": ""
+      "email": "robert.baruck@gmail.com"
     },
     {
       "name": "Danny Arnold",
       "email": "despairblue@gmail.com"
     }
-  ]
+  ],
   "name": "shiny-wight",
   "description": "HTML5 Game",
   "version": "0.0.1",

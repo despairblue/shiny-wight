@@ -20,7 +20,6 @@ module.exports = class HomePageView extends View
     @listenTo @gMap, 'change:fullyLoaded', (gMap, fullyLoaded) =>
       @setup() if fullyLoaded
 
-
     @gMap.load('map/level1.json')
 
     mediator.map = @gMap
@@ -38,7 +37,7 @@ module.exports = class HomePageView extends View
       break
 
     window.requestAnimationFrame @doTheWork
-    mediator.publish 'play', 'test'
+   # mediator.publish 'play', 'test'
 
   render: ->
     @canvas = document.createElement 'canvas'
