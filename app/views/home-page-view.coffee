@@ -87,7 +87,7 @@ module.exports = class HomePageView extends View
     @canvas.height = window.innerHeight
 
     # get attributes
-    tileSize = @gMap.get 'tileSize'
+    tileSize  = @gMap.get 'tileSize'
     numXTiles = @gMap.get 'numXTiles'
     numYTiles = @gMap.get 'numYTiles'
 
