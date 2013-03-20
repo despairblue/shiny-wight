@@ -32,7 +32,7 @@ module.exports = class TILEDMap extends Model
     xhr.send()
 
 
-  load: (map) ->
+  load: (map) =>
     @xhrGet map, (data) =>
       @parseMapJSON data.target.responseText
 

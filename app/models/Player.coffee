@@ -19,7 +19,7 @@ module.exports = class Player extends Person
     tilewidth: 32
 
 # overwrite render method
-  render: (ctx, cx, cy) ->
+  render: (ctx, cx, cy) =>
 
     #map = (@get 'mediator').map
 

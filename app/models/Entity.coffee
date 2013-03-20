@@ -10,7 +10,7 @@ module.exports = class Entity extends Model
   viewDirection: 0
 
 
-  updateViewAndMove: (vd) ->
+  updateViewAndMove: (vd) =>
     if @viewDirection != vd
       @animationStep = 1
       @viewDirection = vd

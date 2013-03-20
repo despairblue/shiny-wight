@@ -16,7 +16,7 @@ module.exports = class VisibleEntity extends Entity
   getSprite: =>
     # get sprite
 
-  load: ->
+  load: =>
 
     tileSet = @tileSet
 
@@ -25,5 +25,5 @@ module.exports = class VisibleEntity extends Entity
 
     @set 'atlas':img
 
-  render: (ctx, cx, cy) ->
+  render: (ctx, cx, cy) =>
     # render method to be overloaded

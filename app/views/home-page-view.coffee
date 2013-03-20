@@ -39,7 +39,7 @@ module.exports = class HomePageView extends View
     window.requestAnimationFrame @doTheWork
    # mediator.publish 'play', 'test'
 
-  render: ->
+  render: =>
     @canvas = document.createElement 'canvas'
     @ctx = @canvas.getContext '2d'
     @el.appendChild @canvas
