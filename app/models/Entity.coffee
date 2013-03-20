@@ -1,12 +1,23 @@
 Model = require 'models/base/model'
 mediator = require 'mediator'
 
-module.exports = class Entity extends Model
+# Base class for all entities
+#
+# @example How to subclass Entity
+#   module.exports = class VisibleEntity extends Entity
+#     onAction: (object): ->
+#
+
+module.exports = class Entity extends
+  # The entity's position
   position:
     x: 0
     y: 0
 
+  # decides what sprite to draw
   animationStep: 0
+  # what direction the entity looks
+  # can be of of 0,1,2,3
   viewDirection: 0
 
 
