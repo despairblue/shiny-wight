@@ -28,6 +28,9 @@ tmp/
 # Brunch output folder.
 public/
 
+# codo documentation folder.
+doc/
+
 # sublime
 *.sublime-project
 *.sublime-workspace
