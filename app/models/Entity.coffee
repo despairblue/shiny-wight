@@ -8,7 +8,7 @@ mediator = require 'mediator'
 #     onAction: (object): ->
 #
 
-module.exports = class Entity extends
+module.exports = class Entity extends Model
   # The entity's position
   position:
     x: 0
