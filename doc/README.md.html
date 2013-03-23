@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>CoffeeScript API Documentation</title>
+  <link rel='stylesheet' href='assets/codo.css' type='text/css'>
+  <script src='assets/codo.js'></script>
+  <script src='assets/search_data.js'></script>
+</head>
+  <body>
+    <div id='base' data-path=''></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='README.md.html' title='Shiny-wight'>Shiny-wight</a>
+    &raquo;
+    <a href='class_index.html' title='Index'>Index</a>
+    &raquo;
+    <span class='title'>README.md</span>
+    <nav>
+      <ul>
+        <li class='noframes'>
+          (<a class='noframes' href='#'>no frames</a>)
+        </li>
+      </ul>
+    </nav>
+    <div id='search'>
+      <a id='class_list_link' href='class_list.html'>Classes</a>
+      <a id='file_list_link' href='file_list.html'>Files</a>
+      <a id='method_list_link' href='method_list.html'>Methods</a>
+      <a id='extra_list_link' href='extra_list.html'>Extras</a>
+    </div>
+  </div>
+  <iframe id='search_frame'></iframe>
+  <div id='fuzzySearch'>
+    <input type='text'>
+    <ol></ol>
+  </div>
+  <div id='help'>
+    <p>
+      Quickly fuzzy find classes, mixins, methods, file:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-T</span>
+        Open fuzzy finder dialog
+      </li>
+    </ul>
+    <p>
+      In frame mode you can toggle the list naviation frame on the left side:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-L</span>
+        Toggle list view
+      </li>
+    </ul>
+    <p>
+      You can focus a list in frame mode or toggle a tab in frameless mode:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-C</span>
+        Class list
+      </li>
+      <li>
+        <span>Ctrl-I</span>
+        Mixin list
+      </li>
+      <li>
+        <span>Ctrl-F</span>
+        File list
+      </li>
+      <li>
+        <span>Ctrl-M</span>
+        Method list
+      </li>
+      <li>
+        <span>Ctrl-E</span>
+        Extras list
+      </li>
+    </ul>
+    <p>
+      You can focus and blur the search input:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-S</span>
+        Focus search input
+      </li>
+      <li>
+        <span>Esc</span>
+        Blur search input
+      </li>
+    </ul>
+    <p>
+      In frameless mode you can close the list tab:
+    </p>
+    <ul>
+      <li>
+        <span>Esc</span>
+        Close list tab
+      </li>
+    </ul>
+  </div>
+</div>
+    <div id='content'>
+      <nav class='toc'>
+        <p class='title'>
+          <a class='hide_toc' href='#'>
+            <strong>Table of Contents</strong>
+          </a>
+          <small>
+            (<a class='float_toc' href='#'>left</a>)
+          </small>
+        </p>
+      </nav>
+      <div id='filecontents'>
+        <h1>Shiny Wight (working title)</h1><p>This will be an HTML 5 game for <a href="https://www.udacity.com/wiki/CS255/contest">this</a> contest</p><h2>Getting started</h2>
+<ul>
+<li><p>Dependencies</p><ul>
+<li><a href="http://git-scm.com/">git</a></li>
+<li><a href="https://github.com/petervanderdoes/gitflow/wiki">git-flow-avh</a> (optional)</li>
+<li><a href="http://www.mapeditor.org/">Tiled Map Editor</a> (only needed for level design)</li>
+<li><a href="http://nodejs.org/">node</a></li>
+</ul>
+</li>
+<li><p><code>git clone https://github.com/despairblue/shiny-wight.git</code></p></li>
+<li>Run <code>npm install -g brunch</code></li>
+<li>In the project root dir run <code>npm install</code></li>
+<li>In the project root dir run <code>npm up</code></li>
+<li>In the project root dir run <code>npm start</code>.</li>
+<li>Open Browser at <code>localhost:3333</code></li>
+</ul>
+<h2>Used Assets</h2><p><a href="http://opengameart.org/content/rpg-tiles-cobble-stone-paths-town-objects">PathAndObjects_0.png</a>
+<img src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" alt=""></p><p><a href="http://opengameart.org/content/castle-tiles-for-rpgs">Castle2.png</a>
+<img src="http://i.creativecommons.org/l/by/3.0/80x15.png" alt=""></p><p><a href="http://opengameart.org/content/2d-lost-garden-zelda-style-tiles-resized-to-32x32-with-additions">mountain_landscape.png</a>
+<img src="http://i.creativecommons.org/l/by/3.0/80x15.png" alt=""></p><p><a href="http://opengameart.org/content/2d-lost-garden-tileset-transition-to-jetrels-wood-tileset">wood_tileset.png</a>
+<img src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" alt=""></p><p><a href="http://opengameart.org/content/farming-tilesets-magic-animations-and-ui-elements">magic_torrentacle.png</a>
+<img src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" alt=""></p><p><a href="http://opengameart.org/content/antifareas-rpg-sprite-set-1-enlarged-w-transparent-background">warrior_*.png</a>
+<img src="http://i.creativecommons.org/l/by/3.0/80x15.png" alt=""></p><h2>Features</h2>
+<ul>
+<li>renders a map</li>
+<li>renders character</li>
+<li>char can move (wasd)</li>
+<li>char can&#39;t leave map</li>
+</ul>
+<h2>License</h2><p>For the code only. For the assets see <code>Used Assets</code></p><p><img src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" alt="license"></p><p>This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.</p>
+      </div>
+    </div>
+    <div id='footer'>
+  Generated on
+  Sat Mar 23 2013 20:34:29 GMT+0100 (CET)
+  by
+  <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
+  v1.5.6
+  (Node.js v0.10.0).
+  &#10034;
+  Press Ctrl-h to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/#!/netzpirat'>@netzpirat</a>
+  &#10034;
+  <a href='https://mksoft.ch'>mksoft.ch</a>
+</div>
+  </body>
+</html>
