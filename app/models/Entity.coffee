@@ -21,6 +21,8 @@ module.exports = class Entity extends Model
   viewDirection: 0
 
 
+  initialize: ->
+    @map = mediator.map
   updateViewAndMove: (vd) =>
     if @viewDirection != vd
       @animationStep = 1
@@ -28,9 +30,6 @@ module.exports = class Entity extends Model
     else
       @animationStep++
 
-  initialize: ->
-    @set 'mediator': (require 'mediator')
-    @map = (@get 'mediator').map
 
   onAction: (Object) =>
     # perform an <Object> specific action
