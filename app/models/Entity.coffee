@@ -40,11 +40,8 @@ module.exports = class Entity extends Model
 
   # viewDirection {0:up, 1:right, 2:down, 3: left}
   moveUp: =>
-    # get attributes
-    position = @position
-
-    position.y--
-    position.y = 0 if position.y < 0
+    @position.y--
+    @position.y = 0 if @position.y < 0
 
     mediator.publish 'play', 'test'
 
@@ -55,10 +52,9 @@ module.exports = class Entity extends Model
   moveDown: =>
     # get attributes
     numYTiles = @map.get 'numYTiles'
-    position = @position
 
-    position.y++
-    position.y = numYTiles if position.y > numYTiles
+    @position.y++
+    @position.y = numYTiles if position.y > numYTiles
 
     # moveDirection and moveState
     @updateViewAndMove(2)
@@ -66,20 +62,16 @@ module.exports = class Entity extends Model
   moveRight: =>
     # get attributes
     numXTiles = @map.get 'numXTiles'
-    position = @position
 
-    position.x++
-    position.x = numXTiles if position.x > numXTiles
+    @position.x++
+    @position.x = numXTiles if position.x > numXTiles
 
     # moveDirection and moveState
     @updateViewAndMove(1)
 
   moveLeft: =>
-    # get attributes
-    position = @position
-
-    position.x--
-    position.x = 0 if position.x < 0
+    @position.x--
+    @position.x = 0 if position.x < 0
 
     # moveDirection and moveState
     @updateViewAndMove(3)
