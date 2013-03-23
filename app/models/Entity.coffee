@@ -1,28 +1,59 @@
 Model = require 'models/base/model'
 mediator = require 'mediator'
 
-# Base class for all entities
-#
-# @example How to subclass Entity
-#   module.exports = class VisibleEntity extends Entity
-#     onAction: (object): ->
-#
+###
+Base class for all entities
 
+@example How to subclass Entity
+  module.exports = class VisibleEntity extends Entity
+    onAction: (object): ->
+      # do something
+###
 module.exports = class Entity extends Model
-  # The entity's position
+
+  ###
+  @property [Object] The entity's position
+  @option position [Integer] x x coordinate
+  ###
   position:
     x: 0
     y: 0
 
-  # decides what sprite to draw
+  ###
+  @property [Integer]
+  What sprite to draw
+  ###
   animationStep: 0
-  # what direction the entity looks
-  # can be of of 0,1,2,3
+
+  ###
+  @property [Integer]
+  In what direction the entity looks
+
+      0:up
+      1:right
+      2:down
+      3:left
+  ###
   viewDirection: 0
 
-
+  ###
+  @private
+  Initializes the new Entity.
+  Will try to get the map from the mediator.
+  @note Make sure to call `TILEDMap.load(path)` before instantiating any Entities.
+  ###
   initialize: ->
     @map = mediator.map
+
+  ###
+  @private
+  @param [Integer] vd
+    the view direction. Can be one of 0, 1, 2 or 3.
+  @see [Entity#viewDirection]
+  Updates the animationStep counter and viewDirection.
+  If the entity goes into the same direction, only update animationStep
+  If not it will reset the animationStep counter and update the viewDirection
+  ###
   updateViewAndMove: (vd) =>
     if @viewDirection != vd
       @animationStep = 1
@@ -30,14 +61,24 @@ module.exports = class Entity extends Model
     else
       @animationStep++
 
-
-  onAction: (Object) =>
+  ###
+  Is called if the Player stands in front of this Entity and want's to interact with it.
+  @param [Object] player
+    The Player.
+  ###
+  onAction: (player) =>
     # perform an <Object> specific action
 
+  ###
+  Is called each tick/frame.
+  ###
   update: =>
     # update method
 
-  # viewDirection {0:up, 1:right, 2:down, 3: left}
+  ###
+  Move the Entity one tile upwards.
+  @note It won't let `@position.y` be negative.
+  ###
   moveUp: =>
     @position.y--
     @position.y = 0 if @position.y < 0
@@ -47,7 +88,11 @@ module.exports = class Entity extends Model
     # moveDirection and moveState
     @updateViewAndMove(0)
 
-
+  ###
+  Move the Entity one tile downwards.
+  It won't let @position.y be larger than map.numYTiles.
+  @note This method relies on `mediator.map` being set
+  ###
   moveDown: =>
     # get attributes
     numYTiles = @map.get 'numYTiles'
@@ -58,6 +103,11 @@ module.exports = class Entity extends Model
     # moveDirection and moveState
     @updateViewAndMove(2)
 
+  ###
+  Move the Entity one tile to the right.
+  It won't let @position.y be larger than map.numXTiles.
+  @note This method relies on `mediator.map` being set
+  ###
   moveRight: =>
     # get attributes
     numXTiles = @map.get 'numXTiles'
@@ -68,6 +118,10 @@ module.exports = class Entity extends Model
     # moveDirection and moveState
     @updateViewAndMove(1)
 
+  ###
+  Move the Entity one tile upwards.
+  @note It won't let `@position.x` be negative.
+  ###
   moveLeft: =>
     @position.x--
     @position.x = 0 if position.x < 0

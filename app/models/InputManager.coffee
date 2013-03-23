@@ -36,6 +36,12 @@ module.exports = class InputManager extends Model
     window.addEventListener 'keydown', @onKeyDownEvent
     window.addEventListener 'keyup', @onKeyUpEvent
 
+  ###
+  Set the corresponding action in the actions array to true
+
+      Pressing `w` will set `move-up` to true on an qwerty keyboard
+  @params [Event] event Event Object
+  ###
   onKeyDownEvent: (event) =>
     # get attributes
     bindings = @get 'bindings'
@@ -50,6 +56,12 @@ module.exports = class InputManager extends Model
     # set attributes
     @set 'actions':actions
 
+  ###
+  Set the corresponding action in the actions array to false
+
+      Releasing `w` will set `move-up` to false on an qwerty keyboard
+  @params [Event] event Event Object
+  ###
   onKeyUpEvent: (event) =>
     # get attributes
     bindings = @get 'bindings'
@@ -64,6 +76,11 @@ module.exports = class InputManager extends Model
     # set attributes
     @set 'actions':actions
 
+  ###
+  Bind a key code to an action.
+  @example How to bind `w` to the `move-up` action
+    @bind 87, 'move-up'
+  ###
   bind: (key, action) =>
     # get attributes
     bindings = @get 'bindings'

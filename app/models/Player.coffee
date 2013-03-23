@@ -1,6 +1,9 @@
 Person = require 'models/Person'
 mediator = require 'mediator'
 
+###
+The Player
+###
 module.exports = class Player extends Person
   # register entity
   mediator.factory['Player'] = this
