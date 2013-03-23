@@ -1,4 +1,5 @@
 Model = require 'models/base/model'
+mediator = require 'mediator'
 
 module.exports = class TILEDMap extends Model
   defaults:
@@ -24,6 +25,7 @@ module.exports = class TILEDMap extends Model
     @set 'canvas':canvas
     @set 'ctx':ctx
     @listenTo @, 'change:fullyLoaded', @render
+    mediator.map = @
 
   xhrGet: (reqUri, callback) =>
     xhr = new XMLHttpRequest()
@@ -126,3 +128,5 @@ module.exports = class TILEDMap extends Model
           y: Math.floor(tileIDX / numYTiles) * tileSize.y
 
         ctx.drawImage tPKT.img, tPKT.px, tPKT.py, tileSize.x, tileSize.y, coords.x, coords.y, tileSize.x, tileSize.y
+
+    @publishEvent 'map:rendered'

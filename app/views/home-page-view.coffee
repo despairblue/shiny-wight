@@ -17,12 +17,10 @@ module.exports = class HomePageView extends View
     @gMap = new TILEDMap()
     @skipFrame = true
 
-    @listenTo @gMap, 'change:fullyLoaded', (gMap, fullyLoaded) =>
-      @setup() if fullyLoaded
+    @subscribeEvent 'map:rendered', =>
+      @setup()
 
     @gMap.load('map/level1.json')
-
-    mediator.map = @gMap
 
   setup: =>
     @soundManager = new SoundManager()
