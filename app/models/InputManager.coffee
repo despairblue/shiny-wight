@@ -30,7 +30,7 @@ module.exports = class InputManager extends Model
     @bind keyCodes['d'], 'move-right'
     @bind keyCodes['enter'], 'interact'
     @bind keyCodes['space'], 'interact'
-    @bind keyCodes['escape'], 'cancle'
+    @bind keyCodes['escape'], 'cancel'
 
     # register event listener
     window.addEventListener 'keydown', @onKeyDownEvent
