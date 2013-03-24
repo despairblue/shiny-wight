@@ -61,27 +61,27 @@ module.exports = class TILEDMap extends Model
   @param [JSON] mapJSON the TILED map editor json data
   ###
   parseMapJSON: (mapJSON) =>
-    currMapData = JSON.parse mapJSON
-    numXTiles = currMapData.width
-    numYTiles = currMapData.height
+    @currMapData = JSON.parse mapJSON
+    @numXTiles = @currMapData.width
+    @numYTiles = @currMapData.height
 
     tileSize =
-      x: currMapData.tileheight
-      y: currMapData.tilewidth
+      x: @currMapData.tileheight
+      y: @currMapData.tilewidth
 
     pixelSize =
-      x: numXTiles * tileSize.x
-      y: numYTiles * tileSize.y
+      x: @numXTiles * tileSize.x
+      y: @numYTiles * tileSize.y
 
-    @set 'currMapData':currMapData
-    @set 'numXTiles':currMapData.width
-    @set 'numYTiles':currMapData.height
+    @set 'currMapData':@currMapData
+    @set 'numXTiles':@numXTiles
+    @set 'numYTiles':@numYTiles
     @set 'tileSize':tileSize
     @set 'pixelSize':pixelSize
 
     console.log 'Start loading atlasses'
 
-    tilesets = for tileset in currMapData.tilesets
+    tilesets = for tileset in @currMapData.tilesets
       @createTileSet tileset
 
     @set 'tilesets':tilesets
