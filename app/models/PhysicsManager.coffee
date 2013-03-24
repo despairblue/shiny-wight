@@ -44,7 +44,7 @@ module.exports = class PhysicsManager extends Model
         @physicsMap[x][y] = 'background'
 
       # there should only be one physics layer
-      break;
+      break
 
   ###
   Checks if the position is free
