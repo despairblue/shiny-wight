@@ -1,15 +1,14 @@
 Model = require 'models/base/model'
+SoundObj = require 'models/SoundObj'
 mediator = require 'mediator'
 
 module.exports = class SoundManager extends Model
 
   audioContext: null
-  PATH: 'sounds/'
-  soundList: []
-  soundBuffers: {}
+  soundList: {}
   backgroundSounds: {}
-  playingSounds: {}
 
+  PATH: 'sounds/'
 
   initialize: () =>
     mediator.subscribe 'play', @playSound
@@ -17,32 +16,29 @@ module.exports = class SoundManager extends Model
 
     @audioContext = new webkitAudioContext()
     # soundList should be replaced with the mapSoundList of the actual lvl
-    @soundList = ['defaultStep', 'dundundun', 'dummy']
+    @soundList['defaultStep'] = new SoundObj()
+    @soundList['dundundun'] = new SoundObj()
+    @soundList['dummy'] = new SoundObj()
+
     @loadSounds()
 
     #hardcoded backgroundSounds, will be automated later
 
-    position =
-      x : 1
-      y : 1
-
-    @backgroundSounds["dummy"] = position
-
-    position =
-      x : 10
-      y : 10
-
-    @backgroundSounds["dundundun"] = position
+    @backgroundSounds["dummy"] = x:1, y:1
+    @backgroundSounds["dundundun"] = x:10, y:10
 
 
   stop: (sound) =>
-    @playingSounds[sound].noteOff(0)
+    @soundList[sound].sourceNode.noteOff(0)
+    @soundList[sound].isLooping = false
+
 
 
   startBackgroundsSounds: =>
     for sound of @backgroundSounds
+      continue if @soundList[sound].isLooping
       sourceNode = @audioContext.createBufferSource()
-      sourceNode.buffer = @soundBuffers[sound]
+      sourceNode.buffer = @soundList[sound].buffer
       sourceNode.loop = true
 
       pannerNode = @audioContext.createPanner()
@@ -53,21 +49,25 @@ module.exports = class SoundManager extends Model
 
       sourceNode.connect(pannerNode)
       sourceNode.noteOn(0)
-      @playingSounds[sound] = sourceNode
+      @soundList[sound].sourceNode = sourceNode
+      @soundList[sound].isLooping = true
 
 
   playSound: (sound, volume) =>
+    if @soundList[sound].isLooping
+      return
     sourceNode = @audioContext.createBufferSource()
-    sourceNode.buffer = @soundBuffers[sound]
+    sourceNode.buffer = @soundList[sound].buffer
     sourceNode.gain.value = volume
     sourceNode.connect(@audioContext.destination)
 
     sourceNode.noteOn(0)
+    @soundList[sound].sourceNode = sourceNode
 
   loadSounds: () =>
-    for sound in @soundList
+    for sound of @soundList
       request = new XMLHttpRequest()
-      request.soundName = sound
+      request.soundName = @soundList[sound].name = sound
       request.open('GET', @PATH+request.soundName+'.mp3', true)
       request.responseType = 'arraybuffer'
 
@@ -78,7 +78,7 @@ module.exports = class SoundManager extends Model
   bufferSound: (event) =>
     request = event.target
     buffer = @audioContext.createBuffer(request.response, false)
-    @soundBuffers[request.soundName] = buffer
+    @soundList[request.soundName].buffer = buffer
 
   update: (PlayerPosition) =>
     @audioContext.listener.setPosition PlayerPosition.x, PlayerPosition.y, 0

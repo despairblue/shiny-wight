@@ -38,7 +38,7 @@ module.exports = class HomePageView extends View
         break
 
     @soundManager.update(@player.position)
-    @soundManager.startBackgroundsSounds()
+    #@soundManager.startBackgroundsSounds()
 
     window.requestAnimationFrame @doTheWork
 
@@ -75,7 +75,6 @@ module.exports = class HomePageView extends View
 
     if actions['interact']
       placeholder = true
-      mediator.publish 'stop', 'dummy'
       # code
 
     if actions['cancle']
