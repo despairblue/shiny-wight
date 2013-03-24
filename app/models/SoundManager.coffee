@@ -20,15 +20,19 @@ module.exports = class SoundManager extends Model
       x : 1
       y : 1
 
-    @backgroundSounds.push("dummy")
-   # @backgroundSounds[]
-    #["dummy"] = position
-   # @backgroundSounds["dundundun"] = position
+    @backgroundSounds["dummy"] = position
+
+    position =
+      x : 10
+      y : 10
+
+    @backgroundSounds["dundundun"] = position
+
     @loadSounds()
 
 
   startBackgroundsSounds: =>
-    for sound in @backgroundSounds
+    for sound of @backgroundSounds
       sourceNode = @audioContext.createBufferSource()
       sourceNode.buffer = @soundBuffers[sound]
       sourceNode.loop = true
