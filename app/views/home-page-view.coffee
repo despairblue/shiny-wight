@@ -17,6 +17,8 @@ module.exports = class HomePageView extends View
     @gMap = new TILEDMap()
     @skipFrame = true
 
+    @soundManager = new SoundManager()
+
     @subscribeEvent 'map:rendered', =>
       @setup()
 
@@ -33,8 +35,8 @@ module.exports = class HomePageView extends View
         @player = entity
         break
 
-    @soundManager = new SoundManager()
     @soundManager.update(@player.position)
+    @soundManager.startBackgroundsSounds()
 
     window.requestAnimationFrame @doTheWork
 
@@ -48,6 +50,7 @@ module.exports = class HomePageView extends View
     setTimeout =>
       window.requestAnimationFrame @doTheWork
       @handleInput()
+      @soundManager.update(@player.position)
       @draw()
     , 1000/25
 
@@ -70,11 +73,14 @@ module.exports = class HomePageView extends View
 
     if actions['interact']
       placeholder = true
-      mediator.publish 'play', 'dundundun', 1
+      mediator.publish 'play', 'dummy', 1
       # code
 
     if actions['cancle']
       placeholder = true
+      mediator.publish 'play', 'dundundun', 1
+
+
       # code
 
   draw: =>

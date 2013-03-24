@@ -7,6 +7,7 @@ module.exports = class SoundManager extends Model
   PATH: 'sounds/'
   soundList: []
   soundBuffers: {}
+  backgroundSounds: {}
 
 
   initialize: () =>
@@ -14,14 +15,39 @@ module.exports = class SoundManager extends Model
 
     @audioContext = new webkitAudioContext()
     # soundList should be replaced with the mapSoundList of the actual lvl
-    @soundList = ['defaultStep', 'dundundun']
+    @soundList = ['defaultStep', 'dundundun', 'dummy']
+    position =
+      x : 1
+      y : 1
+
+    @backgroundSounds.push("dummy")
+   # @backgroundSounds[]
+    #["dummy"] = position
+   # @backgroundSounds["dundundun"] = position
     @loadSounds()
+
+
+  startBackgroundsSounds: =>
+    for sound in @backgroundSounds
+      sourceNode = @audioContext.createBufferSource()
+      sourceNode.buffer = @soundBuffers[sound]
+      sourceNode.loop = true
+
+      pannerNode = @audioContext.createPanner()
+      position = @backgroundSounds[sound]
+      pannerNode.setPosition position.x, position.y, 0
+      pannerNode.connect(@audioContext.destination)
+
+      sourceNode.connect(pannerNode)
+      sourceNode.noteOn(0)
+
 
   playSound: (sound, volume) =>
     sourceNode = @audioContext.createBufferSource()
     sourceNode.buffer = @soundBuffers[sound]
-    sourceNode.connect(@audioContext.destination)
     sourceNode.gain.value = volume
+    sourceNode.connect(@audioContext.destination)
+
     sourceNode.noteOn(0)
 
   loadSounds: () =>
