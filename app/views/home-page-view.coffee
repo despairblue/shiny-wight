@@ -29,9 +29,9 @@ module.exports = class HomePageView extends View
     @mapInitialEntitySpawnManager.spawn()
 
     for entity in mediator.entities
-      continue if entity.tileSet.name isnt "Player"
-      @player = entity
-      break
+      if entity.tileSet.name is "Player"
+        @player = entity
+        break
 
     @soundManager = new SoundManager()
     @soundManager.update(@player.position)
