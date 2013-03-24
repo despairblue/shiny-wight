@@ -37,12 +37,12 @@ module.exports = class SoundManager extends Model
 
 
   startSoundTheme: (sound, volume) =>
-   # if @sourceNode[sound].isLooping
-    #  return
+    #if @sourceNode[sound].isLooping
+     # return
     sourceNode = @audioContext.createBufferSource()
     sourceNode.buffer = @soundList[sound].buffer
     sourceNode.loop = true
-    sourceNode.volume = volume
+    sourceNode.gain.value = volume
 
     sourceNode.connect(@audioContext.destination)
     sourceNode.noteOn(0)
@@ -96,7 +96,7 @@ module.exports = class SoundManager extends Model
     buffer = @audioContext.createBuffer(request.response, false)
     @soundList[request.soundName].buffer = buffer
     if request.soundName == 'mapTheme'
-      @startSoundTheme(request.soundName, 0.5)
+      @startSoundTheme(request.soundName, 0.1)
 
   update: (PlayerPosition) =>
     @audioContext.listener.setPosition PlayerPosition.x, PlayerPosition.y, 0
