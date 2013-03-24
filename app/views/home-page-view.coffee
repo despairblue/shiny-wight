@@ -3,6 +3,7 @@ TILEDMap = require 'models/TILEDMap'
 Player = require 'models/Player'
 InputManager = require 'models/InputManager'
 SoundManager = require 'models/SoundManager'
+PhysicsManager = require 'models/PhysicsManager'
 mediator = require 'mediator'
 MapInitialEntitySpawnManager = require 'models/MapInitialEntitySpawnManager'
 
@@ -18,6 +19,7 @@ module.exports = class HomePageView extends View
     @skipFrame = true
 
     @soundManager = new SoundManager()
+    @physicsManager = new PhysicsManager()
 
     @subscribeEvent 'map:rendered', =>
       @setup()

@@ -89,8 +89,13 @@ module.exports = class Entity extends Model
   @note It won't let `@position.y` be negative.
   ###
   moveUp: =>
-    @position.y--
-    @position.y = 0 if @position.y < 0
+    newPosition =
+      x: @position.x
+      y: @position.y - 1
+    newPosition.y = 0 if newPosition.y < 0
+
+    if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
+      @position = newPosition
 
     # moveDirection and animationState
     @updateViewAndAnimation(0)
@@ -104,8 +109,13 @@ module.exports = class Entity extends Model
     # get attributes
     numYTiles = @map.get 'numYTiles'
 
-    @position.y++
-    @position.y = numYTiles - 1 if @position.y > numYTiles - 1
+    newPosition =
+      x: @position.x
+      y: @position.y + 1
+    newPosition.y = numYTiles - 1 if newPosition.y > numYTiles - 1
+
+    if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
+      @position = newPosition
 
     # moveDirection and animationState
     @updateViewAndAnimation(2)
@@ -119,8 +129,13 @@ module.exports = class Entity extends Model
     # get attributes
     numXTiles = @map.get 'numXTiles'
 
-    @position.x++
-    @position.x = numXTiles - 1 if @position.x > numXTiles - 1
+    newPosition =
+      x: @position.x + 1
+      y: @position.y
+    newPosition.x = numXTiles - 1 if newPosition.x > numXTiles - 1
+
+    if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
+      @position = newPosition
 
     # moveDirection and animationState
     @updateViewAndAnimation(1)
@@ -130,8 +145,13 @@ module.exports = class Entity extends Model
   @note It won't let `@position.x` be negative.
   ###
   moveLeft: =>
-    @position.x--
-    @position.x = 0 if @position.x < 0
+    newPosition =
+      x: @position.x - 1
+      y: @position.y
+    newPosition.x = 0 if newPosition.x < 0
+
+    if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
+      @position = newPosition
 
     # moveDirection and animationState
     @updateViewAndAnimation(3)
