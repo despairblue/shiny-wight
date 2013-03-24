@@ -79,9 +79,8 @@ module.exports = class HomePageView extends View
     if actions['cancle']
       placeholder = true
       mediator.publish 'play', 'dundundun', 1
-
-
       # code
+
 
   draw: =>
     # Resize canvas to window size
