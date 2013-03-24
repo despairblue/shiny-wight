@@ -85,3 +85,8 @@ module.exports = class Application extends Chaplin.Application
         window.cancelAnimationFrame = (id) ->
           clearTimeout id
     )()
+
+    # extend canvas 2d context to be able to draw with tiles instead of pixels as a unit
+    Object.getPrototypeOf(document.createElement('canvas').getContext('2d')).drawImageTiled = (img, sx, sy, sw, sh, dx, dy, dw, dh, tileSizeX, tileSizeY) ->
+      @drawImage img, sx * tileSizeX, sy * tileSizeY, sw * tileSizeX, sh * tileSizeY, dx * tileSizeX, dy * tileSizeY, dw * tileSizeX, dh * tileSizeY
+
