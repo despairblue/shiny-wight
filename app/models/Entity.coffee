@@ -54,7 +54,7 @@ module.exports = class Entity extends Model
   If the entity goes into the same direction, only update animationStep
   If not it will reset the animationStep counter and update the viewDirection
   ###
-  updateViewAndMove: (vd) =>
+  updateViewAndAnimation: (vd) =>
     if @viewDirection != vd
       @animationStep = 1
       @viewDirection = vd
@@ -83,10 +83,8 @@ module.exports = class Entity extends Model
     @position.y--
     @position.y = 0 if @position.y < 0
 
-    mediator.publish 'play', 'test'
-
     # moveDirection and moveState
-    @updateViewAndMove(0)
+    @updateViewAndAnimation(0)
 
   ###
   Move the Entity one tile downwards.
@@ -101,7 +99,7 @@ module.exports = class Entity extends Model
     @position.y = numYTiles if @position.y > numYTiles
 
     # moveDirection and moveState
-    @updateViewAndMove(2)
+    @updateViewAndAnimation(2)
 
   ###
   Move the Entity one tile to the right.
@@ -116,7 +114,7 @@ module.exports = class Entity extends Model
     @position.x = numXTiles if @position.x > numXTiles
 
     # moveDirection and moveState
-    @updateViewAndMove(1)
+    @updateViewAndAnimation(1)
 
   ###
   Move the Entity one tile upwards.
@@ -127,4 +125,4 @@ module.exports = class Entity extends Model
     @position.x = 0 if @position.x < 0
 
     # moveDirection and moveState
-    @updateViewAndMove(3)
+    @updateViewAndAnimation(3)
