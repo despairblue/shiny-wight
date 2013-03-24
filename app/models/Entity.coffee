@@ -22,7 +22,7 @@ module.exports = class Entity extends Model
   ###
   @property [String] The entity's StepSound
   ###
-  stepSound: 'defaultStep'
+  #stepSound: 'defaultStep'
 
   ###
   @property [Integer]
@@ -68,7 +68,8 @@ module.exports = class Entity extends Model
       # this prevents Player sounding like a mashinegun
       # it's an ugly hack an should be done better later
       if (@animationStep % 3) == 0
-        mediator.publish 'play', @stepSound, 0.5
+        foo = bar
+        #mediator.publish 'play', @stepSound, 0.5
 
   ###
   Is called if the Player stands in front of this Entity and want's to interact with it.

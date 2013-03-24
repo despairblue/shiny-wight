@@ -7,4 +7,3 @@ module.exports = class SoundObj extends Model
   sourceNode = null
   isLooping = false
   buffer = null
-

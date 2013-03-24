@@ -38,7 +38,8 @@ module.exports = class HomePageView extends View
         break
 
     @soundManager.update(@player.position)
-    #@soundManager.startBackgroundsSounds()
+    @soundManager.startBackgroundsSounds()
+    #@soundManager.startSoundTheme('mapTheme', 1)
 
     window.requestAnimationFrame @doTheWork
 

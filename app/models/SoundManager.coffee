@@ -16,22 +16,38 @@ module.exports = class SoundManager extends Model
 
     @audioContext = new webkitAudioContext()
     # soundList should be replaced with the mapSoundList of the actual lvl
-    @soundList['defaultStep'] = new SoundObj()
-    @soundList['dundundun'] = new SoundObj()
-    @soundList['dummy'] = new SoundObj()
+    #@soundList['defaultStep'] = new SoundObj()
+    #@soundList['dundundun'] = new SoundObj()
+    #@soundList['dummy'] = new SoundObj()
+    @soundList['fire'] = new SoundObj()
+    @soundList['wood'] = new SoundObj()
+    @soundList['mapTheme'] = new SoundObj()
 
     @loadSounds()
 
     #hardcoded backgroundSounds, will be automated later
 
-    @backgroundSounds["dummy"] = x:1, y:1
-    @backgroundSounds["dundundun"] = x:10, y:10
+    @backgroundSounds['fire'] = x:10, y:7
+    @backgroundSounds['wood'] = x:3, y:2
 
 
   stop: (sound) =>
     @soundList[sound].sourceNode.noteOff(0)
     @soundList[sound].isLooping = false
 
+
+  startSoundTheme: (sound, volume) =>
+   # if @sourceNode[sound].isLooping
+    #  return
+    sourceNode = @audioContext.createBufferSource()
+    sourceNode.buffer = @soundList[sound].buffer
+    sourceNode.loop = true
+    sourceNode.volume = volume
+
+    sourceNode.connect(@audioContext.destination)
+    sourceNode.noteOn(0)
+    @soundList[sound].sourceNode = sourceNode
+    @soundList[sound].isLooping = true
 
 
   startBackgroundsSounds: =>
@@ -42,7 +58,7 @@ module.exports = class SoundManager extends Model
       sourceNode.loop = true
 
       pannerNode = @audioContext.createPanner()
-      pannerNode.rolloffFactor = 1
+      pannerNode.rolloffFactor = 10
       position = @backgroundSounds[sound]
       pannerNode.setPosition position.x, position.y, 0
       pannerNode.connect(@audioContext.destination)
@@ -79,6 +95,8 @@ module.exports = class SoundManager extends Model
     request = event.target
     buffer = @audioContext.createBuffer(request.response, false)
     @soundList[request.soundName].buffer = buffer
+    if request.soundName == 'mapTheme'
+      @startSoundTheme(request.soundName, 0.5)
 
   update: (PlayerPosition) =>
     @audioContext.listener.setPosition PlayerPosition.x, PlayerPosition.y, 0
