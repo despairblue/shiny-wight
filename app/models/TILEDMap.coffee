@@ -79,6 +79,8 @@ module.exports = class TILEDMap extends Model
     @set 'tileSize':tileSize
     @set 'pixelSize':pixelSize
 
+    console.log 'Start loading atlasses'
+
     tilesets = for tileset in currMapData.tilesets
       @createTileSet tileset
 
@@ -108,6 +110,8 @@ module.exports = class TILEDMap extends Model
       @imgLoadCount++
       if @imgLoadCount == currMapData.tilesets.length
         @set 'fullyLoaded': true
+      else
+        console.log "#{currMapData.tilesets.length - @imgLoadCount} to go"
     img.src = 'atlases/' + tileset.image.replace /^.*[\\\/]/, ''
 
     ts =
@@ -167,6 +171,8 @@ module.exports = class TILEDMap extends Model
 
     canvas.width = numXTiles * tileSize.x
     canvas.height = numYTiles * tileSize.y
+
+    console.log 'Finish loading atlasses'
 
     for layer in currMapData.layers
       continue if layer.type isnt 'tilelayer'
