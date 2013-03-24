@@ -105,7 +105,7 @@ module.exports = class Entity extends Model
     numYTiles = @map.get 'numYTiles'
 
     @position.y++
-    @position.y = numYTiles if @position.y > numYTiles
+    @position.y = numYTiles - 1 if @position.y > numYTiles - 1
 
     # moveDirection and animationState
     @updateViewAndAnimation(2)
@@ -120,7 +120,7 @@ module.exports = class Entity extends Model
     numXTiles = @map.get 'numXTiles'
 
     @position.x++
-    @position.x = numXTiles if @position.x > numXTiles
+    @position.x = numXTiles - 1 if @position.x > numXTiles - 1
 
     # moveDirection and animationState
     @updateViewAndAnimation(1)
