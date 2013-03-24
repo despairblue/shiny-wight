@@ -55,7 +55,6 @@ module.exports = class HomePageView extends View
   handleInput: =>
     # get attributes
     actions = @inputManager.get 'actions'
-    #position = @player.get 'position'
 
     if actions['move-up']
       @player.moveUp()
@@ -77,9 +76,6 @@ module.exports = class HomePageView extends View
     if actions['cancle']
       placeholder = true
       # code
-
-    # set attributes
-    # @player.set 'position':position
 
   draw: =>
     # Resize canvas to window size
