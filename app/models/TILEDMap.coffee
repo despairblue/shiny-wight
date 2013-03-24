@@ -27,13 +27,15 @@ module.exports = class TILEDMap extends Model
   ###
   initialize: ->
     super
+    mediator.map = @
+
     @imgLoadCount = 0
     canvas = document.createElement 'canvas'
     ctx = canvas.getContext '2d'
     @set 'canvas':canvas
     @set 'ctx':ctx
+
     @listenTo @, 'change:fullyLoaded', @render
-    mediator.map = @
 
   ###
   Starts a XMLHttpRequest and calls the given callback when finished loading.
