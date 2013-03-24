@@ -122,6 +122,10 @@
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
+  <div class='note'>
+    <strong>Note:</strong>
+    The PhysicsManager expects only only one physics layer to be present
+  </div>
   <p>Contains a map with all physics bodies.
 Can be used by Entities to decide whether they can move to a specific tile.</p>
 </div>
@@ -148,7 +152,7 @@ Can be used by Entities to decide whether they can move to a specific tile.</p>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      Look for the physics layer inside the map.
     </span>
   </li>
   <li>
@@ -159,7 +163,7 @@ Can be used by Entities to decide whether they can move to a specific tile.</p>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      Checks if the position is free
     </span>
   </li>
 </ul>
@@ -181,7 +185,15 @@ Can be used by Entities to decide whether they can move to a specific tile.</p>
       - (void) <strong>setup</strong>()
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <div class='note'>
+    <strong>Note:</strong>
+    The PhysicsManager expects only only one physics layer to be present
+  </div>
+  <p>Look for the physics layer inside the map.
+Fills in a local representation of it.</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -189,14 +201,36 @@ Can be used by Entities to decide whether they can move to a specific tile.</p>
       - (void) <strong>canIMoveThere</strong>(x, y)
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Checks if the position is free</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>x</span>
+      <span class='type'>
+        (<tt>Integer</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the x value of the position</span>
+    </li>
+    <li>
+      <span class='name'>y</span>
+      <span class='type'>
+        (<tt>Integer</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the y value of the position</span>
+    </li>
+  </ul>
 </div>
   </div>
 </div>
     </div>
     <div id='footer'>
   Generated on
-  Sun Mar 24 2013 19:29:13 GMT+0100 (CET)
+  Sun Mar 24 2013 20:17:17 GMT+0100 (CET)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.5.6
