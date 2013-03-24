@@ -75,12 +75,11 @@ module.exports = class HomePageView extends View
 
     if actions['interact']
       placeholder = true
-      mediator.publish 'play', 'dummy', 1
+      mediator.publish 'stop', 'dummy'
       # code
 
     if actions['cancle']
       placeholder = true
-      mediator.publish 'play', 'dundundun', 1
       # code
 
 

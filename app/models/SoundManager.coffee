@@ -8,14 +8,20 @@ module.exports = class SoundManager extends Model
   soundList: []
   soundBuffers: {}
   backgroundSounds: {}
+  playingSounds: {}
 
 
   initialize: () =>
     mediator.subscribe 'play', @playSound
+    mediator.subscribe 'stop', @stop
 
     @audioContext = new webkitAudioContext()
     # soundList should be replaced with the mapSoundList of the actual lvl
     @soundList = ['defaultStep', 'dundundun', 'dummy']
+    @loadSounds()
+
+    #hardcoded backgroundSounds, will be automated later
+
     position =
       x : 1
       y : 1
@@ -28,7 +34,9 @@ module.exports = class SoundManager extends Model
 
     @backgroundSounds["dundundun"] = position
 
-    @loadSounds()
+
+  stop: (sound) =>
+    @playingSounds[sound].noteOff(0)
 
 
   startBackgroundsSounds: =>
@@ -38,12 +46,14 @@ module.exports = class SoundManager extends Model
       sourceNode.loop = true
 
       pannerNode = @audioContext.createPanner()
+      pannerNode.rolloffFactor = 1
       position = @backgroundSounds[sound]
       pannerNode.setPosition position.x, position.y, 0
       pannerNode.connect(@audioContext.destination)
 
       sourceNode.connect(pannerNode)
       sourceNode.noteOn(0)
+      @playingSounds[sound] = sourceNode
 
 
   playSound: (sound, volume) =>
