@@ -2,6 +2,7 @@ View = require 'views/base/view'
 TILEDMap = require 'models/TILEDMap'
 Player = require 'models/Player'
 InputManager = require 'models/InputManager'
+SoundManager = require 'models/SoundManager'
 mediator = require 'mediator'
 MapInitialEntitySpawnManager = require 'models/MapInitialEntitySpawnManager'
 
@@ -24,13 +25,16 @@ module.exports = class HomePageView extends View
   setup: =>
     @inputManager = new InputManager()
 
-    @MapInitialEntitySpawnManager = new MapInitialEntitySpawnManager()
-    @MapInitialEntitySpawnManager.spawn()
+    @mapInitialEntitySpawnManager = new MapInitialEntitySpawnManager()
+    @mapInitialEntitySpawnManager.spawn()
 
     for entity in mediator.entities
       continue if entity.tileSet.name isnt "Player"
       @player = entity
       break
+
+    @soundManager = new SoundManager()
+    @soundManager.update(@player.position)
 
     window.requestAnimationFrame @doTheWork
 
@@ -67,6 +71,7 @@ module.exports = class HomePageView extends View
 
     if actions['interact']
       placeholder = true
+      mediator.publish 'play', 'dundundun', 1
       # code
 
     if actions['cancle']

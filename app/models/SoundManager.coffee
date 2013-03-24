@@ -3,13 +3,42 @@ mediator = require 'mediator'
 
 module.exports = class SoundManager extends Model
 
+  audioContext: null
+  PATH: 'sounds/'
+  soundList: []
+  soundBuffers: {}
+
 
   initialize: () =>
-    createjs.Sound.addEventListener "loadComplete", createjs.proxy(@playSound, @)
-    createjs.Sound.registerSound 'sounds/dundundun.mp3', 'rainbow'
     mediator.subscribe 'play', @playSound
 
-  playSound: =>
-    instance = createjs.Sound.play 'rainbow'
-    # instance.addEventListener "complete", createjs.proxy(this.handleComplete, this)
-    instance.setVolume 0.5
+    @audioContext = new webkitAudioContext()
+    # soundList should be replaced with the mapSoundList of the actual lvl
+    @soundList = ['defaultStep', 'dundundun']
+    @loadSounds()
+
+  playSound: (sound, volume) =>
+    sourceNode = @audioContext.createBufferSource()
+    sourceNode.buffer = @soundBuffers[sound]
+    sourceNode.connect(@audioContext.destination)
+    sourceNode.gain.value = volume
+    sourceNode.noteOn(0)
+
+  loadSounds: () =>
+    for sound in @soundList
+      request = new XMLHttpRequest()
+      request.soundName = sound
+      request.open('GET', @PATH+request.soundName+'.mp3', true)
+      request.responseType = 'arraybuffer'
+
+      request.addEventListener('loadend', @bufferSound, false)
+
+      request.send()
+
+  bufferSound: (event) =>
+    request = event.target
+    buffer = @audioContext.createBuffer(request.response, false)
+    @soundBuffers[request.soundName] = buffer
+
+  update: (PlayerPosition) =>
+    @audioContext.listener.setPosition PlayerPosition.x, PlayerPosition.y, 0

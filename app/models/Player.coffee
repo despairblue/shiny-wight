@@ -13,6 +13,8 @@ module.exports = class Player extends Person
    # @map = (@get 'mediator').map
   animationState : [0, 1, 2, 1]
 
+  stepSound: 'defaultStep'
+
   tileSet:
     name: "Player"
     image: "atlases/warrior_m.png"
