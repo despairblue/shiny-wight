@@ -78,7 +78,7 @@ module.exports = class HomePageView extends View
       placeholder = true
       # code
 
-    if actions['cancle']
+    if actions['cancel']
       placeholder = true
       # code
 
