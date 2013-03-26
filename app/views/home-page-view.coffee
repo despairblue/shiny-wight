@@ -5,7 +5,7 @@ InputManager = require 'models/InputManager'
 SoundManager = require 'models/SoundManager'
 PhysicsManager = require 'models/PhysicsManager'
 mediator = require 'mediator'
-std = require 'models/std'
+Std = require 'models/Std'
 MapInitialEntitySpawnManager = require 'models/MapInitialEntitySpawnManager'
 
 
@@ -16,7 +16,7 @@ module.exports = class HomePageView extends View
 
   initialize: (options) ->
     super
-    new std()
+    new Std()
     @gMap = new TILEDMap()
     @skipFrame = true
 

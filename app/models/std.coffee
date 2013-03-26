@@ -1,7 +1,7 @@
 Model = require 'models/base/model'
 mediator = require 'mediator'
 
-module.exports = class std extends Model
+module.exports = class Std extends Model
 
 
   initialize: ->
