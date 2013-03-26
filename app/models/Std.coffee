@@ -12,7 +12,6 @@ module.exports = class Std extends Model
   Starts a XMLHttpRequest and calls the given callback when finished loading.
   @param [String] reqUri URI to the file to be loaded
   @param [Function] callback Callback function
-  @todo move to a library
   ###
   xhrGet: (reqUri, callback, rest...) ->
     xhr = new XMLHttpRequest()
