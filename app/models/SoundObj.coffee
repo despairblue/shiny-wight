@@ -3,5 +3,6 @@ mediator = require 'mediator'
 
 module.exports = class SoundObj extends Model
 
-  sourceNode = null
-  buffer = null
+  sourceNode: null
+  buffer: null
+  isPlaying: false

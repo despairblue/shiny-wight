@@ -15,30 +15,62 @@ module.exports = class SoundManager extends Model
   PATH: 'sounds/'
 
 
-  initialize: () =>
+  initialize: =>
+    super
+    mediator.soundManager = @
     mediator.subscribe 'play', @playSound
     mediator.subscribe 'stop', @stop
 
     @audioContext = new webkitAudioContext()
 
 
+  initializeSoundMap: =>
+    map = mediator.map
+    currMapData = map.currMapData
+
+    @soundMap = []
+    for x in [0..map.numXTiles - 1]
+      @soundMap[x] = for y in [0..map.numYTiles - 1]
+        []
+
+
+    for layer in currMapData.layers
+      continue if layer.name isnt 'sound'
+
+      for tileID, tileIndex in layer.data
+        continue if tileID is 0
+
+        x = (tileIndex % map.numXTiles)
+        y = Math.floor(tileIndex / map.numXTiles)
+
+        @soundMap[x][y].push(layer.properties)
+
+
   load: (level) =>
-    mediator.std.xhrGet level, (data) =>
-      mapSounds = JSON.parse data.target.responseText
-      @soundCount =  mapSounds.sounds.length
-      @loadSounds mapSounds
+    @subscribeEvent 'map:rendered', =>
+      @initializeSoundMap()
+      mediator.std.xhrGet level, (data) =>
+        mapSounds = JSON.parse data.target.responseText
+        @soundCount =  mapSounds.sounds.length + mapSounds.backgroundSounds.length
+        @backgroundSoundsToPlay = new Array(@soundCount)
+        @loadSounds mapSounds
+
 
 
   loadSounds: (mapSounds) =>
     for sound in mapSounds.sounds
       @soundList[sound] = new SoundObj
-      mediator.std.xhrGet @PATH+sound+'.mp3', @bufferSounds, 'arraybuffer', sound
+      mediator.std.xhrGet @PATH+sound+'.mp3', @bufferSounds, 'arraybuffer', sound, @soundList
+
+    for sound in mapSounds.backgroundSounds
+      @backgroundSounds[sound] = new SoundObj
+      mediator.std.xhrGet @PATH+sound+'.mp3', @bufferSounds, 'arraybuffer', sound, @backgroundSounds
 
 
   bufferSounds: (event) =>
     request = event.target
     buffer = @audioContext.createBuffer(request.response, false)
-    @soundList[request.additionalAttributes[0]].buffer = buffer
+    request.additionalAttributes[1][request.additionalAttributes[0]].buffer = buffer
 
     console.log request.additionalAttributes[0] + '.mp3 loaded'
     @soundLoadCount++
@@ -47,44 +79,36 @@ module.exports = class SoundManager extends Model
       @publishEvent 'sound:loaded'
 
 
-  playSound: (sound, volume) =>
+  playSound: (sound, list, volume, loops) =>
     sourceNode = @audioContext.createBufferSource()
-    sourceNode.buffer = @soundList[sound].buffer
+    sourceNode.buffer = list[sound].buffer
     sourceNode.gain.value = volume
+    sourceNode.loop = loops
     sourceNode.connect(@audioContext.destination)
 
     sourceNode.start(0)
-    @soundList[sound].sourceNode = sourceNode
+    list[sound].sourceNode = sourceNode
 
 
-  stop: (sound) =>
-    @soundList[sound].sourceNode.stop(0)
-
-
-  startSoundTheme: (sound, volume) =>
-    sourceNode = @audioContext.createBufferSource()
-    sourceNode.buffer = @soundList[sound].buffer
-    sourceNode.loop = true
-    sourceNode.gain.value = volume
-
-    sourceNode.connect(@audioContext.destination)
-
-    sourceNode.start(0)
-    @soundList[sound].sourceNode = sourceNode
-
-
-  startBackgroundsSounds: =>
-    for sound of @backgroundSounds
-      sourceNode = @audioContext.createBufferSource()
-      sourceNode.buffer = @soundList[sound].buffer
-      sourceNode.loop = true
-      sourceNode.connect(@audioContext.destination)
-      sourceNode.start(0)
-      @soundList[sound].sourceNode = sourceNode
+  stop: (sound, list) =>
+    list[sound].sourceNode.stop(0)
+    list[sound].isPlaying = false
 
 
   update: (PlayerPosition) =>
-    # soundTile the player stands on
-    # welche werte sind auf der karte -> werte liste
-    #
-    @audioContext.listener.setPosition PlayerPosition.x, PlayerPosition.y, 0
+    #code
+
+
+  updateBackgroundSounds: (PlayerPosition) =>
+    @backgroundSoundsToPlay = []
+    for sound in @soundMap[PlayerPosition.x][PlayerPosition.y]
+      # sound.type is the name of the sound here
+      if @backgroundSounds[sound.type].isPlaying
+        @backgroundSounds[sound.type].sourceNode.gain.value = sound.intensity/100
+      else
+        @playSound sound.type, @backgroundSounds, sound.intensity/100, true
+        @backgroundSounds[sound.type].isPlaying = true
+      @backgroundSoundsToPlay.push(sound.type)
+    for key, sound of @backgroundSounds
+      if sound.isPlaying && @backgroundSoundsToPlay.indexOf(key) == -1
+        sound.sourceNode.gain.value = 0

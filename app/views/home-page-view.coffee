@@ -30,7 +30,8 @@ module.exports = class HomePageView extends View
 
     @soundManager.load('sounds/'+LEVEL+'sounds.json')
     @subscribeEvent 'sound:loaded', =>
-      mediator.publish 'play', 'lvl1theme', 1
+      mediator.publish 'play', 'lvl1theme', @soundManager.soundList, 1, true
+      @soundManager.updateBackgroundSounds(@player.position)
 
     @gMap.load('map/'+LEVEL+'.json')
 
@@ -45,9 +46,6 @@ module.exports = class HomePageView extends View
         @player = entity
         break
 
-    #@soundManager.update(@player.position)
-
-
     window.requestAnimationFrame @doTheWork
 
   render: =>
@@ -60,8 +58,8 @@ module.exports = class HomePageView extends View
     setTimeout =>
       window.requestAnimationFrame @doTheWork
       @handleInput()
-      # update soundManager only if player position changed
-      #@soundManager.update(@player.position)
+      @subscribeEvent 'player:moved', =>
+        @soundManager.updateBackgroundSounds(@player.position)
       @draw()
     , 1000/25
 

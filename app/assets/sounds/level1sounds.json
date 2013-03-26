@@ -1,12 +1,8 @@
 {
   "sounds": [
-    "water",
-    "fire",
-    "wood",
     "lvl1theme"],
   "backgroundSounds":[
     "water",
     "fire",
-    "wood",
-    "lvl1theme"]
+    "wood"]
 }

@@ -13,7 +13,7 @@ module.exports = class Entity extends Model
 
   ###
   @property [Object] The entity's position
-  @option position [Integer] x x coordinate
+  @option position [Integer] x y coordinate
   ###
   position:
     x: 0
@@ -60,6 +60,7 @@ module.exports = class Entity extends Model
       @viewDirection = vd
     else
       @animationStep++
+      @publishPositionChangeEvent()
 
   ###
   Is called if the Player stands in front of this Entity and want's to interact with it.
@@ -68,6 +69,14 @@ module.exports = class Entity extends Model
   ###
   onAction: (player) =>
     # perform an <Object> specific action
+
+
+  ###
+  Publishes an Event when Entity moved
+  ###
+  publishPositionChangeEvent: =>
+    # method to be overloaded
+
 
   ###
   Is called each tick/frame.
@@ -88,7 +97,6 @@ module.exports = class Entity extends Model
     if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
       @position = newPosition
 
-    # moveDirection and animationState
     @updateViewAndAnimation(0)
 
   ###
@@ -108,7 +116,6 @@ module.exports = class Entity extends Model
     if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
       @position = newPosition
 
-    # moveDirection and animationState
     @updateViewAndAnimation(2)
 
   ###
@@ -128,7 +135,6 @@ module.exports = class Entity extends Model
     if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
       @position = newPosition
 
-    # moveDirection and animationState
     @updateViewAndAnimation(1)
 
   ###
@@ -144,5 +150,4 @@ module.exports = class Entity extends Model
     if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
       @position = newPosition
 
-    # moveDirection and animationState
     @updateViewAndAnimation(3)

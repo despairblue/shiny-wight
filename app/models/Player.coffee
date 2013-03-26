@@ -18,6 +18,7 @@ module.exports = class Player extends Person
     tileheight: 32
     tilewidth: 32
 
+
   # overwrite render method
   render: (ctx, cx, cy) =>
 
@@ -46,3 +47,8 @@ module.exports = class Player extends Person
     dh = 32
 
     ctx.drawImage img, sx, sy, sw, sh, dx, dy, dw, dh
+
+
+  # override from Entity class
+  publishPositionChangeEvent: =>
+    @publishEvent 'player:moved'
