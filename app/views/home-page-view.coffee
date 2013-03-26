@@ -5,6 +5,7 @@ InputManager = require 'models/InputManager'
 SoundManager = require 'models/SoundManager'
 PhysicsManager = require 'models/PhysicsManager'
 mediator = require 'mediator'
+std = require 'models/std'
 MapInitialEntitySpawnManager = require 'models/MapInitialEntitySpawnManager'
 
 
@@ -15,6 +16,7 @@ module.exports = class HomePageView extends View
 
   initialize: (options) ->
     super
+    new std()
     @gMap = new TILEDMap()
     @skipFrame = true
 
@@ -23,6 +25,10 @@ module.exports = class HomePageView extends View
 
     @subscribeEvent 'map:rendered', =>
       @setup()
+
+    #@subscribeEvent 'sound:loaded', =>
+    #  @soundManager.startBackgroundsSounds()
+    #  @soundManager.startSoundTheme('mapTheme', 0.1)
 
     @gMap.load('map/level1.json')
 
@@ -37,9 +43,8 @@ module.exports = class HomePageView extends View
         @player = entity
         break
 
-    @soundManager.update(@player.position)
-    @soundManager.startBackgroundsSounds()
-    #@soundManager.startSoundTheme('mapTheme', 1)
+    #@soundManager.update(@player.position)
+
 
     window.requestAnimationFrame @doTheWork
 
@@ -53,7 +58,8 @@ module.exports = class HomePageView extends View
     setTimeout =>
       window.requestAnimationFrame @doTheWork
       @handleInput()
-      @soundManager.update(@player.position)
+      # update soundManager only if player position changed
+      #@soundManager.update(@player.position)
       @draw()
     , 1000/25
 

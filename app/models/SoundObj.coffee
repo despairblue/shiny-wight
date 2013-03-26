@@ -3,7 +3,5 @@ mediator = require 'mediator'
 
 module.exports = class SoundObj extends Model
 
-  name = ""
   sourceNode = null
-  isLooping = false
   buffer = null

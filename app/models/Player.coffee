@@ -8,12 +8,7 @@ module.exports = class Player extends Person
   # register entity
   mediator.factory['Player'] = this
 
-  #initialize: ->
-   # @set 'mediator': (require 'mediator')
-   # @map = (@get 'mediator').map
   animationState : [0, 1, 2, 1]
-
-  #stepSound: 'defaultStep'
 
   tileSet:
     name: "Player"
@@ -26,8 +21,6 @@ module.exports = class Player extends Person
   # overwrite render method
   render: (ctx, cx, cy) =>
 
-    #map = (@get 'mediator').map
-
     tileSet = @tileSet
 
     animationState = @animationState
@@ -38,9 +31,7 @@ module.exports = class Player extends Person
 
     # position of first pixel at [sx, sy] in atlas
     # determine what tile to use (by viewDirection)
-    # iterate through the three walkingStates
-
-
+    # iterate through the three animationStates
 
     sx = (animationState[@animationStep % animationState.length])*tileSet.tilewidth
     sy = (@viewDirection)*tileSet.tileheight

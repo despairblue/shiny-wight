@@ -42,11 +42,12 @@ module.exports = class TILEDMap extends Model
   @param [String] reqUri URI to the file to be loaded
   @param [Function] callback Callback function
   @todo move to a library
+  @todo test onloadend
   ###
   xhrGet: (reqUri, callback) ->
     xhr = new XMLHttpRequest()
     xhr.open 'GET', reqUri, true
-    xhr.onload = callback
+    xhr.onloadend = callback
     xhr.send()
 
   ###

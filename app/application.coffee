@@ -59,6 +59,7 @@ module.exports = class Application extends Chaplin.Application
     mediator.physicsManager = null
     mediator.factory        = {}
     mediator.entities       = []
+    mediator.std            = null
     # Seal the mediator
     mediator.seal()
 

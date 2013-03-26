@@ -8,37 +8,70 @@ module.exports = class SoundManager extends Model
   soundList: {}
   backgroundSounds: {}
 
+  # to check whether all sounds loaded
+  soundLoadCount: 0
+  soundCount: 0
+
   PATH: 'sounds/'
+
 
   initialize: () =>
     mediator.subscribe 'play', @playSound
     mediator.subscribe 'stop', @stop
 
     @audioContext = new webkitAudioContext()
-    # soundList should be replaced with the mapSoundList of the actual lvl
-    #@soundList['defaultStep'] = new SoundObj()
-    #@soundList['dundundun'] = new SoundObj()
-    #@soundList['dummy'] = new SoundObj()
-    @soundList['fire'] = new SoundObj()
-    @soundList['wood'] = new SoundObj()
-    @soundList['mapTheme'] = new SoundObj()
 
-    @loadSounds()
+    # should be called in home-page-view later
+    @load("sounds/level1sounds.json")
 
     #hardcoded backgroundSounds, will be automated later
+    ###
+    @backgroundSounds['fire'] = x:9, y:8
+    @backgroundSounds['wood'] = x:6, y:0
+    @backgroundSounds['water'] = x:6, y:12
+    ###
 
-    @backgroundSounds['fire'] = x:10, y:7
-    @backgroundSounds['wood'] = x:3, y:2
+
+  load: (level) =>
+    mediator.std.xhrGet level, (data) =>
+      mapSounds = JSON.parse data.target.responseText
+      @soundCount =  mapSounds.sounds.length
+      @loadSounds mapSounds
+
+
+  loadSounds: (mapSounds) =>
+    for sound in mapSounds.sounds
+      @soundList[sound] = new SoundObj
+      mediator.std.xhrGet @PATH+sound+'.mp3', @bufferSounds, sound
+
+
+  bufferSounds: (event) =>
+    request = event.target
+    buffer = @audioContext.createBuffer(request.response, false)
+    @soundList[request.additionalAttributes[0]].buffer = buffer
+
+    console.log request.soundName + '.mp3 loaded'
+    @soundLoadCount++
+    if @soundLoadCount == @soundCount
+      console.log 'all sounds loaded'
+      @publishEvent 'sound:loaded'
+
+
+  playSound: (sound, volume) =>
+    sourceNode = @audioContext.createBufferSource()
+    sourceNode.buffer = @soundList[sound].buffer
+    sourceNode.gain.value = volume
+    sourceNode.connect(@audioContext.destination)
+
+    sourceNode.noteOn(0)
+    @soundList[sound].sourceNode = sourceNode
 
 
   stop: (sound) =>
     @soundList[sound].sourceNode.noteOff(0)
-    @soundList[sound].isLooping = false
 
 
   startSoundTheme: (sound, volume) =>
-    #if @sourceNode[sound].isLooping
-     # return
     sourceNode = @audioContext.createBufferSource()
     sourceNode.buffer = @soundList[sound].buffer
     sourceNode.loop = true
@@ -47,18 +80,17 @@ module.exports = class SoundManager extends Model
     sourceNode.connect(@audioContext.destination)
     sourceNode.noteOn(0)
     @soundList[sound].sourceNode = sourceNode
-    @soundList[sound].isLooping = true
 
 
   startBackgroundsSounds: =>
     for sound of @backgroundSounds
-      continue if @soundList[sound].isLooping
       sourceNode = @audioContext.createBufferSource()
       sourceNode.buffer = @soundList[sound].buffer
       sourceNode.loop = true
 
       pannerNode = @audioContext.createPanner()
-      pannerNode.rolloffFactor = 10
+      pannerNode.rolloffFactor = 1
+      #pannerNode.PanningModelType = "equalpower"
       position = @backgroundSounds[sound]
       pannerNode.setPosition position.x, position.y, 0
       pannerNode.connect(@audioContext.destination)
@@ -66,37 +98,7 @@ module.exports = class SoundManager extends Model
       sourceNode.connect(pannerNode)
       sourceNode.noteOn(0)
       @soundList[sound].sourceNode = sourceNode
-      @soundList[sound].isLooping = true
 
-
-  playSound: (sound, volume) =>
-    if @soundList[sound].isLooping
-      return
-    sourceNode = @audioContext.createBufferSource()
-    sourceNode.buffer = @soundList[sound].buffer
-    sourceNode.gain.value = volume
-    sourceNode.connect(@audioContext.destination)
-
-    sourceNode.noteOn(0)
-    @soundList[sound].sourceNode = sourceNode
-
-  loadSounds: () =>
-    for sound of @soundList
-      request = new XMLHttpRequest()
-      request.soundName = @soundList[sound].name = sound
-      request.open('GET', @PATH+request.soundName+'.mp3', true)
-      request.responseType = 'arraybuffer'
-
-      request.addEventListener('loadend', @bufferSound, false)
-
-      request.send()
-
-  bufferSound: (event) =>
-    request = event.target
-    buffer = @audioContext.createBuffer(request.response, false)
-    @soundList[request.soundName].buffer = buffer
-    if request.soundName == 'mapTheme'
-      @startSoundTheme(request.soundName, 0.1)
 
   update: (PlayerPosition) =>
     @audioContext.listener.setPosition PlayerPosition.x, PlayerPosition.y, 0
