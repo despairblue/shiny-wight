@@ -20,11 +20,6 @@ module.exports = class Entity extends Model
     y: 0
 
   ###
-  @property [String] The entity's StepSound
-  ###
-  #stepSound: 'defaultStep'
-
-  ###
   @property [Integer]
   What sprite to draw
   ###
@@ -65,11 +60,6 @@ module.exports = class Entity extends Model
       @viewDirection = vd
     else
       @animationStep++
-      # this prevents Player sounding like a mashinegun
-      # it's an ugly hack an should be done better later
-      if (@animationStep % 3) == 0
-        foo = bar
-        #mediator.publish 'play', @stepSound, 0.5
 
   ###
   Is called if the Player stands in front of this Entity and want's to interact with it.
