@@ -16,8 +16,8 @@ module.exports = class Std extends Model
   ###
   xhrGet: (reqUri, callback, rest...) ->
     xhr = new XMLHttpRequest()
-    xhr.open 'GET', reqUri, true
     xhr.responseType = rest[0] if rest.length isnt 0
-    xhr.onload = callback
     xhr.additionalAttributes = rest.splice 1
+    xhr.open 'GET', reqUri, true
+    xhr.onload = callback
     xhr.send()

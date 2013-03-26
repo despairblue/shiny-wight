@@ -26,11 +26,13 @@ module.exports = class HomePageView extends View
     @subscribeEvent 'map:rendered', =>
       @setup()
 
-    #@subscribeEvent 'sound:loaded', =>
-    #  @soundManager.startBackgroundsSounds()
-    #  @soundManager.startSoundTheme('mapTheme', 0.1)
+    LEVEL = "level1"
 
-    @gMap.load('map/level1.json')
+    @soundManager.load('sounds/'+LEVEL+'sounds.json')
+    @subscribeEvent 'sound:loaded', =>
+      mediator.publish 'play', 'lvl1theme', 1
+
+    @gMap.load('map/'+LEVEL+'.json')
 
   setup: =>
     @inputManager = new InputManager()

@@ -21,16 +21,6 @@ module.exports = class SoundManager extends Model
 
     @audioContext = new webkitAudioContext()
 
-    # should be called in home-page-view later
-    @load("sounds/level1sounds.json")
-
-    #hardcoded backgroundSounds, will be automated later
-    ###
-    @backgroundSounds['fire'] = x:9, y:8
-    @backgroundSounds['wood'] = x:6, y:0
-    @backgroundSounds['water'] = x:6, y:12
-    ###
-
 
   load: (level) =>
     mediator.std.xhrGet level, (data) =>
@@ -50,7 +40,7 @@ module.exports = class SoundManager extends Model
     buffer = @audioContext.createBuffer(request.response, false)
     @soundList[request.additionalAttributes[0]].buffer = buffer
 
-    console.log request.soundName + '.mp3 loaded'
+    console.log request.additionalAttributes[0] + '.mp3 loaded'
     @soundLoadCount++
     if @soundLoadCount == @soundCount
       console.log 'all sounds loaded'
@@ -63,12 +53,12 @@ module.exports = class SoundManager extends Model
     sourceNode.gain.value = volume
     sourceNode.connect(@audioContext.destination)
 
-    sourceNode.noteOn(0)
+    sourceNode.start(0)
     @soundList[sound].sourceNode = sourceNode
 
 
   stop: (sound) =>
-    @soundList[sound].sourceNode.noteOff(0)
+    @soundList[sound].sourceNode.stop(0)
 
 
   startSoundTheme: (sound, volume) =>
@@ -78,7 +68,8 @@ module.exports = class SoundManager extends Model
     sourceNode.gain.value = volume
 
     sourceNode.connect(@audioContext.destination)
-    sourceNode.noteOn(0)
+
+    sourceNode.start(0)
     @soundList[sound].sourceNode = sourceNode
 
 
@@ -87,18 +78,13 @@ module.exports = class SoundManager extends Model
       sourceNode = @audioContext.createBufferSource()
       sourceNode.buffer = @soundList[sound].buffer
       sourceNode.loop = true
-
-      pannerNode = @audioContext.createPanner()
-      pannerNode.rolloffFactor = 1
-      #pannerNode.PanningModelType = "equalpower"
-      position = @backgroundSounds[sound]
-      pannerNode.setPosition position.x, position.y, 0
-      pannerNode.connect(@audioContext.destination)
-
-      sourceNode.connect(pannerNode)
-      sourceNode.noteOn(0)
+      sourceNode.connect(@audioContext.destination)
+      sourceNode.start(0)
       @soundList[sound].sourceNode = sourceNode
 
 
   update: (PlayerPosition) =>
+    # soundTile the player stands on
+    # welche werte sind auf der karte -> werte liste
+    #
     @audioContext.listener.setPosition PlayerPosition.x, PlayerPosition.y, 0
