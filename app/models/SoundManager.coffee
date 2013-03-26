@@ -42,7 +42,7 @@ module.exports = class SoundManager extends Model
   loadSounds: (mapSounds) =>
     for sound in mapSounds.sounds
       @soundList[sound] = new SoundObj
-      mediator.std.xhrGet @PATH+sound+'.mp3', @bufferSounds, sound
+      mediator.std.xhrGet @PATH+sound+'.mp3', @bufferSounds, 'arraybuffer', sound
 
 
   bufferSounds: (event) =>
