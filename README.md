@@ -40,6 +40,9 @@ This will be an HTML 5 game for [this](https://www.udacity.com/wiki/CS255/contes
 * char can move (wasd)
 * char can't leave map
 
+## Physics
+box2d ([Erin Catto](http://www.gphysics.com))
+
 ## License
 For the code only. For the assets see `Used Assets`
 
