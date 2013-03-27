@@ -60,7 +60,7 @@ module.exports = class Entity extends Model
       @viewDirection = vd
     else
       @animationStep++
-      @publishPositionChangeEvent()
+      @onPositionChange()
 
   ###
   Is called if the Player stands in front of this Entity and want's to interact with it.
@@ -72,9 +72,10 @@ module.exports = class Entity extends Model
 
 
   ###
-  Publishes an Event when Entity moved
+  Is called when the Entity moved
+  @note removed publish event 'anyEntityhere:moved' for much(!) better performance
   ###
-  publishPositionChangeEvent: =>
+  onPositionChange: =>
     # method to be overloaded
 
 

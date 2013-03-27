@@ -50,5 +50,5 @@ module.exports = class Player extends Person
 
 
   # override from Entity class
-  publishPositionChangeEvent: =>
-    @publishEvent 'player:moved'
+  onPositionChange: ->
+    mediator.soundManager.updateBackgroundSounds(@position)

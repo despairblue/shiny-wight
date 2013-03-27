@@ -57,6 +57,7 @@ module.exports = class Application extends Chaplin.Application
     # e.g. mediator.prop = null
     mediator.map            = null
     mediator.physicsManager = null
+    mediator.soundManager   = null
     mediator.factory        = {}
     mediator.entities       = []
     mediator.std            = null

@@ -30,7 +30,7 @@ module.exports = class HomePageView extends View
 
     @soundManager.load('sounds/'+LEVEL+'sounds.json')
     @subscribeEvent 'sound:loaded', =>
-      mediator.publish 'play', 'lvl1theme', @soundManager.soundList, 1, true
+      @soundManager.playSound(LEVEL+'theme', @soundManager.soundList, 1, true)
       @soundManager.startBackgroundSounds()
       @soundManager.updateBackgroundSounds(@player.position)
 
@@ -59,9 +59,6 @@ module.exports = class HomePageView extends View
     setTimeout =>
       window.requestAnimationFrame @doTheWork
       @handleInput()
-      # TODO reduce player velocity by 100% to reduce 'player:moved' event occurance by a half
-      @subscribeEvent 'player:moved', =>
-        @soundManager.updateBackgroundSounds(@player.position)
       @draw()
     , 1000/25
 

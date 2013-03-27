@@ -13,14 +13,12 @@ module.exports = class SoundManager extends Model
   soundCount: 0
 
   PATH: 'sounds/'
-  FADETIME: 1
+  FADE_TIME_INTERVAL: 1
 
 
   initialize: =>
     super
     mediator.soundManager = @
-    mediator.subscribe 'play', @playSound
-    mediator.subscribe 'stop', @stop
 
     @audioContext = new webkitAudioContext()
 
@@ -111,9 +109,7 @@ module.exports = class SoundManager extends Model
       sound.isPlaying = true
 
 
-  # optimization needed
-  # test on danny's system
-  # führe beide for schleifen zusammen um auslastung zu verringern
+  # maybe look for an optimization here
   updateBackgroundSounds: (PlayerPosition) =>
     @backgroundSoundsToPlay = []
     for sound in @soundMap[PlayerPosition.x][PlayerPosition.y]
@@ -129,5 +125,5 @@ module.exports = class SoundManager extends Model
 
 
   fade: (sound, list, volume) =>
-    # fade to <volume> in <@FADETIME> seconds
-      list[sound].sourceNode.gain.linearRampToValueAtTime(volume, @audioContext.currentTime+@FADETIME)
+    # exponentially approaching the target value <volume> at the given time with a rate <@FADE_TIME_INTERVAL>
+    list[sound].sourceNode.gain.setTargetAtTime(volume, @audioContext.currentTime, @FADE_TIME_INTERVAL)
