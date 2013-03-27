@@ -13,6 +13,7 @@ module.exports = class SoundManager extends Model
   soundCount: 0
 
   PATH: 'sounds/'
+  FADETIME: 1
 
 
   initialize: =>
@@ -82,33 +83,51 @@ module.exports = class SoundManager extends Model
   playSound: (sound, list, volume, loops) =>
     sourceNode = @audioContext.createBufferSource()
     sourceNode.buffer = list[sound].buffer
-    sourceNode.gain.value = volume
     sourceNode.loop = loops
+
+    sourceNode.gain.value = volume
     sourceNode.connect(@audioContext.destination)
 
-    sourceNode.start(0)
     list[sound].sourceNode = sourceNode
+
+    sourceNode.start(0)
 
 
   stop: (sound, list) =>
-    list[sound].sourceNode.stop(0)
-    list[sound].isPlaying = false
+    @fade sound, list, 0
+    setTimeout =>
+      list[sound].sourceNode.stop(0)
+      list[sound].isPlaying = false
 
 
   update: (PlayerPosition) =>
     #code
 
 
+  # @todo start all backgroundSounds from the start
+  startBackgroundSounds: =>
+    for name, sound of @backgroundSounds
+      @playSound name, @backgroundSounds, 0, true
+      sound.isPlaying = true
+
+
+  # optimization needed
+  # test on danny's system
+  # führe beide for schleifen zusammen um auslastung zu verringern
   updateBackgroundSounds: (PlayerPosition) =>
     @backgroundSoundsToPlay = []
     for sound in @soundMap[PlayerPosition.x][PlayerPosition.y]
       # sound.type is the name of the sound here
       if @backgroundSounds[sound.type].isPlaying
-        @backgroundSounds[sound.type].sourceNode.gain.value = sound.intensity/100
-      else
-        @playSound sound.type, @backgroundSounds, sound.intensity/100, true
         @backgroundSounds[sound.type].isPlaying = true
+      @fade sound.type, @backgroundSounds, sound.intensity/100
       @backgroundSoundsToPlay.push(sound.type)
-    for key, sound of @backgroundSounds
-      if sound.isPlaying && @backgroundSoundsToPlay.indexOf(key) == -1
-        sound.sourceNode.gain.value = 0
+
+    for name, sound of @backgroundSounds
+      if sound.isPlaying && @backgroundSoundsToPlay.indexOf(name) == -1
+        @fade name, @backgroundSounds, 0
+
+
+  fade: (sound, list, volume) =>
+    # fade to <volume> in <@FADETIME> seconds
+      list[sound].sourceNode.gain.linearRampToValueAtTime(volume, @audioContext.currentTime+@FADETIME)
