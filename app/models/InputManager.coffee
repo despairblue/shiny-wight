@@ -36,6 +36,8 @@ module.exports = class InputManager extends Model
     window.addEventListener 'keydown', @onKeyDownEvent
     window.addEventListener 'keyup', @onKeyUpEvent
 
+    @otherKeyPressed = false
+
   ###
   Set the corresponding action in the actions array to true
 
@@ -44,9 +46,13 @@ module.exports = class InputManager extends Model
   ###
   onKeyDownEvent: (event) =>
     # get attributes
+    code     = event['keyCode']
+
+    if @otherKeyPressed
+      @onKeyUpEvent(@otherKeyPressed)
+
     bindings = @get 'bindings'
     actions  = @get 'actions'
-    code     = event['keyCode']
 
     action = bindings[code]
 
@@ -55,6 +61,9 @@ module.exports = class InputManager extends Model
 
     # set attributes
     @set 'actions':actions
+
+    @otherKeyPressed = event
+
 
   ###
   Set the corresponding action in the actions array to false
