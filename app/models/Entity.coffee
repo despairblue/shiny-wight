@@ -67,7 +67,8 @@ module.exports = class Entity extends Model
       @viewDirection = vd
     else
       @animationStep++
-      @onPositionChange()
+      if mediator.PlayWithSounds
+        @onPositionChange()
 
   ###
   Is called if the Player stands in front of this Entity and want's to interact with it.

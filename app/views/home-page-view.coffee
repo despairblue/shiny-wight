@@ -20,19 +20,20 @@ module.exports = class HomePageView extends View
     @gMap = new TILEDMap()
     @skipFrame = true
 
-    @soundManager = new SoundManager()
     @physicsManager = new PhysicsManager()
 
     @subscribeEvent 'map:rendered', =>
       @setup()
 
     LEVEL = "level1"
-
-    @soundManager.load('sounds/'+LEVEL+'sounds.json')
-    @subscribeEvent 'sound:loaded', =>
-      @soundManager.playSound(LEVEL+'theme', @soundManager.soundList, 1, true)
-      @soundManager.startBackgroundSounds()
-      @soundManager.updateBackgroundSounds(@player.position)
+    mediator.PlayWithSounds = confirm("Load Sounds?")
+    if mediator.PlayWithSounds
+      @soundManager = new SoundManager()
+      @soundManager.load('sounds/'+LEVEL+'sounds.json')
+      @subscribeEvent 'sound:loaded', =>
+        @soundManager.playSound(LEVEL+'theme', @soundManager.soundList, 1, true)
+        @soundManager.startBackgroundSounds()
+        @soundManager.updateBackgroundSounds(@player.position)
 
     @gMap.load('map/'+LEVEL+'.json')
 

@@ -58,6 +58,8 @@ module.exports = class Application extends Chaplin.Application
     mediator.map            = null
     mediator.physicsManager = null
     mediator.soundManager   = null
+    # used while developing, so wie don't have to load sounds if we don't need to
+    mediator.PlayWithSounds = false
     mediator.factory        = {}
     mediator.entities       = []
     mediator.std            = null
