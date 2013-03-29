@@ -95,23 +95,26 @@ module.exports = class HomePageView extends View
 
     # get attributes
     tileSize  = @gMap.get 'tileSize'
+    pixelSize  = @gMap.get 'pixelSize'
     numXTiles = @gMap.get 'numXTiles'
     numYTiles = @gMap.get 'numYTiles'
 
     pos = @player.position
-    radiusOfSight = 6
+    radiusOfSight = 6 * tileSize.x
 
     sx = (pos.x - radiusOfSight)
     sy = (pos.y - radiusOfSight)
-    sw = dw = sh = dh = radiusOfSight * 2 + 1
+    sw = dw = sh = dh = radiusOfSight * 2 + tileSize.x
     dx = 0
     dy = 0
 
     sx = 0 if sx < 0
     sy = 0 if sy < 0
-    sx = numXTiles - sw if sx + sw > numXTiles
-    sy = numYTiles - sh if sy + sh > numYTiles
+    sx = pixelSize.x - sw if sx + sw > pixelSize.x
+    sy = pixelSize.y - sh if sy + sh > pixelSize.y
 
-    @ctx.drawImageTiled (@gMap.get 'canvas'), sx, sy, sw, sh, dx, dy, dw, dh, tileSize.x, tileSize.y
+    # @ctx.drawImageTiled (@gMap.get 'canvas'), sx, sy, sw, sh, dx, dy, dw, dh, tileSize.x, tileSize.y
+    @ctx.drawImage (@gMap.get 'canvas'), sx, sy, sw, sh, dx, dy, dw, dh
+
     for entity in mediator.entities
-      entity.render(@ctx, sx * tileSize.x, sy * tileSize.y)
+      entity.render(@ctx, sx, sy)

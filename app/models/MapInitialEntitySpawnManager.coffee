@@ -15,10 +15,13 @@ module.exports = class MapInitialEntitySpawnManager extends Model
       continue if layer.type is 'tilelayer'
 
       for object in layer.objects
-        obj = new mediator.factory[object.name]
+        obj = new mediator.factory[object.type]
 
-        obj.position.x = Math.floor((object.x)/32)
-        obj.position.y = Math.floor((object.y)/32)
+        obj.position.x = Math.floor object.x
+        obj.position.y = Math.floor object.y
+
+        obj.size.x = Math.floor object.width
+        obj.size.y = Math.floor object.height
 
         obj.load()
 

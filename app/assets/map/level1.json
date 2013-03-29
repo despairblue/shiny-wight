@@ -156,17 +156,17 @@
          "name":"Object Layer 1",
          "objects":[
                 {
-                 "height":0,
-                 "name":"Player",
+                 "height":32,
+                 "name":"Initial Spawnpoint",
                  "properties":
                     {
 
                     },
-                 "type":"",
+                 "type":"Player",
                  "visible":true,
-                 "width":0,
-                 "x":63,
-                 "y":223
+                 "width":32,
+                 "x":64,
+                 "y":224
                 }],
          "opacity":1,
          "type":"objectgroup",

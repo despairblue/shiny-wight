@@ -52,6 +52,9 @@ module.exports = class PhysicsManager extends Model
   @param [Integer] y the y value of the position
   ###
   canIMoveThere: (x, y) =>
+    # TODO: just a temporary fix, use box2d later
+    x = Math.floor x/32
+    y = Math.floor y/32
     if @physicsMap[x][y] is false
       return true
     else

@@ -21,7 +21,6 @@ module.exports = class Player extends Person
 
   # overwrite render method
   render: (ctx, cx, cy) =>
-
     tileSet = @tileSet
 
     animationState = @animationState
@@ -41,8 +40,8 @@ module.exports = class Player extends Person
     sh = tileSet.tileheight
 
     # position of first pixel at [dx, dy] on canvas
-    dx = (pos.x * 32) - cx
-    dy = (pos.y * 32) - cy
+    dx = (pos.x) - cx
+    dy = (pos.y) - cy
     dw = 32
     dh = 32
 

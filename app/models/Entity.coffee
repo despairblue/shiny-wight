@@ -12,10 +12,17 @@ Base class for all entities
 module.exports = class Entity extends Model
 
   ###
-  @property [Object] The entity's position
+  @property [Object] The entity's position in pixels
   @option position [Integer] x y coordinate
   ###
   position:
+    x: 0
+    y: 0
+
+  ###
+  @property [Object] The entity's size
+  ###
+  size:
     x: 0
     y: 0
 
@@ -107,12 +114,12 @@ module.exports = class Entity extends Model
   ###
   moveDown: =>
     # get attributes
-    numYTiles = @map.get 'numYTiles'
+    pixelSize = @map.get 'pixelSize'
 
     newPosition =
       x: @position.x
       y: @position.y + 1
-    newPosition.y = numYTiles - 1 if newPosition.y > numYTiles - 1
+    newPosition.y = pixelSize.y - @size.y if newPosition.y > pixelSize.y - @size.y
 
     if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
       @position = newPosition
@@ -126,12 +133,12 @@ module.exports = class Entity extends Model
   ###
   moveRight: =>
     # get attributes
-    numXTiles = @map.get 'numXTiles'
+    pixelSize = @map.get 'pixelSize'
 
     newPosition =
       x: @position.x + 1
       y: @position.y
-    newPosition.x = numXTiles - 1 if newPosition.x > numXTiles - 1
+    newPosition.x = pixelSize.x - @size.x if newPosition.x > pixelSize.x - @size.x
 
     if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
       @position = newPosition

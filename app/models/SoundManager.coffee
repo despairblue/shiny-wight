@@ -112,7 +112,8 @@ module.exports = class SoundManager extends Model
   # maybe look for an optimization here
   updateBackgroundSounds: (PlayerPosition) =>
     @backgroundSoundsToPlay = []
-    for sound in @soundMap[PlayerPosition.x][PlayerPosition.y]
+    # TODO: not really elegant
+    for sound in @soundMap[Math.floor(PlayerPosition.x/32)][Math.floor(PlayerPosition.y/32)]
       # sound.type is the name of the sound here
       if @backgroundSounds[sound.type].isPlaying
         @backgroundSounds[sound.type].isPlaying = true

@@ -68,19 +68,19 @@ module.exports = class TILEDMap extends Model
     @numXTiles = @currMapData.width
     @numYTiles = @currMapData.height
 
-    tileSize =
+    @tileSize =
       x: @currMapData.tileheight
       y: @currMapData.tilewidth
 
-    pixelSize =
-      x: @numXTiles * tileSize.x
-      y: @numYTiles * tileSize.y
+    @pixelSize =
+      x: @numXTiles * @tileSize.x
+      y: @numYTiles * @tileSize.y
 
     @set 'currMapData':@currMapData
     @set 'numXTiles':@numXTiles
     @set 'numYTiles':@numYTiles
-    @set 'tileSize':tileSize
-    @set 'pixelSize':pixelSize
+    @set 'tileSize':@tileSize
+    @set 'pixelSize':@pixelSize
 
     console.log 'Start loading atlasses'
 
