@@ -34,6 +34,13 @@ module.exports = class Entity extends Model
 
   ###
   @property [Integer]
+  Entity' velocity
+  Standart velocity = 10
+  ###
+  VELOCITY: 10
+
+  ###
+  @property [Integer]
   In what direction the entity looks
 
       0:up
@@ -100,7 +107,7 @@ module.exports = class Entity extends Model
   moveUp: =>
     newPosition =
       x: @position.x
-      y: @position.y - 1
+      y: @position.y - @VELOCITY
     newPosition.y = 0 if newPosition.y < 0
 
     if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
@@ -119,7 +126,7 @@ module.exports = class Entity extends Model
 
     newPosition =
       x: @position.x
-      y: @position.y + 1
+      y: @position.y + @VELOCITY
     newPosition.y = pixelSize.y - @size.y if newPosition.y > pixelSize.y - @size.y
 
     if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
@@ -137,7 +144,7 @@ module.exports = class Entity extends Model
     pixelSize = @map.get 'pixelSize'
 
     newPosition =
-      x: @position.x + 1
+      x: @position.x + @VELOCITY
       y: @position.y
     newPosition.x = pixelSize.x - @size.x if newPosition.x > pixelSize.x - @size.x
 
@@ -152,7 +159,7 @@ module.exports = class Entity extends Model
   ###
   moveLeft: =>
     newPosition =
-      x: @position.x - 1
+      x: @position.x - @VELOCITY
       y: @position.y
     newPosition.x = 0 if newPosition.x < 0
 

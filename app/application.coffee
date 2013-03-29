@@ -62,6 +62,7 @@ module.exports = class Application extends Chaplin.Application
     mediator.PlayWithSounds = false
     mediator.factory        = {}
     mediator.entities       = []
+    mediator.levels         = {}
     mediator.std            = null
     # Seal the mediator
     mediator.seal()
