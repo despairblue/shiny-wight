@@ -52,6 +52,7 @@ module.exports = class HomePageView extends View
 
   setup: (LEVEL) =>
     mediator.activeLevel = LEVEL
+    mediator.entities = []
     @physicsManager.setup()
     @EntitySpawnManager.initialSpawn()
     if mediator.PlayWithSounds
