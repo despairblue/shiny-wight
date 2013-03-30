@@ -57,7 +57,7 @@ module.exports = class Entity extends Model
   @note Make sure to call `TILEDMap.load(path)` before instantiating any Entities.
   ###
   initialize: ->
-    @map = mediator.map
+    @map = mediator.levels[mediator.activeLevel].gMap
 
   ###
   @private

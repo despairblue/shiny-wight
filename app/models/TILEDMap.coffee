@@ -25,9 +25,10 @@ module.exports = class TILEDMap extends Model
   @private
   Initializes an instance.
   ###
-  initialize: ->
+  initialize: (options) ->
     super
-    mediator.map = @
+
+    #mediator.levels[LEVEL].gMap = @
 
     @imgLoadCount = 0
     canvas = document.createElement 'canvas'
@@ -35,27 +36,16 @@ module.exports = class TILEDMap extends Model
     @set 'canvas':canvas
     @set 'ctx':ctx
 
-    @listenTo @, 'change:fullyLoaded', @render
+    @subscribeEvent 'fullyLoaded', =>
+      @render(options.level)
 
-  ###
-  Starts a XMLHttpRequest and calls the given callback when finished loading.
-  @param [String] reqUri URI to the file to be loaded
-  @param [Function] callback Callback function
-  @todo use std library
-  @todo test onloadend
-  ###
-  xhrGet: (reqUri, callback) ->
-    xhr = new XMLHttpRequest()
-    xhr.open 'GET', reqUri, true
-    xhr.onloadend = callback
-    xhr.send()
 
   ###
   Loads the map, parses it and renders it
   @param [String] map URI that points to the json output of TILED map editor
   ###
-  load: (map) =>
-    @xhrGet map, (data) =>
+  load: (LEVEL) =>
+    mediator.std.xhrGet 'map/'+LEVEL+'.json', (data) =>
       @parseMapJSON data.target.responseText
 
   ###
@@ -112,7 +102,7 @@ module.exports = class TILEDMap extends Model
     img.onload = =>
       @imgLoadCount++
       if @imgLoadCount == currMapData.tilesets.length
-        @set 'fullyLoaded': true
+        @publishEvent 'fullyLoaded'
       else
         console.log "#{currMapData.tilesets.length - @imgLoadCount} to go"
     img.src = 'atlases/' + tileset.image.replace /^.*[\\\/]/, ''
@@ -164,7 +154,7 @@ module.exports = class TILEDMap extends Model
   This means the whol background can be drawn with one single draw
   call instead of hundreads.
   ###
-  render: () =>
+  render: (LEVEL) =>
     currMapData = @get 'currMapData'
     tileSize = @get 'tileSize'
     numXTiles = @get 'numXTiles'
@@ -191,4 +181,4 @@ module.exports = class TILEDMap extends Model
 
         ctx.drawImage tPKT.img, tPKT.px, tPKT.py, tileSize.x, tileSize.y, coords.x, coords.y, tileSize.x, tileSize.y
 
-    @publishEvent 'map:rendered'
+    @publishEvent 'mapRendered:'+LEVEL

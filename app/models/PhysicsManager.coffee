@@ -14,9 +14,10 @@ module.exports = class PhysicsManager extends Model
   initialize: ->
     super
     mediator.physicsManager = @
-
+    ###
     @subscribeEvent 'map:rendered', =>
       @setup()
+    ###
 
   ###
   Look for the physics layer inside the map.
@@ -24,12 +25,12 @@ module.exports = class PhysicsManager extends Model
   @note The PhysicsManager expects only only one physics layer to be present
   ###
   setup: =>
-    map = mediator.map
+    map = mediator.levels[mediator.activeLevel].gMap
     currMapData = map.currMapData
 
-    @physicsMap = []
+    mediator.levels[mediator.activeLevel].physicsMap = []
     for x in [0..map.numXTiles - 1]
-      @physicsMap[x] = for y in [0..map.numYTiles - 1]
+      mediator.levels[mediator.activeLevel].physicsMap[x] = for y in [0..map.numYTiles - 1]
         false
 
     for layer in currMapData.layers
@@ -41,7 +42,7 @@ module.exports = class PhysicsManager extends Model
         x = (tileIndex % map.numXTiles)
         y = Math.floor(tileIndex / map.numXTiles)
 
-        @physicsMap[x][y] = 'background'
+        mediator.levels[mediator.activeLevel].physicsMap[x][y] = 'background'
 
       # there should only be one physics layer
       break
@@ -55,7 +56,7 @@ module.exports = class PhysicsManager extends Model
     # TODO: just a temporary fix, use box2d later
     x = Math.floor x/32
     y = Math.floor y/32
-    if @physicsMap[x][y] is false
+    if mediator.levels[mediator.activeLevel].physicsMap[x][y] is false
       return true
     else
       return false

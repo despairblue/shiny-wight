@@ -7,6 +7,7 @@ PhysicsManager = require 'models/PhysicsManager'
 mediator = require 'mediator'
 Std = require 'models/Std'
 MapInitialEntitySpawnManager = require 'models/MapInitialEntitySpawnManager'
+Level = require 'models/Level'
 
 
 module.exports = class HomePageView extends View
@@ -17,38 +18,50 @@ module.exports = class HomePageView extends View
   initialize: (options) ->
     super
     new Std()
-    @gMap = new TILEDMap()
     @skipFrame = true
 
-    @physicsManager = new PhysicsManager()
-
-    @subscribeEvent 'map:rendered', =>
-      @setup()
-
-    LEVEL = "level1"
+    # developement only, will be removed in release build
     mediator.PlayWithSounds = confirm("Load Sounds?")
-    if mediator.PlayWithSounds
-      @soundManager = new SoundManager()
-      @soundManager.load('sounds/'+LEVEL+'sounds.json')
-      @subscribeEvent 'sound:loaded', =>
-        @soundManager.playSound(LEVEL+'theme', @soundManager.soundList, 1, true)
-        @soundManager.startBackgroundSounds()
-        @soundManager.updateBackgroundSounds(@player.position)
 
-    @gMap.load('map/'+LEVEL+'.json')
+    # the first level
+    LEVEL = 'level1'
+    mediator.levels[LEVEL] = new Level()
 
-  setup: =>
+    @physicsManager = new PhysicsManager()
+    @soundManager = new SoundManager() if mediator.PlayWithSounds
     @inputManager = new InputManager()
 
     @mapInitialEntitySpawnManager = new MapInitialEntitySpawnManager()
-    @mapInitialEntitySpawnManager.spawn()
 
-    for entity in mediator.entities
-      if entity.tileSet.name is "Player"
-        @player = entity
-        break
+    @loadLevel(LEVEL)
+
+    @subscribeEvent 'mapRendered:'+LEVEL, =>
+      @publishEvent 'levelChangeTo:'+LEVEL
+
+  loadLevel: (LEVEL) =>
+    map = new TILEDMap("level":LEVEL)
+    mediator.levels[LEVEL].gMap = map
+    mediator.levels[LEVEL].gMap.load(LEVEL)
+
+    if mediator.PlayWithSounds
+      @soundManager.load(LEVEL)
+
+    @subscribeEvent 'levelChangeTo:'+LEVEL, =>
+      @setup(LEVEL)
+
+
+  setup: (LEVEL) =>
+    mediator.activeLevel = LEVEL
+    @mapInitialEntitySpawnManager.spawn()
+    @physicsManager.setup()
+    if mediator.PlayWithSounds
+      @subscribeEvent 'soundsLoaded:'+LEVEL, =>
+        @soundManager.playSound(LEVEL+'theme',mediator.levels[LEVEL].soundList, 1, true)
+        @soundManager.startBackgroundSounds()
+        @soundManager.updateBackgroundSounds(mediator.player.position)
 
     window.requestAnimationFrame @doTheWork
+
 
   render: =>
     @canvas = document.createElement 'canvas'
@@ -69,19 +82,20 @@ module.exports = class HomePageView extends View
     actions = @inputManager.get 'actions'
 
     if actions['move-up']
-      @player.moveUp()
+      mediator.player.moveUp()
 
     if actions['move-down']
-      @player.moveDown()
+      mediator.player.moveDown()
 
     if actions['move-left']
-      @player.moveLeft()
+      mediator.player.moveLeft()
 
     if actions['move-right']
-      @player.moveRight()
+      mediator.player.moveRight()
 
     if actions['interact']
       placeholder = true
+      @publishEvent 'stopCurrentSounds'
       # code
 
     if actions['cancel']
@@ -95,12 +109,12 @@ module.exports = class HomePageView extends View
     @canvas.height = window.innerHeight
 
     # get attributes
-    tileSize  = @gMap.get 'tileSize'
-    pixelSize  = @gMap.get 'pixelSize'
-    numXTiles = @gMap.get 'numXTiles'
-    numYTiles = @gMap.get 'numYTiles'
+    tileSize  = mediator.levels[mediator.activeLevel].gMap.get 'tileSize'
+    pixelSize = mediator.levels[mediator.activeLevel].gMap.get 'pixelSize'
+    numXTiles = mediator.levels[mediator.activeLevel].gMap.get 'numXTiles'
+    numYTiles = mediator.levels[mediator.activeLevel].gMap.get 'numYTiles'
 
-    pos = @player.position
+    pos = mediator.player.position
     radiusOfSight = 6 * tileSize.x
 
     sx = (pos.x - radiusOfSight)
@@ -115,7 +129,7 @@ module.exports = class HomePageView extends View
     sy = pixelSize.y - sh if sy + sh > pixelSize.y
 
     # @ctx.drawImageTiled (@gMap.get 'canvas'), sx, sy, sw, sh, dx, dy, dw, dh, tileSize.x, tileSize.y
-    @ctx.drawImage (@gMap.get 'canvas'), sx, sy, sw, sh, dx, dy, dw, dh
+    @ctx.drawImage (mediator.levels[mediator.activeLevel].gMap.get 'canvas'), sx, sy, sw, sh, dx, dy, dw, dh
 
     for entity in mediator.entities
       entity.render(@ctx, sx, sy)

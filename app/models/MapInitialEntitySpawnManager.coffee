@@ -2,16 +2,16 @@ Model = require 'models/base/model'
 mediator = require "mediator"
 
 module.exports = class MapInitialEntitySpawnManager extends Model
-
-  initialize: ->
-    @set 'mediator': (require 'mediator')
-    @map = (@get 'mediator').map
-    @currMapData = @map.get 'currMapData'
+  # is this really needed?
+  #initialize: ->
+  #  @set 'mediator': (require 'mediator')
 
 
   spawn: () =>
+    map = mediator.levels[mediator.activeLevel].gMap
+    currMapData = map.get 'currMapData'
 
-    for layer in @currMapData.layers
+    for layer in currMapData.layers
       continue if layer.type is 'tilelayer'
 
       for object in layer.objects
@@ -26,5 +26,7 @@ module.exports = class MapInitialEntitySpawnManager extends Model
         obj.load()
 
         mediator.entities.push(obj)
+        if object.type == "Player"
+          mediator.player = obj
 
 
