@@ -1,13 +1,13 @@
 Model = require 'models/base/model'
 mediator = require "mediator"
 
-module.exports = class MapInitialEntitySpawnManager extends Model
+module.exports = class EntitySpawnManager extends Model
   # is this really needed?
   #initialize: ->
   #  @set 'mediator': (require 'mediator')
 
 
-  spawn: () =>
+  initialSpawn: () =>
     map = mediator.levels[mediator.activeLevel].gMap
     currMapData = map.get 'currMapData'
 

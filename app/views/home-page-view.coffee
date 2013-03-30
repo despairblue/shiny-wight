@@ -6,7 +6,7 @@ SoundManager = require 'models/SoundManager'
 PhysicsManager = require 'models/PhysicsManager'
 mediator = require 'mediator'
 Std = require 'models/Std'
-MapInitialEntitySpawnManager = require 'models/MapInitialEntitySpawnManager'
+EntitySpawnManager = require 'models/EntitySpawnManager'
 Level = require 'models/Level'
 
 
@@ -31,7 +31,7 @@ module.exports = class HomePageView extends View
     @soundManager = new SoundManager() if mediator.PlayWithSounds
     @inputManager = new InputManager()
 
-    @mapInitialEntitySpawnManager = new MapInitialEntitySpawnManager()
+    @EntitySpawnManager = new EntitySpawnManager()
 
     @loadLevel(LEVEL)
 
@@ -52,7 +52,7 @@ module.exports = class HomePageView extends View
 
   setup: (LEVEL) =>
     mediator.activeLevel = LEVEL
-    @mapInitialEntitySpawnManager.spawn()
+    @EntitySpawnManager.initialSpawn()
     @physicsManager.setup()
     if mediator.PlayWithSounds
       @subscribeEvent 'soundsLoaded:'+LEVEL, =>
