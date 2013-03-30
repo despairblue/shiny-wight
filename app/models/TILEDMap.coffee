@@ -113,8 +113,9 @@ module.exports = class TILEDMap extends Model
       imageheight: tileset.imageheight
       imagewidth: tileset.imagewidth
       name: tileset.name
-      numXTiles: Math.floor (tileset.imagewidth / tileSize.x)
-      numYTiles: Math.floor (tileset.imageheight / tileSize.y)
+      numXTiles: Math.floor (tileset.imagewidth  / (tileSize.x + tileset.spacing))
+      numYTiles: Math.floor (tileset.imageheight / (tileSize.y + tileset.spacing))
+      spacing: tileset.spacing
 
   ###
   @private
@@ -143,9 +144,9 @@ module.exports = class TILEDMap extends Model
     pkt.img = tile.image
     localIdx = tileIndex - tile.firstgid
     lTileX = Math.floor localIdx % tile.numXTiles
-    lTileY = Math.floor localIdx / tile.numYTiles
-    pkt.px = lTileX * tileSize.x
-    pkt.py = lTileY * tileSize.y
+    lTileY = Math.floor localIdx / tile.numXTiles
+    pkt.py = lTileY * (tileSize.y + tile.spacing) + tile.spacing
+    pkt.px = lTileX * (tileSize.x + tile.spacing) + tile.spacing
 
     pkt
 
