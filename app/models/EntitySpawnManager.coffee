@@ -13,6 +13,7 @@ module.exports = class EntitySpawnManager extends Model
 
     for layer in currMapData.layers
       continue if layer.type is 'tilelayer'
+      continue if layer.name isnt 'spawnpoints'
 
       for object in layer.objects
         continue if object.type is ''
