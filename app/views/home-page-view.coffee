@@ -52,8 +52,8 @@ module.exports = class HomePageView extends View
 
   setup: (LEVEL) =>
     mediator.activeLevel = LEVEL
-    @EntitySpawnManager.initialSpawn()
     @physicsManager.setup()
+    @EntitySpawnManager.initialSpawn()
     if mediator.PlayWithSounds
       @subscribeEvent 'soundsLoaded:'+LEVEL, =>
         @soundManager.playSound(LEVEL+'theme',mediator.levels[LEVEL].soundList, 1, true)
@@ -73,6 +73,8 @@ module.exports = class HomePageView extends View
     setTimeout =>
       window.requestAnimationFrame @doTheWork
       @handleInput()
+      ent.update() for ent in mediator.entities
+      @physicsManager.update()
       @draw()
     , 1000/25
 
@@ -80,18 +82,19 @@ module.exports = class HomePageView extends View
   handleInput: =>
     # get attributes
     actions = @inputManager.get 'actions'
+    moveDir = new @physicsManager.Vec2 0, 0
 
     if actions['move-up']
-      mediator.player.moveUp()
+      moveDir.y -= 1
 
     if actions['move-down']
-      mediator.player.moveDown()
+      moveDir.y += 1
 
     if actions['move-left']
-      mediator.player.moveLeft()
+      moveDir.x -= 1
 
     if actions['move-right']
-      mediator.player.moveRight()
+      moveDir.x += 1
 
     if actions['interact']
       placeholder = true
@@ -102,10 +105,17 @@ module.exports = class HomePageView extends View
       placeholder = true
       # code
 
+    if moveDir.LengthSquared()
+      moveDir.Normalize()
+      moveDir.Multiply(mediator.player.VELOCITY)
+
+      mediator.player.physBody.SetLinearVelocity moveDir
+    else
+      mediator.player.physBody.SetLinearVelocity new @physicsManager.Vec2 0, 0
 
   draw: =>
     # Resize canvas to window size
-    @canvas.width  = window.innerWidth
+    @canvas.width  = window.innerWidth/2
     @canvas.height = window.innerHeight
 
     # get attributes

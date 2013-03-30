@@ -37,7 +37,7 @@ module.exports = class Entity extends Model
   Entity' velocity
   Standart velocity = 10
   ###
-  VELOCITY: 10
+  VELOCITY: 400
 
   ###
   @property [Integer]
@@ -50,6 +50,18 @@ module.exports = class Entity extends Model
   ###
   viewDirection: 0
 
+  constructor: (x, y, width, height, settings) ->
+    super
+
+    @position =
+     x: x
+     y: y
+
+    @size =
+      x: width
+      y: height
+
+
   ###
   @private
   Initializes the new Entity.
@@ -59,23 +71,24 @@ module.exports = class Entity extends Model
   initialize: ->
     @map = mediator.levels[mediator.activeLevel].gMap
 
-  ###
-  @private
-  @param [Integer] vd
-    the view direction. Can be one of 0, 1, 2 or 3.
-  @see [Entity#viewDirection]
-  Updates the animationStep counter and viewDirection.
-  If the entity goes into the same direction, only update animationStep
-  If not it will reset the animationStep counter and update the viewDirection
-  ###
-  updateViewAndAnimation: (vd) =>
-    if @viewDirection != vd
-      @animationStep = 1
-      @viewDirection = vd
-    else
-      @animationStep++
-      if mediator.PlayWithSounds
-        @onPositionChange()
+  # TODO: reimplement...
+  # ###
+  # @private
+  # @param [Integer] vd
+  #   the view direction. Can be one of 0, 1, 2 or 3.
+  # @see [Entity#viewDirection]
+  # Updates the animationStep counter and viewDirection.
+  # If the entity goes into the same direction, only update animationStep
+  # If not it will reset the animationStep counter and update the viewDirection
+  # ###
+  # updateViewAndAnimation: (vd) =>
+  #   if @viewDirection != vd
+  #     @animationStep = 1
+  #     @viewDirection = vd
+  #   else
+  #     @animationStep++
+  #     if mediator.PlayWithSounds
+  #       @onPositionChange()
 
   ###
   Is called if the Player stands in front of this Entity and want's to interact with it.
@@ -93,77 +106,77 @@ module.exports = class Entity extends Model
   onPositionChange: =>
     # method to be overloaded
 
-
   ###
   Is called each tick/frame.
   ###
   update: =>
     # update method
 
-  ###
-  Move the Entity one tile upwards.
-  @note It won't let `@position.y` be negative.
-  ###
-  moveUp: =>
-    newPosition =
-      x: @position.x
-      y: @position.y - @VELOCITY
-    newPosition.y = 0 if newPosition.y < 0
+  # TODO: reimplement animation
+  # ###
+  # Move the Entity one tile upwards.
+  # @note It won't let `@position.y` be negative.
+  # ###
+  # moveUp: =>
+  #   newPosition =
+  #     x: @position.x
+  #     y: @position.y - @VELOCITY
+  #   newPosition.y = 0 if newPosition.y < 0
 
-    if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
-      @position = newPosition
+  #   if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
+  #     @position = newPosition
 
-    @updateViewAndAnimation(0)
+  #   @updateViewAndAnimation(0)
 
-  ###
-  Move the Entity one tile downwards.
-  It won't let @position.y be larger than map.numYTiles.
-  @note This method relies on `mediator.map` being set
-  ###
-  moveDown: =>
-    # get attributes
-    pixelSize = @map.get 'pixelSize'
+  # ###
+  # Move the Entity one tile downwards.
+  # It won't let @position.y be larger than map.numYTiles.
+  # @note This method relies on `mediator.map` being set
+  # ###
+  # moveDown: =>
+  #   # get attributes
+  #   pixelSize = @map.get 'pixelSize'
 
-    newPosition =
-      x: @position.x
-      y: @position.y + @VELOCITY
-    newPosition.y = pixelSize.y - @size.y if newPosition.y > pixelSize.y - @size.y
+  #   newPosition =
+  #     x: @position.x
+  #     y: @position.y + @VELOCITY
+  #   newPosition.y = pixelSize.y - @size.y if newPosition.y > pixelSize.y - @size.y
 
-    if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
-      @position = newPosition
+  #   if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
+  #     @position = newPosition
 
-    @updateViewAndAnimation(2)
+  #   @updateViewAndAnimation(2)
 
-  ###
-  Move the Entity one tile to the right.
-  It won't let @position.y be larger than map.numXTiles.
-  @note This method relies on `mediator.map` being set
-  ###
-  moveRight: =>
-    # get attributes
-    pixelSize = @map.get 'pixelSize'
+  # ###
+  # Move the Entity one tile to the right.
+  # It won't let @position.y be larger than map.numXTiles.
+  # @note This method relies on `mediator.map` being set
+  # ###
+  # moveRight: =>
+  #   # get attributes
+  #   pixelSize = @map.get 'pixelSize'
 
-    newPosition =
-      x: @position.x + @VELOCITY
-      y: @position.y
-    newPosition.x = pixelSize.x - @size.x if newPosition.x > pixelSize.x - @size.x
+  #   newPosition =
+  #     x: @position.x + @VELOCITY
+  #     y: @position.y
+  #   newPosition.x = pixelSize.x - @size.x if newPosition.x > pixelSize.x - @size.x
 
-    if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
-      @position = newPosition
+  #   if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
+  #     @position = newPosition
 
-    @updateViewAndAnimation(1)
+  #   @updateViewAndAnimation(1)
 
-  ###
-  Move the Entity one tile upwards.
-  @note It won't let `@position.x` be negative.
-  ###
-  moveLeft: =>
-    newPosition =
-      x: @position.x - @VELOCITY
-      y: @position.y
-    newPosition.x = 0 if newPosition.x < 0
+  # ###
+  # Move the Entity one tile upwards.
+  # @note It won't let `@position.x` be negative.
+  # ###
+  # moveLeft: =>
+  #   newPosition =
+  #     x: @position.x - @VELOCITY
+  #     y: @position.y
+  #   newPosition.x = 0 if newPosition.x < 0
 
-    if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
-      @position = newPosition
+  #   if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
+  #     @position = newPosition
 
-    @updateViewAndAnimation(3)
+  #   @updateViewAndAnimation(3)

@@ -15,7 +15,15 @@ module.exports = class EntitySpawnManager extends Model
       continue if layer.type is 'tilelayer'
 
       for object in layer.objects
-        obj = new mediator.factory[object.type]
+        continue if object.type is ''
+
+        # sanitize constructor attributes
+        x = Math.floor object.x
+        y = Math.floor object.y
+        width = Math.floor object.width
+        height = Math.floor object.height
+
+        obj = new mediator.factory[object.type](x, y, width, height, object.properties)
 
         obj.position.x = Math.floor object.x
         obj.position.y = Math.floor object.y
