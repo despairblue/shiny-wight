@@ -84,18 +84,23 @@ module.exports = class HomePageView extends View
     # get attributes
     actions = @inputManager.get 'actions'
     moveDir = new @physicsManager.Vec2 0, 0
+    player = mediator.player
 
     if actions['move-up']
       moveDir.y -= 1
+      player.viewDirection = 0
 
     if actions['move-down']
       moveDir.y += 1
+      player.viewDirection = 2
 
     if actions['move-left']
       moveDir.x -= 1
+      player.viewDirection = 3
 
     if actions['move-right']
       moveDir.x += 1
+      player.viewDirection = 1
 
     if actions['interact']
       placeholder = true
@@ -108,7 +113,7 @@ module.exports = class HomePageView extends View
 
     if moveDir.LengthSquared()
       moveDir.Normalize()
-      moveDir.Multiply(mediator.player.VELOCITY)
+      moveDir.Multiply(player.VELOCITY)
 
       mediator.player.physBody.SetLinearVelocity moveDir
       mediator.player.onPositionChange(mediator.player.position) if mediator.PlayWithSounds
