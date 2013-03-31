@@ -19,6 +19,9 @@ module.exports = class HomePageView extends View
     super
     new Std()
     @skipFrame = true
+    @physicsManager = new PhysicsManager()
+    @soundManager = new SoundManager() if mediator.PlayWithSounds
+    @inputManager = new InputManager()
     @entitySpawnManager = new EntitySpawnManager()
 
     # developement only, will be removed in release build
@@ -27,11 +30,6 @@ module.exports = class HomePageView extends View
     # the first level
     level = 'level1'
     mediator.levels[level] = new Level()
-
-    @physicsManager = new PhysicsManager()
-    @soundManager = new SoundManager() if mediator.PlayWithSounds
-    @inputManager = new InputManager()
-
 
     @loadLevel(level)
 
