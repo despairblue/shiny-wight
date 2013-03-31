@@ -19,6 +19,7 @@ module.exports = class HomePageView extends View
     super
     new Std()
     @skipFrame = true
+    @entitySpawnManager = new EntitySpawnManager()
 
     # developement only, will be removed in release build
     mediator.PlayWithSounds = confirm("Load Sounds?")
@@ -31,7 +32,6 @@ module.exports = class HomePageView extends View
     @soundManager = new SoundManager() if mediator.PlayWithSounds
     @inputManager = new InputManager()
 
-    @EntitySpawnManager = new EntitySpawnManager()
 
     @loadLevel(level)
 
@@ -54,7 +54,7 @@ module.exports = class HomePageView extends View
     mediator.activeLevel = level
     mediator.entities = []
     @physicsManager.setup()
-    @EntitySpawnManager.initialSpawn()
+    @entitySpawnManager.initialSpawn()
     if mediator.PlayWithSounds
       @subscribeEvent 'soundsLoaded:'+level, =>
         @soundManager.playSound(level+'theme',mediator.levels[level].soundList, 1, true)
