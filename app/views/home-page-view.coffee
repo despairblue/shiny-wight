@@ -88,19 +88,19 @@ module.exports = class HomePageView extends View
 
     if actions['move-up']
       moveDir.y -= 1
-      player.viewDirection = 0
+      player.spriteState.viewDirection = 0
 
     if actions['move-down']
       moveDir.y += 1
-      player.viewDirection = 2
+      player.spriteState.viewDirection = 2
 
     if actions['move-left']
       moveDir.x -= 1
-      player.viewDirection = 3
+      player.spriteState.viewDirection = 3
 
     if actions['move-right']
       moveDir.x += 1
-      player.viewDirection = 1
+      player.spriteState.viewDirection = 1
 
     if actions['interact']
       placeholder = true
@@ -115,10 +115,11 @@ module.exports = class HomePageView extends View
       moveDir.Normalize()
       moveDir.Multiply(player.VELOCITY)
 
-      mediator.player.physBody.SetLinearVelocity moveDir
-      mediator.player.onPositionChange(mediator.player.position) if mediator.PlayWithSounds
+      player.physBody.SetLinearVelocity moveDir
+      player.spriteState.moving = true
     else
-      mediator.player.physBody.SetLinearVelocity new @physicsManager.Vec2 0, 0
+      player.physBody.SetLinearVelocity new @physicsManager.Vec2 0, 0
+      player.spriteState.moving = false
 
   draw: =>
     # Resize canvas to window size

@@ -14,13 +14,24 @@ module.exports = class Player extends Person
 
     super x, y, width, height, settings
 
+    @spriteState =
+      moving: false
+      viewDirection: 0
+      creationTime: Date.now()
+      animationRate: 1000/10
+      normal: 1
+
+    @VELOCITY = 300
+
     @tileSet =
       name: "Player"
       image: "atlases/warrior_m.png"
+      tilesX: 3
+      tilesY: 4
       imageheight: 4 * @size.height
       imagewidth: 96
-      tileheight: @size.width
-      tilewidth: @size.height
+      tileheight: 32
+      tilewidth: 32
 
     @entityDef =
       id: 'Player'
@@ -61,6 +72,16 @@ module.exports = class Player extends Person
     @position.x = @physBody.GetPosition().x if @physBody.GetPosition().x?
     @position.y = @physBody.GetPosition().y if @physBody.GetPosition().y?
 
+  getSpritePacket: =>
+    x = Math.floor((Date.now() - @spriteState.creationTime)/@spriteState.animationRate) % @tileSet.tilesX
+    y = @spriteState.viewDirection
+
+    x = @spriteState.normal unless @spriteState.moving
+
+    pkt =
+      x: x * @tileSet.tilewidth
+      y: y * @tileSet.tileheight
+
   # overwrite render method
   render: (ctx, cx, cy) =>
     tileSet = @tileSet
@@ -68,16 +89,17 @@ module.exports = class Player extends Person
     animationState = @animationState
 
     img = @get 'atlas'
+    spritePkt = @getSpritePacket()
 
     # position of first pixel at [sx, sy] in atlas
     # determine what tile to use (by viewDirection)
     # iterate through the three animationStates
 
-    sx = (animationState[@animationStep % animationState.length]) * @size.x
-    sy = (@viewDirection) * @size.y
+    sx = spritePkt.x
+    sy = spritePkt.y
     # with and height of tile in atlas
-    sw = @size.x
-    sh = @size.y
+    sw = @tileSet.tilewidth
+    sh = @tileSet.tileheight
 
     # position of first pixel at [dx, dy] on canvas
     dx = (@position.x) - cx
