@@ -24,8 +24,8 @@ module.exports = class HomePageView extends View
     mediator.PlayWithSounds = confirm("Load Sounds?")
 
     # the first level
-    LEVEL = 'level1'
-    mediator.levels[LEVEL] = new Level()
+    level = 'level1'
+    mediator.levels[level] = new Level()
 
     @physicsManager = new PhysicsManager()
     @soundManager = new SoundManager() if mediator.PlayWithSounds
@@ -33,31 +33,31 @@ module.exports = class HomePageView extends View
 
     @EntitySpawnManager = new EntitySpawnManager()
 
-    @loadLevel(LEVEL)
+    @loadLevel(level)
 
-    @subscribeEvent 'mapRendered:'+LEVEL, =>
-      @publishEvent 'levelChangeTo:'+LEVEL
+    @subscribeEvent 'mapRendered:'+level, =>
+      @publishEvent 'levelChangeTo:'+level
 
-  loadLevel: (LEVEL) =>
-    map = new TILEDMap("level":LEVEL)
-    mediator.levels[LEVEL].gMap = map
-    mediator.levels[LEVEL].gMap.load(LEVEL)
+  loadLevel: (level) =>
+    map = new TILEDMap("level":level)
+    mediator.levels[level].gMap = map
+    mediator.levels[level].gMap.load(level)
 
     if mediator.PlayWithSounds
-      @soundManager.load(LEVEL)
+      @soundManager.load(level)
 
-    @subscribeEvent 'levelChangeTo:'+LEVEL, =>
-      @setup(LEVEL)
+    @subscribeEvent 'levelChangeTo:'+level, =>
+      @setup(level)
 
 
-  setup: (LEVEL) =>
-    mediator.activeLevel = LEVEL
+  setup: (level) =>
+    mediator.activeLevel = level
     mediator.entities = []
     @physicsManager.setup()
     @EntitySpawnManager.initialSpawn()
     if mediator.PlayWithSounds
-      @subscribeEvent 'soundsLoaded:'+LEVEL, =>
-        @soundManager.playSound(LEVEL+'theme',mediator.levels[LEVEL].soundList, 1, true)
+      @subscribeEvent 'soundsLoaded:'+level, =>
+        @soundManager.playSound(level+'theme',mediator.levels[level].soundList, 1, true)
         @soundManager.startBackgroundSounds()
         @soundManager.updateBackgroundSounds(mediator.player.position)
 
