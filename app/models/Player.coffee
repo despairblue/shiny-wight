@@ -1,10 +1,10 @@
-Person = require 'models/Person'
+Entity = require 'models/Entity'
 mediator = require 'mediator'
 
 ###
 The Player
 ###
-module.exports = class Player extends Person
+module.exports = class Player extends Entity
   # register entity
   mediator.factory['Player'] = this
 
@@ -56,6 +56,17 @@ module.exports = class Player extends Person
     mediator.physicsManager.removeBody @physBody
     @physBody = null
     @killed = true
+
+  initialize: ->
+    # what?
+
+  load: =>
+    tileSet = @tileSet
+
+    img = new Image()
+    img.src = tileSet.image
+
+    @set 'atlas':img
 
   onTouch: (otherBody, point, impulse) =>
     return false if not @physBody?
