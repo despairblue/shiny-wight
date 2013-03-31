@@ -116,6 +116,7 @@ module.exports = class HomePageView extends View
       moveDir.Multiply(player.VELOCITY)
 
       player.physBody.SetLinearVelocity moveDir
+      player.onPositionChange(mediator.player.position) if mediator.PlayWithSounds
       player.spriteState.moving = true
     else
       player.physBody.SetLinearVelocity new @physicsManager.Vec2 0, 0
