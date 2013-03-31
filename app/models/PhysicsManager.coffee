@@ -52,12 +52,13 @@ module.exports = class PhysicsManager extends Model
   @note The PhysicsManager expects only only one physics layer to be present
   ###
   setup: =>
+    map = mediator.levels[mediator.activeLevel].gMap
     @world = new World(new Vec2(0, 0), false)
     debugDraw = new Box2D.Dynamics.b2DebugDraw()
     dCanvas = document.createElement 'canvas'
     dCtx = dCanvas.getContext '2d'
 
-    @createLevelBorder()
+    @createLevelBorder(map)
 
     # initialize debugging canvas
     document.getElementById('debug-container').appendChild dCanvas
@@ -70,41 +71,44 @@ module.exports = class PhysicsManager extends Model
     debugDraw.SetFlags Box2D.Dynamics.b2DebugDraw.e_shapeBit | Box2D.Dynamics.b2DebugDraw.e_jointBit
     @world.SetDebugDraw debugDraw
 
+    @addBackgroundRigidBodies(map)
 
-    # TODO: read background boundaries from map, should actually be done im map
-    # fixtureDefinition.shape.SetAsArray [
-    #   new Vec2(-1, 0),
-    #   new Vec2(0, 0),
-    #   new Vec2(0, mediator.map.pixelSize.y),
-    #   new Vec2(-1, mediator.map.pixelSize.y)], 4
+  addBackgroundRigidBodies: (map) =>
+    for layer in map.currMapData.layers
+      continue if layer.type isnt 'objectgroup'
+      continue if layer.name isnt 'physics'
 
-    # map = mediator.levels[mediator.activeLevel].gMap
-    # currMapData = map.currMapData
+      for object in layer.objects
+        if object.polygon
+          vec2Arr = []
 
-    # mediator.levels[mediator.activeLevel].physicsMap = []
-    # for x in [0..map.numXTiles - 1]
-    #   mediator.levels[mediator.activeLevel].physicsMap[x] = for y in [0..map.numYTiles - 1]
-    #     false
+          for vec2 in object.polygon
+            vec2Arr.push new Vec2(vec2.x, vec2.y)
 
-    # for layer in currMapData.layers
-    #   continue if layer.name isnt 'physics'
-
-    #   for tileID, tileIndex in layer.data
-    #     continue if tileID is 0
-
-    #     x = (tileIndex % map.numXTiles)
-    #     y = Math.floor(tileIndex / map.numXTiles)
-
-    #     mediator.levels[mediator.activeLevel].physicsMap[x][y] = 'background'
-    #   # there should only be one physics layer
-    #   break
+          fixtureDefinition = new FixtureDef()
+          fixtureDefinition.shape = new PolygonShape()
+          fixtureDefinition.shape.SetAsArray vec2Arr, vec2Arr.length
+          bgRigidBody = new BodyDef()
+          bgRigidBody.type = Body.b2_staticBody
+          bgRigidBody.position.x = object.x
+          bgRigidBody.position.y = object.y
+          body = @registerBody bgRigidBody
+          body.CreateFixture fixtureDefinition
+        else
+          fixtureDefinition = new FixtureDef()
+          fixtureDefinition.shape = new PolygonShape()
+          fixtureDefinition.shape.SetAsBox object.width/2, object.height/2
+          bgRigidBody = new BodyDef()
+          bgRigidBody.type = Body.b2_staticBody
+          bgRigidBody.position.x = object.x + object.width/2
+          bgRigidBody.position.y = object.y + object.height/2
+          body = @registerBody bgRigidBody
+          body.CreateFixture fixtureDefinition
 
   ###
   @todo should actually go to TILEDMap.coffee
   ###
-  createLevelBorder: =>
-    map = mediator.levels[mediator.activeLevel].gMap
-
+  createLevelBorder: (map) =>
     fixtureDefinition = new FixtureDef()
     fixtureDefinition.shape = new PolygonShape()
     fixtureDefinition.shape.SetAsBox 0, map.pixelSize.y
