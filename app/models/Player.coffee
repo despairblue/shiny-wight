@@ -27,8 +27,9 @@ module.exports = class Player extends Person
       type: 'dynamic'
       x: @position.x
       y: @position.y
-      halfWidth: @size.x / 2
-      halfHeight: @size.y / 2
+      # make the player's physBody smaller to make movements more plausable
+      halfWidth: @size.x / 4
+      halfHeight: @size.y / 4
       damping: 0
       angle: 0
       categories: ['']
@@ -86,7 +87,7 @@ module.exports = class Player extends Person
 
     # translate to drawing center
     dx = dx - Math.floor(sw/2)
-    dy = dy - Math.floor(sh/2)
+    dy = dy - Math.floor((sh/4)*3)
 
     ctx.drawImage img, sx, sy, sw, sh, dx, dy, dw, dh
 
