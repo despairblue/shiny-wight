@@ -157,13 +157,79 @@ Can be used by Entities to decide whether they can move to a specific tile.</p>
   </li>
   <li>
     <span class='signature'>
-      <a href='#canIMoveThere-instance'>
-        - (void) <strong>canIMoveThere</strong>(x, y)
+      <a href='#addBackgroundRigidBodies-instance'>
+        - (void) <strong>addBackgroundRigidBodies</strong>(map)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      Checks if the position is free
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#createLevelBorder-instance'>
+        - (void) <strong>createLevelBorder</strong>(map)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#update-instance'>
+        - (void) <strong>update</strong>()
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#addContactListener-instance'>
+        - (void) <strong>addContactListener</strong>(callbacks)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#registerBody-instance'>
+        - (void) <strong>registerBody</strong>(bodyDef)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#addBody-instance'>
+        - (void) <strong>addBody</strong>(entityDef)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#removeBody-instance'>
+        - (void) <strong>removeBody</strong>(obj)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
     </span>
   </li>
 </ul>
@@ -197,44 +263,77 @@ Fills in a local representation of it.</p>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='canIMoveThere-instance'>
-      - (void) <strong>canIMoveThere</strong>(x, y)
+    <p class='signature' id='addBackgroundRigidBodies-instance'>
+      - (void) <strong>addBackgroundRigidBodies</strong>(map)
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='createLevelBorder-instance'>
+      - (void) <strong>createLevelBorder</strong>(map)
       (bound)
     </p>
     <div class='docstring'>
-  <p>Checks if the position is free</p>
+  <div class='note todo'>
+    <strong>TODO:</strong>
+    should actually go to TILEDMap.coffee
+  </div>
+  
 </div>
 <div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='name'>x</span>
-      <span class='type'>
-        (<tt>Integer</tt>)
-      </span>
-      &mdash;
-      <span class='desc'>the x value of the position</span>
-    </li>
-    <li>
-      <span class='name'>y</span>
-      <span class='type'>
-        (<tt>Integer</tt>)
-      </span>
-      &mdash;
-      <span class='desc'>the y value of the position</span>
-    </li>
-  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='update-instance'>
+      - (void) <strong>update</strong>()
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='addContactListener-instance'>
+      - (void) <strong>addContactListener</strong>(callbacks)
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='registerBody-instance'>
+      - (void) <strong>registerBody</strong>(bodyDef)
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='addBody-instance'>
+      - (void) <strong>addBody</strong>(entityDef)
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='removeBody-instance'>
+      - (void) <strong>removeBody</strong>(obj)
+      (bound)
+    </p>
+    <div class='tags'>
 </div>
   </div>
 </div>
     </div>
     <div id='footer'>
   Generated on
-  Sun Mar 24 2013 20:23:39 GMT+0100 (CET)
+  Mon Apr 01 2013 04:41:04 GMT+0200 (CEST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
-  v1.5.6
-  (Node.js v0.10.0).
+  v1.6.0
+  (Node.js v0.10.2).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
   &#10034;

@@ -116,7 +116,7 @@
         <tr>
           <td>Inherits:</td>
           <td>
-            <a href='../classes/Person.html'>Person</a>
+            <a href='../classes/Entity.html'>Entity</a>
           </td>
         </tr>
       </table>
@@ -133,12 +133,79 @@
       </h3>
       <p class='inherited'>
                 <a href='../classes/Entity.html#position-property'>position</a>,
-                <a href='../classes/Entity.html#stepSound-property'>stepSound</a>,
+                <a href='../classes/Entity.html#size-property'>size</a>,
                 <a href='../classes/Entity.html#animationStep-property'>animationStep</a>,
+                <a href='../classes/Entity.html#VELOCITY-property'>VELOCITY</a>,
         <a href='../classes/Entity.html#viewDirection-property'>viewDirection</a>
       </p>
       <h2>Instance Method Summary</h2>
       <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#constructor-instance'>
+        - (void) <strong>constructor</strong>(x, y, width, height, settings)
+      </a>
+    </span>
+    <span class='constructor note title'>Constructor</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#kill-instance'>
+        - (void) <strong>kill</strong>()
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#load-instance'>
+        - (void) <strong>load</strong>()
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onTouch-instance'>
+        - (void) <strong>onTouch</strong>(otherBody, point, impulse)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#update-instance'>
+        - (void) <strong>update</strong>()
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getSpritePacket-instance'>
+        - (void) <strong>getSpritePacket</strong>()
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
   <li>
     <span class='signature'>
       <a href='#render-instance'>
@@ -150,35 +217,83 @@
       overwrite render method
     </span>
   </li>
+  <li>
+    <span class='signature'>
+      <a href='#onPositionChange-instance'>
+        - (void) <strong>onPositionChange</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      override from Entity class
+    </span>
+  </li>
 </ul>
       <h2>
         <small>Inherited Method Summary</small>
       </h2>
       <h3 class='inherited'>
         Methods inherited from
-        <a href='../classes/VisibleEntity.html'>VisibleEntity</a>
-      </h3>
-      <p class='inherited'>
-                <a href='../classes/VisibleEntity.html#getSprite-instance'>#getSprite</a>,
-                <a href='../classes/VisibleEntity.html#load-instance'>#load</a>,
-        <a href='../classes/VisibleEntity.html#render-instance'>#render</a>
-      </p>
-      <h3 class='inherited'>
-        Methods inherited from
         <a href='../classes/Entity.html'>Entity</a>
       </h3>
       <p class='inherited'>
+                <a href='../classes/Entity.html#constructor-instance'>#constructor</a>,
                 <a href='../classes/Entity.html#initialize-instance'>#initialize</a>,
-                <a href='../classes/Entity.html#updateViewAndAnimation-instance'>#updateViewAndAnimation</a>,
                 <a href='../classes/Entity.html#onAction-instance'>#onAction</a>,
-                <a href='../classes/Entity.html#update-instance'>#update</a>,
-                <a href='../classes/Entity.html#moveUp-instance'>#moveUp</a>,
-                <a href='../classes/Entity.html#moveDown-instance'>#moveDown</a>,
-                <a href='../classes/Entity.html#moveRight-instance'>#moveRight</a>,
-        <a href='../classes/Entity.html#moveLeft-instance'>#moveLeft</a>
+                <a href='../classes/Entity.html#onPositionChange-instance'>#onPositionChange</a>,
+        <a href='../classes/Entity.html#update-instance'>#update</a>
       </p>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-instance'>
+      - (void) <strong>constructor</strong>(x, y, width, height, settings)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+</div>
       <h2>Instance Method Details</h2>
       <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='kill-instance'>
+      - (void) <strong>kill</strong>()
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='load-instance'>
+      - (void) <strong>load</strong>()
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onTouch-instance'>
+      - (void) <strong>onTouch</strong>(otherBody, point, impulse)
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='update-instance'>
+      - (void) <strong>update</strong>()
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getSpritePacket-instance'>
+      - (void) <strong>getSpritePacket</strong>()
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
   <div class='method_details'>
     <p class='signature' id='render-instance'>
       - (void) <strong>render</strong>(ctx, cx, cy)
@@ -190,15 +305,25 @@
 <div class='tags'>
 </div>
   </div>
+  <div class='method_details'>
+    <p class='signature' id='onPositionChange-instance'>
+      - (void) <strong>onPositionChange</strong>()
+    </p>
+    <div class='docstring'>
+  <p>override from Entity class</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
 </div>
     </div>
     <div id='footer'>
   Generated on
-  Sun Mar 24 2013 20:23:39 GMT+0100 (CET)
+  Mon Apr 01 2013 04:41:04 GMT+0200 (CEST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
-  v1.5.6
-  (Node.js v0.10.0).
+  v1.6.0
+  (Node.js v0.10.2).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
   &#10034;

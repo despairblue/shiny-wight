@@ -1,0 +1,18 @@
+{
+  "sounds": {
+    "sounds": ["level1theme"],
+    "backgroundSounds":[
+      "water",
+      "fire",
+      "wood"
+    ]
+  },
+  "entities": {
+    "prefix": "entities",
+    "files": ["Player.json"]
+  },
+  "map": {
+    "prefix": "map",
+    "file": "level1.json"
+  }
+}

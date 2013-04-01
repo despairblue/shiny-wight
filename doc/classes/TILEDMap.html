@@ -135,7 +135,7 @@
   <li>
     <span class='signature'>
       <a href='#initialize-instance'>
-        - (void) <strong>initialize</strong>()
+        - (void) <strong>initialize</strong>(options)
       </a>
     </span>
     <span class='note private title'>Private</span>
@@ -145,18 +145,8 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#xhrGet-instance'>
-        - (void) <strong>xhrGet</strong>(reqUri, callback)
-      </a>
-    </span>
-    <span class='desc'>
-      Starts a XMLHttpRequest and calls the given callback when finished loading.
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
       <a href='#load-instance'>
-        - (void) <strong>load</strong>(map)
+        - (void) <strong>load</strong>(level)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -203,7 +193,7 @@
   <li>
     <span class='signature'>
       <a href='#render-instance'>
-        - (void) <strong>render</strong>()
+        - (void) <strong>render</strong>(LEVEL)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -216,7 +206,7 @@
       <div class='methods'>
   <div class='method_details'>
     <p class='signature' id='initialize-instance'>
-      - (void) <strong>initialize</strong>()
+      - (void) <strong>initialize</strong>(options)
       (private)
     </p>
     <div class='docstring'>
@@ -226,41 +216,8 @@
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='xhrGet-instance'>
-      - (void) <strong>xhrGet</strong>(reqUri, callback)
-    </p>
-    <div class='docstring'>
-  <div class='note todo'>
-    <strong>TODO:</strong>
-    move to a library
-  </div>
-  <p>Starts a XMLHttpRequest and calls the given callback when finished loading.</p>
-</div>
-<div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='name'>reqUri</span>
-      <span class='type'>
-        (<tt>String</tt>)
-      </span>
-      &mdash;
-      <span class='desc'>URI to the file to be loaded</span>
-    </li>
-    <li>
-      <span class='name'>callback</span>
-      <span class='type'>
-        (<tt>Function</tt>)
-      </span>
-      &mdash;
-      <span class='desc'>Callback function</span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
     <p class='signature' id='load-instance'>
-      - (void) <strong>load</strong>(map)
+      - (void) <strong>load</strong>(level)
       (bound)
     </p>
     <div class='docstring'>
@@ -393,7 +350,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='render-instance'>
-      - (void) <strong>render</strong>()
+      - (void) <strong>render</strong>(LEVEL)
       (bound)
     </p>
     <div class='docstring'>
@@ -408,11 +365,11 @@ call instead of hundreads.</p>
     </div>
     <div id='footer'>
   Generated on
-  Sun Mar 24 2013 20:23:39 GMT+0100 (CET)
+  Mon Apr 01 2013 04:41:04 GMT+0200 (CEST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
-  v1.5.6
-  (Node.js v0.10.0).
+  v1.6.0
+  (Node.js v0.10.2).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
   &#10034;

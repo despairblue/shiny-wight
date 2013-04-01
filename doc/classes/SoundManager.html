@@ -131,6 +131,15 @@
         <dd>
           <pre><code class='coffee'>'sounds/'</code></pre>
         </dd>
+        <dt id='FADE_TIME_INTERVAL-constant'>
+          FADE_TIME_INTERVAL
+          =
+          <div class='tags'>
+</div>
+        </dt>
+        <dd>
+          <pre><code class='coffee'>1</code></pre>
+        </dd>
       </dl>
       <h2>Instance Method Summary</h2>
       <ul class='summary'>
@@ -147,8 +156,8 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#startBackgroundsSounds-instance'>
-        - (void) <strong>startBackgroundsSounds</strong>()
+      <a href='#load-instance'>
+        - (void) <strong>load</strong>(LEVEL)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -158,8 +167,8 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#playSound-instance'>
-        - (void) <strong>playSound</strong>(sound, volume)
+      <a href='#initializeSoundMap-instance'>
+        - (void) <strong>initializeSoundMap</strong>(LEVEL, map)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -170,7 +179,7 @@
   <li>
     <span class='signature'>
       <a href='#loadSounds-instance'>
-        - (void) <strong>loadSounds</strong>()
+        - (void) <strong>loadSounds</strong>(LEVEL, mapSounds)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -180,8 +189,8 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#bufferSound-instance'>
-        - (void) <strong>bufferSound</strong>(event)
+      <a href='#bufferSounds-instance'>
+        - (void) <strong>bufferSounds</strong>(event)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -191,8 +200,63 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#update-instance'>
-        - (void) <strong>update</strong>(PlayerPosition)
+      <a href='#playSound-instance'>
+        - (void) <strong>playSound</strong>(sound, list, volume, loops)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#stop-instance'>
+        - (void) <strong>stop</strong>(sound, list)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#stopAll-instance'>
+        - (void) <strong>stopAll</strong>()
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#startBackgroundSounds-instance'>
+        - (void) <strong>startBackgroundSounds</strong>()
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#updateBackgroundSounds-instance'>
+        - (void) <strong>updateBackgroundSounds</strong>(PlayerPosition)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      maybe look for an optimization here
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#fade-instance'>
+        - (void) <strong>fade</strong>(sound, list, volume)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -212,16 +276,16 @@
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='startBackgroundsSounds-instance'>
-      - (void) <strong>startBackgroundsSounds</strong>()
+    <p class='signature' id='load-instance'>
+      - (void) <strong>load</strong>(LEVEL)
       (bound)
     </p>
     <div class='tags'>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='playSound-instance'>
-      - (void) <strong>playSound</strong>(sound, volume)
+    <p class='signature' id='initializeSoundMap-instance'>
+      - (void) <strong>initializeSoundMap</strong>(LEVEL, map)
       (bound)
     </p>
     <div class='tags'>
@@ -229,23 +293,73 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='loadSounds-instance'>
-      - (void) <strong>loadSounds</strong>()
+      - (void) <strong>loadSounds</strong>(LEVEL, mapSounds)
       (bound)
     </p>
     <div class='tags'>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='bufferSound-instance'>
-      - (void) <strong>bufferSound</strong>(event)
+    <p class='signature' id='bufferSounds-instance'>
+      - (void) <strong>bufferSounds</strong>(event)
       (bound)
     </p>
     <div class='tags'>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='update-instance'>
-      - (void) <strong>update</strong>(PlayerPosition)
+    <p class='signature' id='playSound-instance'>
+      - (void) <strong>playSound</strong>(sound, list, volume, loops)
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='stop-instance'>
+      - (void) <strong>stop</strong>(sound, list)
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='stopAll-instance'>
+      - (void) <strong>stopAll</strong>()
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='startBackgroundSounds-instance'>
+      - (void) <strong>startBackgroundSounds</strong>()
+      (bound)
+    </p>
+    <div class='docstring'>
+  <div class='note todo'>
+    <strong>TODO:</strong>
+    start all backgroundSounds from the start
+  </div>
+  
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='updateBackgroundSounds-instance'>
+      - (void) <strong>updateBackgroundSounds</strong>(PlayerPosition)
+      (bound)
+    </p>
+    <div class='docstring'>
+  <p>maybe look for an optimization here</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='fade-instance'>
+      - (void) <strong>fade</strong>(sound, list, volume)
       (bound)
     </p>
     <div class='tags'>
@@ -255,11 +369,11 @@
     </div>
     <div id='footer'>
   Generated on
-  Sun Mar 24 2013 20:23:39 GMT+0100 (CET)
+  Mon Apr 01 2013 04:41:04 GMT+0200 (CEST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
-  v1.5.6
-  (Node.js v0.10.0).
+  v1.6.0
+  (Node.js v0.10.2).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
   &#10034;

@@ -86,9 +86,3 @@ window.require.register("test/models/TILEDMap-test", Function('exports, require,
 window.require.register("test/models/home-test", Function('exports, require, module', "var Home;\n\nHome = require('models/home');\n\ndescribe('Home', function() {\n  return beforeEach(function() {\n    return this.model = new Home();\n  });\n});\n\n//@ sourceURL=test/models/home-test.coffee"));
 window.require.register("test/test-helpers", Function('exports, require, module', "var chai, sinonChai;\n\nchai = require('chai');\n\nsinonChai = require('sinon-chai');\n\nchai.use(sinonChai);\n\nmodule.exports = {\n  expect: chai.expect,\n  sinon: require('sinon')\n};\n\n//@ sourceURL=test/test-helpers.coffee"));
 window.require.register("test/views/home-page-view-test", Function('exports, require, module', "var HomePageView;\n\nHomePageView = require('views/home-page-view');\n\ndescribe('HomePageView', function() {\n  beforeEach(function() {\n    return this.view = new HomePageView;\n  });\n  afterEach(function() {\n    return this.view.dispose();\n  });\n  return it('should auto-render', function() {\n    return expect(this.view.$el.find('img')).to.have.length(1);\n  });\n});\n\n//@ sourceURL=test/views/home-page-view-test.coffee"));
-window.require('test/models/Entity-test');
-window.require('test/models/InputManager-test');
-window.require('test/models/Player-test');
-window.require('test/models/TILEDMap-test');
-window.require('test/models/home-test');
-window.require('test/views/home-page-view-test');
