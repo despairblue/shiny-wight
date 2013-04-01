@@ -18,18 +18,19 @@ module.exports = class HomePageView extends View
   initialize: (options) ->
     super
     new Std()
+
+    window.homepageview = @ if debug
+    mediator.PlayWithSounds = true
+    mediator.PlayWithSounds = confirm("Load Sounds?") if debug
+
     @skipFrame = true
     @physicsManager = new PhysicsManager()
     @soundManager = new SoundManager() if mediator.PlayWithSounds
     @inputManager = new InputManager()
     @entitySpawnManager = new EntitySpawnManager()
 
-    # developement only, will be removed in release build
-    mediator.PlayWithSounds = confirm("Load Sounds?")
-
     # the first level
     level = 'level1'
-    mediator.levels[level] = new Level()
 
     @loadLevel(level)
 
