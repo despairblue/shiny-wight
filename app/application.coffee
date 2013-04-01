@@ -65,6 +65,9 @@ module.exports = class Application extends Chaplin.Application
     mediator.levels         = {}
     mediator.activeLevel    = ""
     mediator.std            = null
+    mediator.getActiveLevel = =>
+      mediator.levels[mediator.activeLevel]
+
     # Seal the mediator
     mediator.seal()
 
