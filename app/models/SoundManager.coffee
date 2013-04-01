@@ -22,10 +22,9 @@ module.exports = class SoundManager extends Model
   load: (LEVEL) =>
     @subscribeEvent 'mapRendered:'+LEVEL, =>
       @initializeSoundMap(LEVEL, mediator.levels[LEVEL].gMap)
-      mediator.std.xhrGet @PATH+LEVEL+'sounds.json', (data) =>
-        mapSounds = JSON.parse data.target.responseText
-        mediator.levels[LEVEL].soundCount =  mapSounds.sounds.length + mapSounds.backgroundSounds.length
-        @loadSounds LEVEL, mapSounds
+      mapSounds = mediator.levels[LEVEL].sounds
+      mediator.levels[LEVEL].soundCount =  mapSounds.sounds.length + mapSounds.backgroundSounds.length
+      @loadSounds LEVEL, mapSounds
 
 
   initializeSoundMap: (LEVEL, map) =>
