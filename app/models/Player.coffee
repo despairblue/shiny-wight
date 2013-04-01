@@ -14,40 +14,13 @@ module.exports = class Player extends Entity
 
     super x, y, width, height, settings
 
-    @spriteState =
-      moving: false
-      viewDirection: 0
-      creationTime: Date.now()
-      animationRate: 1000/10
-      normal: 1
+    @[prop] = content for prop, content of settings
 
-    @VELOCITY = 300
+    @spriteState.creationTime = Date.now()
 
-    @tileSet =
-      name: "Player"
-      image: "atlases/warrior_m.png"
-      tilesX: 3
-      tilesY: 4
-      imageheight: 4 * @size.height
-      imagewidth: 96
-      tileheight: 32
-      tilewidth: 32
-
-    @entityDef =
-      id: 'Player'
-      type: 'dynamic'
-      x: @position.x
-      y: @position.y
-      # make the player's physBody smaller to make movements more plausable
-      halfWidth: @size.x / 4
-      halfHeight: @size.y / 4
-      damping: 0
-      angle: 0
-      categories: ['']
-      collidesWith: ['all']
-      userData:
-        id: 'Player'
-        ent: @
+    @entityDef.x = @position.x
+    @entityDef.y = @position.y
+    @entityDef.userData.ent = @
 
     @physBody = mediator.physicsManager.addBody @entityDef
     @physBody.SetLinearVelocity(new mediator.physicsManager.Vec2(0, 0))
@@ -56,9 +29,6 @@ module.exports = class Player extends Entity
     mediator.physicsManager.removeBody @physBody
     @physBody = null
     @killed = true
-
-  initialize: ->
-    # what?
 
   load: =>
     tileSet = @tileSet
@@ -119,8 +89,8 @@ module.exports = class Player extends Entity
     dh = @size.y
 
     # translate to drawing center
-    dx = dx - Math.floor(sw/2)
-    dy = dy - Math.floor((sh/4)*3)
+    dx = dx - @tileSet.offset.x
+    dy = dy - @tileSet.offset.y
 
     ctx.drawImage img, sx, sy, sw, sh, dx, dy, dw, dh
 
