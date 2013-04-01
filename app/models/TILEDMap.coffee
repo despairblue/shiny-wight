@@ -44,8 +44,9 @@ module.exports = class TILEDMap extends Model
   Loads the map, parses it and renders it
   @param [String] map URI that points to the json output of TILED map editor
   ###
-  load: (LEVEL) =>
-    mediator.std.xhrGet 'map/'+LEVEL+'.json', (data) =>
+  load: (level) =>
+    lvl = mediator.levels[level]
+    mediator.std.xhrGet lvl.map.prefix + '/' + lvl.map.file, (data) =>
       @parseMapJSON data.target.responseText
 
   ###

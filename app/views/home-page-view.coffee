@@ -39,14 +39,15 @@ module.exports = class HomePageView extends View
 
   loadLevel: (level) =>
     map = new TILEDMap("level":level)
-    mediator.levels[level].gMap = map
-    mediator.levels[level].gMap.load(level)
+    mediator.levels[level] = new Level (level + '.json'), =>
+      mediator.levels[level].gMap = map
+      mediator.levels[level].gMap.load(level)
 
-    if mediator.PlayWithSounds
-      @soundManager.load(level)
+      if mediator.PlayWithSounds
+        @soundManager.load(level)
 
-    @subscribeEvent 'levelChangeTo:'+level, =>
-      @setup(level)
+      @subscribeEvent 'levelChangeTo:'+level, =>
+        @setup(level)
 
 
   setup: (level) =>
