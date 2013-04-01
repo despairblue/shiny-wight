@@ -37,6 +37,12 @@ module.exports = class HomePageView extends View
     @subscribeEvent 'mapRendered:'+level, =>
       @publishEvent 'levelChangeTo:'+level
 
+    if mediator.PlayWithSounds
+      @subscribeEvent 'soundsLoaded:'+level, =>
+        @soundManager.playSound(level+'theme',mediator.levels[level].soundList, 1, true)
+        @soundManager.startBackgroundSounds()
+        @soundManager.updateBackgroundSounds(mediator.player.position)
+
   loadLevel: (level) =>
     map = new TILEDMap("level":level)
     mediator.levels[level] = new Level (level + '.json'), =>
@@ -55,11 +61,6 @@ module.exports = class HomePageView extends View
     mediator.entities = []
     @physicsManager.setup()
     @entitySpawnManager.initialSpawn()
-    if mediator.PlayWithSounds
-      @subscribeEvent 'soundsLoaded:'+level, =>
-        @soundManager.playSound(level+'theme',mediator.levels[level].soundList, 1, true)
-        @soundManager.startBackgroundSounds()
-        @soundManager.updateBackgroundSounds(mediator.player.position)
 
     window.requestAnimationFrame @doTheWork
 
