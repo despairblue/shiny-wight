@@ -105,7 +105,7 @@ module.exports = class HomePageView extends View
 
     if actions['interact']
       placeholder = true
-      @publishEvent 'stopCurrentSounds'
+      @loadLevel('level2')
       # code
 
     if actions['cancel']
