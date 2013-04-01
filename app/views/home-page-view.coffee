@@ -32,28 +32,28 @@ module.exports = class HomePageView extends View
     # the first level
     level = 'level1'
 
-    @loadLevel(level)
-
-    @subscribeEvent 'mapRendered:'+level, =>
-      @publishEvent 'levelChangeTo:'+level
-
     if mediator.PlayWithSounds
-      @subscribeEvent 'soundsLoaded:'+level, =>
-        @soundManager.playSound(level+'theme',mediator.levels[level].soundList, 1, true)
+      @subscribeEvent 'soundsLoaded', =>
+        # TODO: hardcoded themesong
+        @soundManager.playSound('level1theme',mediator.levels[level].soundList, 1, true)
         @soundManager.startBackgroundSounds()
         @soundManager.updateBackgroundSounds(mediator.player.position)
 
+    @loadLevel(level)
+
   loadLevel: (level) =>
-    map = new TILEDMap("level":level)
-    mediator.levels[level] = new Level (level + '.json'), =>
-      mediator.levels[level].gMap = map
-      mediator.levels[level].gMap.load(level)
+    mediator.nextLevel = level
+
+    map = new TILEDMap 'callWhenRendered': =>
+      @setup level
 
       if mediator.PlayWithSounds
         @soundManager.load(level)
 
-      @subscribeEvent 'levelChangeTo:'+level, =>
-        @setup(level)
+    mediator.levels[level] = new Level (level + '.json'), =>
+      mediator.levels[level].gMap = map
+      mediator.levels[level].gMap.load(level)
+
 
 
   setup: (level) =>

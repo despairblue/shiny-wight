@@ -27,12 +27,11 @@ module.exports = class SoundManager extends Model
   @note later change listener based to observer based event system
   ###
   load: (LEVEL) =>
-    # wait till mapRedendered event from TiledMap
-    @subscribeEvent 'mapRendered:'+LEVEL, =>
-      @initializeSoundMap(LEVEL, mediator.levels[LEVEL].gMap)
-      mapSounds = mediator.levels[LEVEL].sounds
-      mediator.levels[LEVEL].soundCount =  mapSounds.sounds.length + mapSounds.backgroundSounds.length
-      @loadSounds LEVEL, mapSounds
+    @initializeSoundMap(LEVEL, mediator.levels[LEVEL].gMap)
+    mapSounds = mediator.levels[LEVEL].sounds
+    mediator.levels[LEVEL].soundCount =  mapSounds.sounds.length + mapSounds.backgroundSounds.length
+    mediator.levels[LEVEL].soundLoadCount = 0
+    @loadSounds LEVEL, mapSounds
 
   ###
   @param [String]
@@ -90,7 +89,7 @@ module.exports = class SoundManager extends Model
 
     if mediator.levels[LEVEL].soundLoadCount == mediator.levels[LEVEL].soundCount
       console.log 'all sounds loaded'
-      @publishEvent 'soundsLoaded:'+LEVEL
+      @publishEvent 'soundsLoaded'
 
   ###
   @param [String]

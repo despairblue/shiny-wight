@@ -21,12 +21,14 @@ module.exports = class TILEDMap extends Model
     canvas: null
     ctx: null
 
+
   ###
   @private
   Initializes an instance.
   ###
   initialize: (options) ->
     super
+    @callWhenRendered = options.callWhenRendered
 
     #mediator.levels[LEVEL].gMap = @
 
@@ -35,9 +37,6 @@ module.exports = class TILEDMap extends Model
     ctx = canvas.getContext '2d'
     @set 'canvas':canvas
     @set 'ctx':ctx
-
-    @subscribeEvent 'fullyLoaded', =>
-      @render(options.level)
 
 
   ###
@@ -103,7 +102,7 @@ module.exports = class TILEDMap extends Model
     img.onload = =>
       @imgLoadCount++
       if @imgLoadCount == currMapData.tilesets.length
-        @publishEvent 'fullyLoaded'
+        @render()
       else
         console.log "#{currMapData.tilesets.length - @imgLoadCount} to go"
     img.src = 'atlases/' + tileset.image.replace /^.*[\\\/]/, ''
@@ -156,7 +155,7 @@ module.exports = class TILEDMap extends Model
   This means the whol background can be drawn with one single draw
   call instead of hundreads.
   ###
-  render: (LEVEL) =>
+  render: () =>
     currMapData = @get 'currMapData'
     tileSize = @get 'tileSize'
     numXTiles = @get 'numXTiles'
@@ -183,4 +182,4 @@ module.exports = class TILEDMap extends Model
 
         ctx.drawImage tPKT.img, tPKT.px, tPKT.py, tileSize.x, tileSize.y, coords.x, coords.y, tileSize.x, tileSize.y
 
-    @publishEvent 'mapRendered:'+LEVEL
+    @callWhenRendered()
