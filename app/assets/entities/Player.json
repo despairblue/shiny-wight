@@ -4,7 +4,7 @@
   "spriteState": {
     "moving": false,
     "viewDirection": 0,
-    "creationTime": null,
+    "creationTime": "Will be overidden by `Date.Now()`",
     "animationRate": 100,
     "normal": 1
   },
@@ -13,5 +13,26 @@
     "tilesX": 3,
     "tilesY": 4,
     "tileheight": 32,
-    "tilewidth": 32
-}}
+    "tilewidth": 32,
+    "offset": {
+      "x": 16,
+      "y":24
+    }
+  },
+  "entityDef": {
+    "id": "Player",
+    "type": "dynamic",
+    "x": "will be overidden by `@position.x`",
+    "y": "will be overidden by `@position.y`",
+    "halfWidth": 8,
+    "halfHeight": 8,
+    "damping": 0,
+    "angle": 0,
+    "categories": [""],
+    "collidesWith": ["all"],
+    "userData": {
+      "id": "Player",
+      "ent": "will be overidden by `this`"
+    }
+  }
+}
