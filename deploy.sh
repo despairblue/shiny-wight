@@ -8,7 +8,7 @@ cp -r node_modules ../
 git stash -u
 git checkout gh-pages
 rm -rf *
-cp -r ../public/ .
+cp -r ../public/* .
 cp -r ../doc .
 git add --all
 git commit -m 'update site'
