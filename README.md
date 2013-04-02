@@ -31,15 +31,13 @@ When designing a level there are some things to watch out for.
 
 #### Physics
 Shiny-Wight uses two kinds of background physics:
+
 1. A tile layer for crude background physics. It must be called 'physics'
     - The tileset used here is called `physics.png` and can be found in the `atlases` folder. This tileset must be used for now as the tile order is hardcoded, for more sophisticated physics use the object layer.
 2. An object layer for more sophisticated physics.
     - The object's *name* and *type* can be arbitrary.
     - You can use *boxes* and *polygons*. *Polylines* are not supported.
-    - *Polygons* must be:
-        - convex
-        - have no more than 8 corners
-        - drawn clockwise
+    - *Polygons* must be: **convex**, have **no more than 8 corners**, **drawn clockwise**
 
 #### Background Sounds
 
