@@ -214,7 +214,7 @@ module.exports = class PhysicsManager extends Model
     id = entityDef.id
 
     if entityDef.type == 'static'
-      bodyDef.type = Body.b2_staticBody;
+      bodyDef.type = Body.b2_staticBody
     else
       bodyDef.type = Body.b2_dynamicBody
 
