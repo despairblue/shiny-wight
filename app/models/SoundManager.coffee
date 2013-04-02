@@ -172,3 +172,10 @@ module.exports = class SoundManager extends Model
   fade: (sound, list, volume) =>
     # exponentially approaching the target value <volume> at the given time with a rate <@FADE_TIME_INTERVAL>
     list[sound].sourceNode.gain.setTargetAtTime(volume, @audioContext.currentTime, @FADE_TIME_INTERVAL)
+
+
+  startAll: =>
+    @playSound(mediator.activeLevel+'theme',mediator.levels[mediator.activeLevel].soundList, 1, true)
+    @startBackgroundSounds()
+    @updateBackgroundSounds(mediator.player.position)
+

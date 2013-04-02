@@ -34,10 +34,7 @@ module.exports = class HomePageView extends View
 
     if mediator.PlayWithSounds
       @subscribeEvent 'soundsLoaded', =>
-        # TODO: hardcoded themesong
-        @soundManager.playSound(mediator.activeLevel+'theme',mediator.levels[level].soundList, 1, true)
-        @soundManager.startBackgroundSounds()
-        @soundManager.updateBackgroundSounds(mediator.player.position)
+        @soundManager.startAll()
 
     @loadLevel(level)
 
