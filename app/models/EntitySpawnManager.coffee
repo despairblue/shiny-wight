@@ -24,7 +24,7 @@ module.exports = class EntitySpawnManager extends Model
         width = Math.floor object.width
         height = Math.floor object.height
 
-        obj = new mediator.factory[object.type](x, y, width, height, mediator.getActiveLevel().entities[object.type])
+        obj = new mediator.factory[object.type](x, y, width, height, mediator.getActiveLevel().entities[object.name])
 
         obj.position.x = Math.floor object.x
         obj.position.y = Math.floor object.y
