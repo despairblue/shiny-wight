@@ -1,0 +1,18 @@
+{
+  "sounds": {
+    "sounds": ["dundundun"],
+    "backgroundSounds":[
+      "water"
+    ]
+  },
+  "entities": {
+    "prefix": "entities",
+    "files": ["Player.json",
+              "MapChangerToLevel2.json"
+             ]
+  },
+  "map": {
+    "prefix": "map",
+    "file": "level2house1.json"
+  }
+}

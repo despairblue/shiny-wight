@@ -9,9 +9,10 @@
   },
   "entities": {
     "prefix": "entities",
-    "files": ["Player.json",
-              "MapChanger.json"
-             ]
+    "files":[
+      "Player.json",
+      "MapChangerToLevel2.json"
+    ]
   },
   "map": {
     "prefix": "map",
