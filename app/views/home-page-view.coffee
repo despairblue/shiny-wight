@@ -35,7 +35,7 @@ module.exports = class HomePageView extends View
     if mediator.PlayWithSounds
       @subscribeEvent 'soundsLoaded', =>
         # TODO: hardcoded themesong
-        @soundManager.playSound('level1theme',mediator.levels[level].soundList, 1, true)
+        @soundManager.playSound(mediator.activeLevel+'theme',mediator.levels[level].soundList, 1, true)
         @soundManager.startBackgroundSounds()
         @soundManager.updateBackgroundSounds(mediator.player.position)
 
@@ -57,6 +57,7 @@ module.exports = class HomePageView extends View
 
 
   setup: (level) =>
+    @soundManager.stopAll()
     mediator.activeLevel = level
     mediator.entities = []
     @physicsManager.setup()

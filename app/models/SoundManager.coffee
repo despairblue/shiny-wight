@@ -127,11 +127,16 @@ module.exports = class SoundManager extends Model
   Stop all sounds in active level
   ###
   stopAll: =>
-    for name, sound of mediator.levels[mediator.activeLevel].soundList
-      @stop name, mediator.levels[mediator.activeLevel].soundList
+    try
+      for name, sound of mediator.levels[mediator.activeLevel].soundList
+        @stop name, mediator.levels[mediator.activeLevel].soundList
 
-    for name, sound of mediator.levels[mediator.activeLevel].backgroundSounds
-      @stop name, mediator.levels[mediator.activeLevel].backgroundSounds
+      for name, sound of mediator.levels[mediator.activeLevel].backgroundSounds
+        @stop name, mediator.levels[mediator.activeLevel].backgroundSounds
+
+    catch e
+      console.log e.toString()
+
 
   ###
   Start all background sounds in backgroundSound list of active level with gain = 0, i.e. muted
