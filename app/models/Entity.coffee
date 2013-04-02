@@ -53,6 +53,8 @@ module.exports = class Entity extends Model
   constructor: (x, y, width, height, settings) ->
     super
 
+    @[prop] = content for prop, content of settings
+
     @position =
      x: x
      y: y
@@ -105,6 +107,12 @@ module.exports = class Entity extends Model
   ###
   onPositionChange: =>
     # method to be overloaded
+
+  load: =>
+    # ..
+
+  render: =>
+    # ..
 
   ###
   Is called each tick/frame.

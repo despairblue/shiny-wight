@@ -14,8 +14,6 @@ module.exports = class Player extends Entity
 
     super x, y, width, height, settings
 
-    @[prop] = content for prop, content of settings
-
     @spriteState.creationTime = Date.now()
 
     @entityDef.x = @position.x

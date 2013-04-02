@@ -1,13 +1,14 @@
 View = require 'views/base/view'
 TILEDMap = require 'models/TILEDMap'
-Player = require 'models/Player'
 InputManager = require 'models/InputManager'
 SoundManager = require 'models/SoundManager'
 PhysicsManager = require 'models/PhysicsManager'
+EntitySpawnManager = require 'models/EntitySpawnManager'
 mediator = require 'mediator'
 Std = require 'models/Std'
-EntitySpawnManager = require 'models/EntitySpawnManager'
 Level = require 'models/Level'
+Player = require 'models/Player'
+MapChanger = require 'models/MapChanger'
 
 
 module.exports = class HomePageView extends View
@@ -36,13 +37,17 @@ module.exports = class HomePageView extends View
       @subscribeEvent 'soundsLoaded', =>
         @soundManager.startAll()
 
+    @subscribeEvent 'changeLvl', =>
+      console.log 'change level'
+      @setup(mediator.activeLevel)
+
     @loadLevel(level)
 
   loadLevel: (level) =>
     mediator.nextLevel = level
 
     map = new TILEDMap 'callWhenRendered': =>
-      @setup level
+      #@setup level
 
       if mediator.PlayWithSounds
         @soundManager.load(level)
@@ -50,7 +55,6 @@ module.exports = class HomePageView extends View
     mediator.levels[level] = new Level (level + '.json'), =>
       mediator.levels[level].gMap = map
       mediator.levels[level].gMap.load(level)
-
 
 
   setup: (level) =>
