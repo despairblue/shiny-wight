@@ -54,7 +54,7 @@ module.exports = class HomePageView extends View
 
 
   setup: (level) =>
-    @soundManager.stopAll()
+    @soundManager.stopAll() if mediator.PlayWithSounds
     mediator.activeLevel = level
     mediator.entities = []
     @physicsManager.setup()
