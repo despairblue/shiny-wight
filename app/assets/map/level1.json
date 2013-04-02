@@ -11,7 +11,7 @@
              "type":"water"
             },
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":22,
          "x":0,
          "y":0
@@ -27,7 +27,7 @@
              "type":"water"
             },
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":22,
          "x":0,
          "y":0
@@ -97,12 +97,12 @@
          "y":0
         }, 
         {
-         "data":[0, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 0, 0, 1045, 1045, 0, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 0, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 1045, 1045, 0, 0, 1045, 1045, 0, 0, 1045, 1045, 0, 0, 0, 0, 0, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 0, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 1045, 1045, 0, 0, 0, 0, 0, 1045, 0, 1045, 1045, 0, 0, 0, 1045, 1045, 0, 1045, 1045, 0, 0, 1045, 1045, 0, 0, 0, 0, 0, 0, 1045, 1045, 1045, 0, 0, 0, 1045, 1045, 1045, 1045, 0, 1045, 0, 0, 0, 0, 1045, 1045, 0, 0, 0, 0, 0, 1045, 1045, 0, 0, 1045, 1045, 1045, 1045, 1045, 0, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 0, 0, 1045, 1045, 0, 0, 1045, 1045, 1045, 1045, 1045, 0, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 0, 0, 1045, 1045, 0, 0, 1045, 1045, 1045, 1045, 1045, 0, 0, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 0, 1045, 1045, 0, 0, 0, 1045, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 0, 0, 0, 0, 0, 0, 0, 1045, 1045, 1045, 0, 0, 0, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 0, 0, 0, 0, 0, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 0, 0, 0, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 0, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 1045, 1045, 0, 0, 0, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 0, 0, 1045, 1045, 1045, 1045, 1045, 0, 0, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 1045, 0, 0, 1045, 0, 0, 0, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 0, 0, 0, 0, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 1045, 1045, 1045, 1045, 1045],
+         "data":[1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1047, 0, 0, 0, 0, 0, 1046, 1045, 1045, 0, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1047, 0, 0, 0, 1048, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1049, 0, 0, 0, 1046, 1045, 1045, 0, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 1048, 1045, 1045, 1045, 1048, 1049, 0, 0, 1048, 1049, 0, 0, 1048, 1049, 0, 0, 1048, 1049, 0, 0, 0, 0, 1046, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1048, 1045, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 0, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 0, 0, 0, 0, 0, 1045, 0, 1045, 1045, 0, 0, 0, 0, 0, 0, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 1048, 1045, 1047, 0, 0, 1046, 1045, 1045, 0, 0, 0, 0, 0, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 1045, 1045, 1045, 1045, 1045, 1049, 0, 0, 0, 0, 0, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 1045, 1045, 1045, 1045, 1045, 1047, 0, 0, 0, 0, 0, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 1048, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 0, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 1049, 0, 0, 0, 0, 0, 0, 0, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 0, 0, 0, 0, 0, 0, 0, 1045, 1045, 1045, 0, 0, 0, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 1046, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1048, 1045, 1045, 1045, 1045, 1045, 1047, 0, 0, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1048, 1045, 1045, 1045, 1045, 1045, 1047, 1046, 1045, 1045, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1045, 1049, 0, 1048, 1045, 1045, 1045, 1045, 1049, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1046, 1045, 0, 0, 0, 1048, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 1045, 0, 0, 0, 0, 1045, 1045, 1045, 1045, 1045, 1045, 1045],
          "height":24,
          "name":"physics",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":22,
          "x":0,
          "y":0
@@ -210,162 +210,6 @@
                  "y":274
                 }, 
                 {
-                 "height":119,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":386,
-                 "x":1,
-                 "y":1
-                }, 
-                {
-                 "height":121,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":51,
-                 "x":390,
-                 "y":33
-                }, 
-                {
-                 "height":28,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":18,
-                 "x":444,
-                 "y":64
-                }, 
-                {
-                 "height":26,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":43,
-                 "x":9,
-                 "y":125
-                }, 
-                {
-                 "height":28,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":41,
-                 "x":138,
-                 "y":124
-                }, 
-                {
-                 "height":25,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":44,
-                 "x":264,
-                 "y":124
-                }, 
-                {
-                 "height":249,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":34,
-                 "x":609,
-                 "y":0
-                }, 
-                {
-                 "height":31,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":12,
-                 "x":594,
-                 "y":25
-                }, 
-                {
-                 "height":30,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":11,
-                 "x":595,
-                 "y":96
-                }, 
-                {
-                 "height":23,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":13,
-                 "x":593,
-                 "y":164
-                }, 
-                {
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":2,
-                 "x":600,
-                 "y":175
-                }, 
-                {
-                 "height":27,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":23,
-                 "x":352,
-                 "y":226
-                }, 
-                {
                  "height":0,
                  "name":"",
                  "polygon":[
@@ -412,45 +256,6 @@
                  "y":321
                 }, 
                 {
-                 "height":21,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":21,
-                 "x":132,
-                 "y":484
-                }, 
-                {
-                 "height":44,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":15,
-                 "x":169,
-                 "y":462
-                }, 
-                {
-                 "height":24,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":24,
-                 "x":195,
-                 "y":484
-                }, 
-                {
                  "height":48,
                  "name":"",
                  "properties":
@@ -488,322 +293,6 @@
                  "width":47,
                  "x":199,
                  "y":584
-                }, 
-                {
-                 "height":93,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":29,
-                 "x":545,
-                 "y":195
-                }, 
-                {
-                 "height":38,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":65,
-                 "x":160,
-                 "y":253
-                }, 
-                {
-                 "height":36,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":64,
-                 "x":352,
-                 "y":286
-                }, 
-                {
-                 "height":38,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":32,
-                 "x":384,
-                 "y":382
-                }, 
-                {
-                 "height":315,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":33,
-                 "x":576,
-                 "y":251
-                }, 
-                {
-                 "height":20,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":323,
-                 "x":2,
-                 "y":668
-                }, 
-                {
-                 "height":39,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":51,
-                 "x":257,
-                 "y":509
-                }, 
-                {
-                 "height":83,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":129,
-                 "x":320,
-                 "y":478
-                }, 
-                {
-                 "height":13,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":63,
-                 "x":481,
-                 "y":604
-                }, 
-                {
-                 "height":28,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":27,
-                 "x":451,
-                 "y":576
-                }, 
-                {
-                 "height":62,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":25,
-                 "x":547,
-                 "y":546
-                }, 
-                {
-                 "height":61,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":14,
-                 "x":320,
-                 "y":603
-                }, 
-                {
-                 "height":0,
-                 "name":"",
-                 "polygon":[
-                        {
-                         "x":0,
-                         "y":0
-                        }, 
-                        {
-                         "x":59,
-                         "y":30
-                        }, 
-                        {
-                         "x":58,
-                         "y":57
-                        }],
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":0,
-                 "x":261,
-                 "y":550
-                }, 
-                {
-                 "height":0,
-                 "name":"",
-                 "polygon":[
-                        {
-                         "x":0,
-                         "y":0
-                        }, 
-                        {
-                         "x":61,
-                         "y":1
-                        }, 
-                        {
-                         "x":61,
-                         "y":24
-                        }, 
-                        {
-                         "x":29,
-                         "y":27
-                        }],
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":0,
-                 "x":164,
-                 "y":292
-                }, 
-                {
-                 "height":0,
-                 "name":"",
-                 "polygon":[
-                        {
-                         "x":0,
-                         "y":0
-                        }, 
-                        {
-                         "x":29,
-                         "y":0
-                        }, 
-                        {
-                         "x":1,
-                         "y":19
-                        }],
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":0,
-                 "x":384,
-                 "y":324
-                }, 
-                {
-                 "height":0,
-                 "name":"",
-                 "polygon":[
-                        {
-                         "x":0,
-                         "y":0
-                        }, 
-                        {
-                         "x":16,
-                         "y":12
-                        }, 
-                        {
-                         "x":3,
-                         "y":11
-                        }],
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":0,
-                 "x":383,
-                 "y":369
-                }, 
-                {
-                 "height":0,
-                 "name":"",
-                 "polygon":[
-                        {
-                         "x":0,
-                         "y":0
-                        }, 
-                        {
-                         "x":39,
-                         "y":3
-                        }, 
-                        {
-                         "x":40,
-                         "y":38
-                        }],
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":0,
-                 "x":193,
-                 "y":384
-                }, 
-                {
-                 "height":73,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":192,
-                 "x":192,
-                 "y":313
-                }, 
-                {
-                 "height":32,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Background",
-                 "visible":true,
-                 "width":149,
-                 "x":233,
-                 "y":389
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -821,7 +310,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/..\/..\/..\/..\/Dropbox\/mlp_fim_soundboard_v8_4_by_kyrospawn-d41pzv0\/Nick Skeleton\/assets\/atlases\/PathAndObjects_0.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/PathAndObjects_0.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -836,7 +325,7 @@
         }, 
         {
          "firstgid":257,
-         "image":"..\/..\/..\/..\/..\/Dropbox\/mlp_fim_soundboard_v8_4_by_kyrospawn-d41pzv0\/Nick Skeleton\/assets\/atlases\/Castle2.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/Castle2.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -851,7 +340,7 @@
         }, 
         {
          "firstgid":513,
-         "image":"..\/..\/..\/..\/..\/Dropbox\/mlp_fim_soundboard_v8_4_by_kyrospawn-d41pzv0\/Nick Skeleton\/assets\/atlases\/wood_tileset_3.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/wood_tileset_3.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -866,7 +355,7 @@
         }, 
         {
          "firstgid":769,
-         "image":"..\/..\/..\/..\/..\/Dropbox\/mlp_fim_soundboard_v8_4_by_kyrospawn-d41pzv0\/Nick Skeleton\/assets\/atlases\/mountain_landscape_23.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/mountain_landscape_23.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -881,7 +370,7 @@
         }, 
         {
          "firstgid":1025,
-         "image":"..\/..\/..\/..\/..\/Dropbox\/mlp_fim_soundboard_v8_4_by_kyrospawn-d41pzv0\/Nick Skeleton\/assets\/atlases\/sound_map.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/sound_map.png",
          "imageheight":64,
          "imagewidth":320,
          "margin":0,
@@ -896,9 +385,9 @@
         }, 
         {
          "firstgid":1045,
-         "image":"..\/..\/..\/..\/..\/Dropbox\/mlp_fim_soundboard_v8_4_by_kyrospawn-d41pzv0\/Nick Skeleton\/assets\/atlases\/physics.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/physics.png",
          "imageheight":32,
-         "imagewidth":32,
+         "imagewidth":160,
          "margin":0,
          "name":"physics",
          "properties":

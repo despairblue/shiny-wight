@@ -75,35 +75,72 @@ module.exports = class PhysicsManager extends Model
 
   addBackgroundRigidBodies: (map) =>
     for layer in map.currMapData.layers
-      continue if layer.type isnt 'objectgroup'
       continue if layer.name isnt 'physics'
 
-      for object in layer.objects
-        if object.polygon
-          vec2Arr = []
+      # create polygons
+      if layer.type is 'objectgroup'
+        for object in layer.objects
+          if object.polygon
+            vec2Array = (new Vec2(vec2.x, vec2.y) for vec2 in object.polygon)
+            @createStaticBodyWithPolygon vec2Array, object.x, object.y
+          else
+            @createStaticBodyWithBox object.x, object.y, object.width, object.height
 
-          for vec2 in object.polygon
-            vec2Arr.push new Vec2(vec2.x, vec2.y)
+      # create boxes and triangles
+      else if layer.type is 'tilelayer'
+        map = mediator.levels[mediator.activeLevel].gMap
 
-          fixtureDefinition = new FixtureDef()
-          fixtureDefinition.shape = new PolygonShape()
-          fixtureDefinition.shape.SetAsArray vec2Arr, vec2Arr.length
-          bgRigidBody = new BodyDef()
-          bgRigidBody.type = Body.b2_staticBody
-          bgRigidBody.position.x = object.x
-          bgRigidBody.position.y = object.y
-          body = @registerBody bgRigidBody
-          body.CreateFixture fixtureDefinition
-        else
-          fixtureDefinition = new FixtureDef()
-          fixtureDefinition.shape = new PolygonShape()
-          fixtureDefinition.shape.SetAsBox object.width/2, object.height/2
-          bgRigidBody = new BodyDef()
-          bgRigidBody.type = Body.b2_staticBody
-          bgRigidBody.position.x = object.x + object.width/2
-          bgRigidBody.position.y = object.y + object.height/2
-          body = @registerBody bgRigidBody
-          body.CreateFixture fixtureDefinition
+        for tileID, tileIndex in layer.data
+          continue if tileID is 0
+
+          x = (tileIndex % map.numXTiles) * map.tileSize.x
+          y = Math.floor(tileIndex / map.numXTiles) * map.tileSize.y
+
+          pkt = map.getTilePacket tileID
+          physicsTile = pkt.px / map.tileSize.x
+          tileSize = map.tileSize.x
+
+          if physicsTile is 0
+            @createStaticBodyWithBox x, y, tileSize, tileSize
+          else if physicsTile is 1
+            vec2Array = [new Vec2(0, tileSize), new Vec2(tileSize, 0), new Vec2(tileSize, tileSize)]
+            @createStaticBodyWithPolygon vec2Array, x, y
+          else if physicsTile is 2
+            vec2Array = [new Vec2(0, 0), new Vec2(tileSize, tileSize), new Vec2(0, tileSize)]
+            @createStaticBodyWithPolygon vec2Array, x, y
+          else if physicsTile is 3
+            vec2Array = [new Vec2(0, 0), new Vec2(tileSize, 0), new Vec2(tileSize, tileSize)]
+            @createStaticBodyWithPolygon vec2Array, x, y
+          else if physicsTile is 4
+            vec2Array = [new Vec2(0, 0), new Vec2(tileSize, 0), new Vec2(0, tileSize)]
+            @createStaticBodyWithPolygon vec2Array, x, y
+
+
+
+
+
+
+  createStaticBodyWithBox: (x, y, w, h) =>
+    fixtureDefinition = new FixtureDef()
+    fixtureDefinition.shape = new PolygonShape()
+    fixtureDefinition.shape.SetAsBox w/2, h/2
+    bgRigidBody = new BodyDef()
+    bgRigidBody.type = Body.b2_staticBody
+    bgRigidBody.position.x = x + w/2
+    bgRigidBody.position.y = y + h/2
+    body = @registerBody bgRigidBody
+    body.CreateFixture fixtureDefinition
+
+  createStaticBodyWithPolygon: (vec2Array, x, y) =>
+    fixtureDefinition = new FixtureDef()
+    fixtureDefinition.shape = new PolygonShape()
+    fixtureDefinition.shape.SetAsArray vec2Array, vec2Array.length
+    bgRigidBody = new BodyDef()
+    bgRigidBody.type = Body.b2_staticBody
+    bgRigidBody.position.x = x
+    bgRigidBody.position.y = y
+    body = @registerBody bgRigidBody
+    body.CreateFixture fixtureDefinition
 
   ###
   @todo should actually go to TILEDMap.coffee
@@ -189,8 +226,14 @@ module.exports = class PhysicsManager extends Model
     body = @registerBody bodyDef
     fixtureDefinition = new FixtureDef()
 
-    fixtureDefinition.shape = new PolygonShape()
-    fixtureDefinition.shape.SetAsBox entityDef.halfWidth, entityDef.halfHeight
+    # TODO: remove hard coding
+    if id is 'Player'
+      fixtureDefinition.shape = new CircleShape()
+      fixtureDefinition.shape.SetRadius entityDef.halfWidth
+    else
+      fixtureDefinition.shape = new PolygonShape()
+      fixtureDefinition.shape.SetAsBox entityDef.halfWidth, entityDef.halfHeight
+
     body.CreateFixture fixtureDefinition
 
     body
