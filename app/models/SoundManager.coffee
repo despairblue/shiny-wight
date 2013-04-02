@@ -27,34 +27,55 @@ module.exports = class SoundManager extends Model
   @note later change listener based to observer based event system
   ###
   load: (LEVEL) =>
-    @initializeSoundMap(LEVEL, mediator.levels[LEVEL].gMap)
-    mapSounds = mediator.levels[LEVEL].sounds
-    mediator.levels[LEVEL].soundCount =  mapSounds.sounds.length + mapSounds.backgroundSounds.length
-    mediator.levels[LEVEL].soundLoadCount = 0
+    # @initializeSoundMap(LEVEL, mediator.levels[LEVEL].gMap)
+    # mapSounds = mediator.levels[LEVEL].sounds
+    # mediator.levels[LEVEL].soundCount =  mapSounds.sounds.length + mapSounds.backgroundSounds.length
+    # mediator.levels[LEVEL].soundLoadCount = 0
     @loadSounds LEVEL, mapSounds
 
-  ###
-  @param [String]
-  @param [map]
-  Reads levelX.json file and to all sounds of the level
-  ###
-  initializeSoundMap: (LEVEL, map) =>
-    currMapData = map.get 'currMapData'
-    mediator.levels[LEVEL].soundMap = []
-    for x in [0..map.numXTiles - 1]
-      mediator.levels[LEVEL].soundMap[x] = for y in [0..map.numYTiles - 1]
+  # ###
+  # @param [String]
+  # @param [map]
+  # Reads levelX.json file and to all sounds of the level
+  # ###
+  # initializeSoundMap: (LEVEL, map) =>
+  #   currMapData = map.get 'currMapData'
+  #   mediator.levels[LEVEL].soundMap = []
+  #   for x in [0..map.numXTiles - 1]
+  #     mediator.levels[LEVEL].soundMap[x] = for y in [0..map.numYTiles - 1]
+  #       []
+
+  #   for layer in currMapData.layers
+  #     continue if layer.name isnt 'sound'
+
+  #     for tileID, tileIndex in layer.data
+  #       continue if tileID is 0
+
+  #       x = (tileIndex % map.numXTiles)
+  #       y = Math.floor(tileIndex / map.numXTiles)
+
+  #       mediator.levels[LEVEL].soundMap[x][y].push(layer.properties)
+
+
+  getSoundMap: (map) =>
+    soundMap = []
+    for x in [0..map.width - 1]
+      soundMap[x] = for y in [0..map.height - 1]
         []
 
-    for layer in currMapData.layers
+    for layer in map.layers
       continue if layer.name isnt 'sound'
 
       for tileID, tileIndex in layer.data
         continue if tileID is 0
 
-        x = (tileIndex % map.numXTiles)
-        y = Math.floor(tileIndex / map.numXTiles)
+        x = (tileIndex % map.width)
+        y = Math.floor(tileIndex / map.width)
 
-        mediator.levels[LEVEL].soundMap[x][y].push(layer.properties)
+        soundMap[x][y].push(layer.properties)
+
+    return soundMap
+
 
   ###
   @param [String]
@@ -69,6 +90,20 @@ module.exports = class SoundManager extends Model
     for sound in mapSounds.backgroundSounds
       mediator.levels[LEVEL].backgroundSounds[sound] = new SoundObj
       mediator.std.xhrGet @PATH+sound+'.mp3', @bufferSounds, 'arraybuffer', sound, mediator.levels[LEVEL].backgroundSounds, LEVEL
+
+
+  loadSounds: (sounds) =>
+
+    for sound in mapSounds.sounds
+      mediator.levels[LEVEL].soundList[sound] = new SoundObj
+      mediator.std.xhrGet @PATH+sound+'.mp3', @bufferSounds, 'arraybuffer', sound, mediator.levels[LEVEL].soundList, LEVEL
+
+    for sound in mapSounds.backgroundSounds
+      mediator.levels[LEVEL].backgroundSounds[sound] = new SoundObj
+      mediator.std.xhrGet @PATH+sound+'.mp3', @bufferSounds, 'arraybuffer', sound, mediator.levels[LEVEL].backgroundSounds, LEVEL
+
+
+
 
   ###
   @param [xhrGethttp-request]

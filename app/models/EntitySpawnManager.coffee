@@ -8,10 +8,9 @@ module.exports = class EntitySpawnManager extends Model
 
 
   initialSpawn: () =>
-    map = mediator.levels[mediator.activeLevel].gMap
-    currMapData = map.get 'currMapData'
+    map = mediator.levels[mediator.activeLevel].mapTiledObject
 
-    for layer in currMapData.layers
+    for layer in map.layers
       continue if layer.type is 'tilelayer'
       continue if layer.name isnt 'spawnpoints'
 
@@ -24,8 +23,16 @@ module.exports = class EntitySpawnManager extends Model
         width = Math.floor object.width
         height = Math.floor object.height
 
-        obj = new mediator.factory[object.type](x, y, width, height, mediator.getActiveLevel().entities[object.name])
 
+        # get constructor and json config
+        Ent = mediator.factory[object.type]
+        # TODO: object.name goes to object.tiled_name
+        conf = mediator.getActiveLevel().entities[object.name]
+
+        # initialize object with position, size and config
+        obj = new Ent(x, y, width, height, conf)
+
+        # TODO: delete?
         obj.position.x = Math.floor object.x
         obj.position.y = Math.floor object.y
 

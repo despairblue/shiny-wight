@@ -27,8 +27,9 @@ module.exports = class TILEDMap extends Model
   Initializes an instance.
   ###
   initialize: (options) ->
+    mediator.mapManager = @
     super
-    @callWhenRendered = options.callWhenRendered
+    # @callWhenRendered = options.callWhenRendered
 
     #mediator.levels[LEVEL].gMap = @
 
@@ -53,8 +54,8 @@ module.exports = class TILEDMap extends Model
   Parses TILED map editor json data
   @param [JSON] mapJSON the TILED map editor json data
   ###
-  parseMapJSON: (mapJSON) =>
-    @currMapData = JSON.parse mapJSON
+  parseMapJSON: (mapJSON, callback) =>
+    @currMapData = mapJSON
     @numXTiles = @currMapData.width
     @numYTiles = @currMapData.height
 
@@ -74,10 +75,10 @@ module.exports = class TILEDMap extends Model
 
     console.log 'Start loading atlasses'
 
-    tilesets = for tileset in @currMapData.tilesets
-      @createTileSet tileset
+    @tilesets = for tileset in @currMapData.tilesets
+      @createTileSet tileset, callback
 
-    @set 'tilesets':tilesets
+    @set 'tilesets':@tilesets
 
   ###
   @private
@@ -94,15 +95,16 @@ module.exports = class TILEDMap extends Model
       numXTiles: …   # number of tiles in x direction
       numYTiles: …   # number of tiles in y direction
   ###
-  createTileSet: (tileset) =>
+  createTileSet: (tileset, callback) =>
     currMapData = @get 'currMapData'
     tileSize = @get 'tileSize'
+    @imgLoadCount = 0
 
     img = new Image()
     img.onload = =>
       @imgLoadCount++
       if @imgLoadCount == currMapData.tilesets.length
-        @render()
+        callback()
       else
         console.log "#{currMapData.tilesets.length - @imgLoadCount} to go"
     img.src = 'atlases/' + tileset.image.replace /^.*[\\\/]/, ''
@@ -112,6 +114,8 @@ module.exports = class TILEDMap extends Model
       image: img
       imageheight: tileset.imageheight
       imagewidth: tileset.imagewidth
+      tileheight: tileset.tileheight
+      tilewidth: tileset.tilewidth
       name: tileset.name
       numXTiles: Math.floor (tileset.imagewidth  / (tileSize.x + tileset.spacing))
       numYTiles: Math.floor (tileset.imageheight / (tileSize.y + tileset.spacing))
@@ -128,25 +132,36 @@ module.exports = class TILEDMap extends Model
       px: …  # x value of the top left corner in pixels
       py: …  # y value of the top left corner in pixels
   ###
-  getTilePacket: (tileIndex) =>
+  getTilePacket: (tileIndex, tileSets) =>
     pkt =
       img: null
       px: 0
       py: 0
 
     tile = null
-    tilesets = @get 'tilesets'
-    tileSize = @get 'tileSize'
 
-    for tile in tilesets by -1 when tile.firstgid <= tileIndex
-      break
+    if tileSets
+      for tile in tileSets by -1 when tile.firstgid <= tileIndex
+        break
 
-    pkt.img = tile.image
-    localIdx = tileIndex - tile.firstgid
-    lTileX = Math.floor localIdx % tile.numXTiles
-    lTileY = Math.floor localIdx / tile.numXTiles
-    pkt.py = lTileY * (tileSize.y + tile.spacing) + tile.spacing
-    pkt.px = lTileX * (tileSize.x + tile.spacing) + tile.spacing
+      pkt.img = tile.image
+      localIdx = tileIndex - tile.firstgid
+      lTileX = Math.floor localIdx % tile.numXTiles
+      lTileY = Math.floor localIdx / tile.numXTiles
+      pkt.py = lTileY * (tile.tileheight + tile.spacing) + tile.spacing
+      pkt.px = lTileX * (tile.tilewidth + tile.spacing) + tile.spacing
+    else
+      tilesets = @get 'tilesets'
+      tileSize = @get 'tileSize'
+      for tile in tilesets by -1 when tile.firstgid <= tileIndex
+        break
+
+      pkt.img = tile.image
+      localIdx = tileIndex - tile.firstgid
+      lTileX = Math.floor localIdx % tile.numXTiles
+      lTileY = Math.floor localIdx / tile.numXTiles
+      pkt.py = lTileY * (tileSize.y + tile.spacing) + tile.spacing
+      pkt.px = lTileX * (tileSize.x + tile.spacing) + tile.spacing
 
     pkt
 
@@ -155,13 +170,14 @@ module.exports = class TILEDMap extends Model
   This means the whol background can be drawn with one single draw
   call instead of hundreads.
   ###
-  render: () =>
+  render: (mapJSON, callback) =>
+    canvas = document.createElement 'canvas'
+    ctx = canvas.getContext '2d'
+
     currMapData = @get 'currMapData'
     tileSize = @get 'tileSize'
     numXTiles = @get 'numXTiles'
     numYTiles = @get 'numYTiles'
-    canvas = @get 'canvas'
-    ctx = @get 'ctx'
 
     canvas.width = numXTiles * tileSize.x
     canvas.height = numYTiles * tileSize.y
@@ -182,4 +198,11 @@ module.exports = class TILEDMap extends Model
 
         ctx.drawImage tPKT.img, tPKT.px, tPKT.py, tileSize.x, tileSize.y, coords.x, coords.y, tileSize.x, tileSize.y
 
+    return canvas
+
     @callWhenRendered()
+
+  renderZwei: (mapJSON, callback) =>
+    @parseMapJSON mapJSON, =>
+      callback( @render(mapJSON), @tilesets )
+

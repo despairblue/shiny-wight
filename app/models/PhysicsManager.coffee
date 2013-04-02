@@ -52,16 +52,17 @@ module.exports = class PhysicsManager extends Model
   @note The PhysicsManager expects only only one physics layer to be present
   ###
   setup: =>
-    map = mediator.levels[mediator.activeLevel].gMap
+    map = mediator.levels[mediator.activeLevel].mapTiledObject
     @world = new World(new Vec2(0, 0), false)
     debugDraw = new Box2D.Dynamics.b2DebugDraw()
-    dCanvas = document.createElement 'canvas'
+    dCanvas = document.getElementById('debug-canvas')
     dCtx = dCanvas.getContext '2d'
 
     @createLevelBorder(map)
 
     # initialize debugging canvas
-    document.getElementById('debug-container').appendChild dCanvas
+    # document.getElementById('debug-container').appendChild dCanvas
+
     dCanvas.width = window.innerWidth/2 - 100
     dCanvas.height = window.innerHeight
     debugDraw.SetSprite dCtx
@@ -74,7 +75,7 @@ module.exports = class PhysicsManager extends Model
     @addBackgroundRigidBodies(map)
 
   addBackgroundRigidBodies: (map) =>
-    for layer in map.currMapData.layers
+    for layer in map.layers
       continue if layer.name isnt 'physics'
 
       # create polygons
@@ -88,17 +89,17 @@ module.exports = class PhysicsManager extends Model
 
       # create boxes and triangles
       else if layer.type is 'tilelayer'
-        map = mediator.levels[mediator.activeLevel].gMap
+        # map = mediator.levels[mediator.activeLevel].gMap
 
         for tileID, tileIndex in layer.data
           continue if tileID is 0
 
-          x = (tileIndex % map.numXTiles) * map.tileSize.x
-          y = Math.floor(tileIndex / map.numXTiles) * map.tileSize.y
+          x = (tileIndex % map.width) * map.tilewidth
+          y = Math.floor(tileIndex / map.width) * map.tileheight
 
-          pkt = map.getTilePacket tileID
-          physicsTile = pkt.px / map.tileSize.x
-          tileSize = map.tileSize.x
+          pkt = mediator.mapManager.getTilePacket tileID, mediator.getActiveLevel().tileSets
+          physicsTile = pkt.px / map.tilewidth
+          tileSize = map.tilewidth
 
           if physicsTile is 0
             @createStaticBodyWithBox x, y, tileSize, tileSize
@@ -143,12 +144,12 @@ module.exports = class PhysicsManager extends Model
     body.CreateFixture fixtureDefinition
 
   ###
-  @todo should actually go to TILEDMap.coffee
+  @todo does not work
   ###
   createLevelBorder: (map) =>
     fixtureDefinition = new FixtureDef()
     fixtureDefinition.shape = new PolygonShape()
-    fixtureDefinition.shape.SetAsBox 0, map.pixelSize.y
+    fixtureDefinition.shape.SetAsBox 0, map.tileheight
     mapBorder = new BodyDef()
     mapBorder.type = Body.b2_staticBody
     mapBorder.position.x = 0
@@ -158,17 +159,17 @@ module.exports = class PhysicsManager extends Model
 
     fixtureDefinition = new FixtureDef()
     fixtureDefinition.shape = new PolygonShape()
-    fixtureDefinition.shape.SetAsBox 0, map.pixelSize.y
+    fixtureDefinition.shape.SetAsBox 0, map.tileheight
     mapBorder = new BodyDef()
     mapBorder.type = Body.b2_staticBody
-    mapBorder.position.x = map.pixelSize.x
+    mapBorder.position.x = map.tilewidth
     mapBorder.position.y = 0
     body = @registerBody mapBorder
     body.CreateFixture fixtureDefinition
 
     fixtureDefinition = new FixtureDef()
     fixtureDefinition.shape = new PolygonShape()
-    fixtureDefinition.shape.SetAsBox map.pixelSize.x, 0
+    fixtureDefinition.shape.SetAsBox map.tilewidth, 0
     mapBorder = new BodyDef()
     mapBorder.type = Body.b2_staticBody
     mapBorder.position.x = 0
@@ -178,11 +179,11 @@ module.exports = class PhysicsManager extends Model
 
     fixtureDefinition = new FixtureDef()
     fixtureDefinition.shape = new PolygonShape()
-    fixtureDefinition.shape.SetAsBox map.pixelSize.x, 0
+    fixtureDefinition.shape.SetAsBox map.tilewidth, 0
     mapBorder = new BodyDef()
     mapBorder.type = Body.b2_staticBody
     mapBorder.position.x = 0
-    mapBorder.position.y = map.pixelSize.y
+    mapBorder.position.y = map.tileheight
     body = @registerBody mapBorder
     body.CreateFixture fixtureDefinition
 

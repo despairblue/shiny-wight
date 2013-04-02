@@ -3,11 +3,11 @@ mediator = require 'mediator'
 
 module.exports = class Level extends Model
   manifest: null
+  callback: null
+
   soundList: {}
   backgroundSounds: {}
 
-  # to check whether all sounds loaded
-  soundLoadCount: 0
   soundCount: 0
 
   physicsMap: []
@@ -15,17 +15,16 @@ module.exports = class Level extends Model
   entities: {}
   bodyCount: 0
 
-  gMap: null
+  mapCanvas: null
+  mapTiledObject: null
 
-  loadCompleted = false
+  bodiesLoaded: false
+  mapLoaded: false
+  loadCompleted: false
 
-  constructor: (manifestUri, callback) ->
+  constructor: (manifestUri, @callback) ->
     mediator.std.xhrGet manifestUri, (data) =>
       @manifest = JSON.parse data.target.responseText
-
-      # just copy sounds and map from the manifest and let the managers load it
-      @sounds = @manifest.sounds
-      @map = @manifest.map
 
       # load the config files for the entities
       @bodyCount = @manifest.entities.files.length
@@ -35,8 +34,26 @@ module.exports = class Level extends Model
           @entities[ent.name] = ent
           @bodyCount--
           if @bodyCount <= 0
-            @loadCompleted = true
-            callback() if callback
+            @bodiesLoaded = true
+            @checkIfDone()
+
+
+
+
+      # load map
+      mediator.std.xhrGet @manifest.map.prefix + '/' + @manifest.map.file, (data) =>
+        @mapTiledObject = JSON.parse data.target.responseText
+        mediator.mapManager.renderZwei @mapTiledObject, (map, tileSets) =>
+          @mapCanvas = map
+          @tileSets = tileSets
+          @mapLoaded = true
+          @checkIfDone()
+        # load sounds
+        if mediator.playWithSounds
+          # just copy sounds from the manifest and let the managers load it
+          @soundCount = @manifest.sounds.sounds.length + 1 + @manifest.sounds.backgroundSounds.length
+          @soundMap = mediator.soundManager.getSoundMap(@mapTiledObject)
+
 
 
   setup: =>
@@ -44,3 +61,8 @@ module.exports = class Level extends Model
       # ...
     else
       console.error "Don't call Level.setup() unless the manifest finished loading"
+
+  checkIfDone: =>
+    if @bodiesLoaded and @mapLoaded
+      @loadCompleted = true
+      @callback() if @callback

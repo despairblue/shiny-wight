@@ -21,19 +21,19 @@ module.exports = class HomePageView extends View
     new Std()
 
     window.homepageview = @ if debug
-    mediator.PlayWithSounds = true
-    mediator.PlayWithSounds = confirm("Load Sounds?") if debug
+    mediator.playWithSounds = true
+    mediator.playWithSounds = confirm("Load Sounds?") if debug
 
-    @skipFrame = true
     @physicsManager = new PhysicsManager()
-    @soundManager = new SoundManager() if mediator.PlayWithSounds
+    @soundManager = new SoundManager() if mediator.playWithSounds
     @inputManager = new InputManager()
     @entitySpawnManager = new EntitySpawnManager()
+    @mapManager = new TILEDMap()
 
     # the first level
     level = 'level1'
 
-    if mediator.PlayWithSounds
+    if mediator.playWithSounds
       @subscribeEvent 'soundsLoaded', =>
         @soundManager.startAll()
 
@@ -41,24 +41,23 @@ module.exports = class HomePageView extends View
       console.log 'change level'
       @setup(mediator.activeLevel)
 
-    @loadLevel(level)
+    @loadLevel level, =>
+      @setup level
 
-  loadLevel: (level) =>
-    mediator.nextLevel = level
-
-    map = new TILEDMap 'callWhenRendered': =>
+  loadLevel: (level, rest...) =>
+    # map = new TILEDMap 'callWhenRendered': =>
       #@setup level
 
-      if mediator.PlayWithSounds
-        @soundManager.load(level)
+      # if mediator.playWithSounds
+      #   @soundManager.load(level)
+
+    return if mediator.levels[level]?
 
     mediator.levels[level] = new Level (level + '.json'), =>
-      mediator.levels[level].gMap = map
-      mediator.levels[level].gMap.load(level)
-
+      rest[0]() if rest[0]
 
   setup: (level) =>
-    @soundManager.stopAll() if mediator.PlayWithSounds
+    @soundManager.stopAll() if mediator.playWithSounds
     mediator.activeLevel = level
     mediator.entities = []
     @physicsManager.setup()
@@ -119,22 +118,28 @@ module.exports = class HomePageView extends View
       moveDir.Multiply(player.VELOCITY)
 
       player.physBody.SetLinearVelocity moveDir
-      player.onPositionChange(mediator.player.position) if mediator.PlayWithSounds
+      player.onPositionChange(mediator.player.position) if mediator.playWithSounds
       player.spriteState.moving = true
     else
       player.physBody.SetLinearVelocity new @physicsManager.Vec2 0, 0
       player.spriteState.moving = false
 
   draw: =>
+    lvl = mediator.getActiveLevel()
+
     # Resize canvas to window size
     @canvas.width  = window.innerWidth/2
     @canvas.height = window.innerHeight
 
     # get attributes
-    tileSize  = mediator.levels[mediator.activeLevel].gMap.get 'tileSize'
-    pixelSize = mediator.levels[mediator.activeLevel].gMap.get 'pixelSize'
-    numXTiles = mediator.levels[mediator.activeLevel].gMap.get 'numXTiles'
-    numYTiles = mediator.levels[mediator.activeLevel].gMap.get 'numYTiles'
+    numXTiles = lvl.mapTiledObject.width
+    numYTiles = lvl.mapTiledObject.height
+    tileSize  =
+      x: lvl.mapTiledObject.tileheight
+      y: lvl.mapTiledObject.tilewidth
+    pixelSize =
+      x: numXTiles * tileSize.x
+      y: numYTiles * tileSize.y
 
     pos = mediator.player.position
     radiusOfSight = 6 * tileSize.x
@@ -145,13 +150,17 @@ module.exports = class HomePageView extends View
     dx = 0
     dy = 0
 
-    sx = 0 if sx < 0
-    sy = 0 if sy < 0
     sx = pixelSize.x - sw if sx + sw > pixelSize.x
     sy = pixelSize.y - sh if sy + sh > pixelSize.y
+    sx = 0 if sx < 0
+    sy = 0 if sy < 0
+
+    # check boundaries, level might be smaller than radius of sight
+    sw = dw = pixelSize.x if sw - sx > pixelSize.x
+    sh = dh = pixelSize.y if sh - sy > pixelSize.y
 
     # @ctx.drawImageTiled (@gMap.get 'canvas'), sx, sy, sw, sh, dx, dy, dw, dh, tileSize.x, tileSize.y
-    @ctx.drawImage (mediator.levels[mediator.activeLevel].gMap.get 'canvas'), sx, sy, sw, sh, dx, dy, dw, dh
+    @ctx.drawImage (mediator.levels[mediator.activeLevel].mapCanvas), sx, sy, sw, sh, dx, dy, dw, dh
 
     for entity in mediator.entities
       entity.render(@ctx, sx, sy)
