@@ -1,10 +1,9 @@
 {
   "sounds": {
-    "sounds": ["level1theme"],
+    "sounds": ["level2theme"],
     "backgroundSounds":[
-      "water",
-      "fire",
-      "wood"
+      "dundundun",
+      "defaultStep"
     ]
   },
   "entities": {

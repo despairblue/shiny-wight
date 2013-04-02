@@ -151,7 +151,7 @@
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      Initialize Soundmanager.
     </span>
   </li>
   <li>
@@ -162,7 +162,7 @@
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      @param [String] Start loading of level.
     </span>
   </li>
   <li>
@@ -173,7 +173,7 @@
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      @param [String] @param [map] Reads levelX.json file and to all sounds of the level
     </span>
   </li>
   <li>
@@ -184,7 +184,7 @@
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      @param [String] @param [Array of String] Load all sounds in soundMap
     </span>
   </li>
   <li>
@@ -195,7 +195,7 @@
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      @param [xhrGethttp-request] Buffer the sound we just got from xhrGet request and put it into the corresponding SourceNode in the audio context
     </span>
   </li>
   <li>
@@ -206,7 +206,7 @@
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      @param [String] @param [Object] @param [Double] @param [Bool] Play sound of list with volume and loop
     </span>
   </li>
   <li>
@@ -217,7 +217,7 @@
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      @param [String] @param [Object] Stop sound in list
     </span>
   </li>
   <li>
@@ -228,7 +228,7 @@
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      Stop all sounds in active level
     </span>
   </li>
   <li>
@@ -239,7 +239,7 @@
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      Start all background sounds in backgroundSound list of active level with gain = 0, i.e.
     </span>
   </li>
   <li>
@@ -250,13 +250,24 @@
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      maybe look for an optimization here
+      @param [Object] Look for backgroundSounds to play on the player position on the soundMap and update their gain
     </span>
   </li>
   <li>
     <span class='signature'>
       <a href='#fade-instance'>
         - (void) <strong>fade</strong>(sound, list, volume)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      @param [String] @param [Object] @param [Double] Fade sound in list to gain
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#startAll-instance'>
+        - (void) <strong>startAll</strong>()
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -272,7 +283,11 @@
       - (void) <strong>initialize</strong>()
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Initialize Soundmanager.
+Create a new audio context and bind soundManager to mediator</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -280,7 +295,15 @@
       - (void) <strong>load</strong>(LEVEL)
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <div class='note'>
+    <strong>Note:</strong>
+    later change listener based to observer based event system
+  </div>
+  <p>@param [String]
+Start loading of level. The level to load is determined by the String LEVEL</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -288,7 +311,12 @@
       - (void) <strong>initializeSoundMap</strong>(LEVEL, map)
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>@param [String]
+@param [map]
+Reads levelX.json file and to all sounds of the level</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -296,7 +324,12 @@
       - (void) <strong>loadSounds</strong>(LEVEL, mapSounds)
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>@param [String]
+@param [Array of String]
+Load all sounds in soundMap</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -304,7 +337,15 @@
       - (void) <strong>bufferSounds</strong>(event)
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <div class='note'>
+    <strong>Note:</strong>
+    later trigger the observer event for &#39;all sounds loaded&#39;
+  </div>
+  <p>@param [xhrGethttp-request]
+Buffer the sound we just got from xhrGet request and put it into the corresponding SourceNode in the audio context</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -312,7 +353,14 @@
       - (void) <strong>playSound</strong>(sound, list, volume, loops)
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>@param [String]
+@param [Object]
+@param [Double]
+@param [Bool]
+Play sound of list with volume and loop</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -320,7 +368,12 @@
       - (void) <strong>stop</strong>(sound, list)
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>@param [String]
+@param [Object]
+Stop sound in list</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -328,7 +381,10 @@
       - (void) <strong>stopAll</strong>()
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Stop all sounds in active level</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -337,11 +393,7 @@
       (bound)
     </p>
     <div class='docstring'>
-  <div class='note todo'>
-    <strong>TODO:</strong>
-    start all backgroundSounds from the start
-  </div>
-  
+  <p>Start all background sounds in backgroundSound list of active level with gain = 0, i.e. muted</p>
 </div>
 <div class='tags'>
 </div>
@@ -352,7 +404,12 @@
       (bound)
     </p>
     <div class='docstring'>
-  <p>maybe look for an optimization here</p>
+  <div class='note todo'>
+    <strong>TODO:</strong>
+    maybe look for an optimization here
+  </div>
+  <p>@param [Object]
+Look for backgroundSounds to play on the player position on the soundMap and update their gain</p>
 </div>
 <div class='tags'>
 </div>
@@ -362,6 +419,20 @@
       - (void) <strong>fade</strong>(sound, list, volume)
       (bound)
     </p>
+    <div class='docstring'>
+  <p>@param [String]
+@param [Object]
+@param [Double]
+Fade sound in list to gain</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='startAll-instance'>
+      - (void) <strong>startAll</strong>()
+      (bound)
+    </p>
     <div class='tags'>
 </div>
   </div>
@@ -369,7 +440,7 @@
     </div>
     <div id='footer'>
   Generated on
-  Mon Apr 01 2013 17:44:49 GMT+0200 (CEST)
+  Tue Apr 02 2013 03:25:20 GMT+0200 (CEST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.6.0
