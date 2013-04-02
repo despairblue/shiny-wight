@@ -1,5 +1,7 @@
 #!/bin/sh -xe
 
+trap 'cp -r ../node_modules .; rm -rf ../public ../node_modules ../doc' INT TERM EXIT
+
 brunch build
 codo --private
 cp -r public ../
@@ -15,7 +17,3 @@ git commit -m 'update site'
 git push
 git checkout develop
 git stash pop
-cp -r ../node_modules .
-rm -rf ../public
-rm -rf ../node_modules
-rm -rf ../doc
