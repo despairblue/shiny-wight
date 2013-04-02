@@ -2,18 +2,91 @@
 This will be an HTML 5 game for [this](https://www.udacity.com/wiki/CS255/contest) contest
 
 ## Getting started
-- Dependencies
-  - [git](http://git-scm.com/)
-  - [git-flow-avh](https://github.com/petervanderdoes/gitflow/wiki) (optional)
-  - [Tiled Map Editor](http://www.mapeditor.org/) (only needed for level design)
-  - [node](http://nodejs.org/)
 
+### Dependencies
+- [git](http://git-scm.com/)
+- [Tiled Map Editor](http://www.mapeditor.org/) (only needed for level design)
+- [node](http://nodejs.org/)
+
+### Setup
 1. ```git clone https://github.com/despairblue/shiny-wight.git```
 2. Run `npm install -g brunch`
 3. In the project root dir run `npm install`
 4. In the project root dir run `npm up`
 5. In the project root dir run `npm start`.
 6. Open Browser at `localhost:3333`
+
+### Level Design
+We use [Tiled Map Editor](http://www.mapeditor.org/) for the level design.
+When designing a level there are some things to watch out for.
+
+**TODO:** Write docs for background sounds, spawners and config files
+
+#### Naming Conventions
+- All physic layers must be called `physics`
+- All object layers for spawning objects must be called `spawnpoints`
+    - In these layers the object's name must match the one in its config file (See config files)
+    - the object's type must match its class
+- All the sound layer must be called `sound`
+
+#### Physics
+Shiny-Wight uses two kinds of background physics:
+1. A tile layer for crude background physics. It must be called 'physics'
+    - The tileset used here is called `physics.png` and can be found in the `atlases` folder. This tileset must be used for now as the tile order is hardcoded, for more sophisticated physics use the object layer.
+2. An object layer for more sophisticated physics.
+    - The object's *name* and *type* can be arbitrary.
+    - You can use *boxes* and *polygons*. *Polylines* are not supported.
+    - *Polygons* must be:
+        - convex
+        - have no more than 8 corners
+        - drawn clockwise
+
+#### Background Sounds
+
+#### Spawners
+
+#### Config Files
+``` JSON
+{
+  "name": "Player",
+  "VELOCITY": 300,
+  "spriteState": {
+    "moving": false,
+    "viewDirection": 0,
+    "creationTime": "Will be overidden by `Date.Now()`",
+    "animationRate": 100,
+    "normal": 1
+  },
+  "tileSet": {
+    "image": "atlases/warrior_m.png",
+    "tilesX": 3,
+    "tilesY": 4,
+    "tileheight": 32,
+    "tilewidth": 32,
+    "offset": {
+      "x": 16,
+      "y":24
+    }
+  },
+  "entityDef": {
+    "id": "Player",
+    "type": "dynamic",
+    "x": "will be overidden by `@position.x`",
+    "y": "will be overidden by `@position.y`",
+    "halfWidth": 8,
+    "halfHeight": 8,
+    "damping": 0,
+    "angle": 0,
+    "categories": [""],
+    "collidesWith": ["all"],
+    "userData": {
+      "id": "Player",
+      "ent": "will be overidden by `this`"
+    }
+  }
+}
+```
+
 
 ## Used Assets
 [PathAndObjects_0.png](http://opengameart.org/content/rpg-tiles-cobble-stone-paths-town-objects)
