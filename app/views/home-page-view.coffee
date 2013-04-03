@@ -33,9 +33,9 @@ module.exports = class HomePageView extends View
     # the first level
     level = 'level1'
 
-    if mediator.playWithSounds
-      @subscribeEvent 'soundsLoaded', =>
-        @soundManager.startAll()
+    # if mediator.playWithSounds
+    #   @subscribeEvent 'soundsLoaded', =>
+    #     @soundManager.startAll()
 
     @subscribeEvent 'changeLvl', =>
       console.log 'change level'
@@ -62,6 +62,7 @@ module.exports = class HomePageView extends View
     mediator.entities = []
     @physicsManager.setup()
     @entitySpawnManager.initialSpawn()
+    @soundManager.startAll()
 
     window.requestAnimationFrame @doTheWork
 
