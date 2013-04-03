@@ -89,7 +89,7 @@ module.exports = class SoundManager extends Model
     buffer = @audioContext.createBuffer(request.response, false)
     list[sound].buffer = buffer
 
-    console.log sound+' loaded'
+    console.log sound+' loaded' if debug
 
     @soundCount--
     if @soundCount <= 0
@@ -120,28 +120,26 @@ module.exports = class SoundManager extends Model
   Stop sound in list
   ###
   stop: (sound, list) =>
-    setTimeout =>
-      @fade sound, list, 0
-    , @FADE_TIME_INTERVAL
-    list[sound].sourceNode.stop(0)
+    @fade sound, list, 0
+    list[sound].sourceNode.stop(@audioContext.currentTime+@FADE_TIME_INTERVAL)
     list[sound].isPlaying = false
-    console.log sound+'.mp3 stopped'
+    console.log sound+'.mp3 stopped' if debug
 
   ###
   Stop all sounds in active level
   ###
   stopAll: =>
     try
-      for name, sound of mediator.levels[mediator.activeLevel].soundList
-        @stop name, mediator.levels[mediator.activeLevel].soundList
+      for name, sound of mediator.getActiveLevel().soundList
+        @stop name, mediator.getActiveLevel().soundList
 
-      for name, sound of mediator.levels[mediator.activeLevel].backgroundSoundList
-        @stop name, mediator.levels[mediator.activeLevel].backgroundSoundList
+      for name, sound of mediator.getActiveLevel().backgroundSoundList
+        @stop name, mediator.getActiveLevel().backgroundSoundList
 
-      @stop mediator.activeLevel+'theme.mp3', mediator.levels[mediator.activeLevel].themeSound
+      @stop mediator.activeLevel+'theme.mp3', mediator.getActiveLevel().themeSound
 
     catch e
-      console.log e.toString()
+      console.log e.toString() if debug
 
 
   ###

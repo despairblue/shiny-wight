@@ -7,5 +7,6 @@ module.exports = class MapChanger extends Entity
 
   update: =>
     if mediator.player.position.y <= 20 && (480 < mediator.player.position.x < 500)
+      mediator.soundManager.stopAll() if mediator.playWithSounds
       mediator.activeLevel = @levelToChangeTo
       @publishEvent 'changeLvl'
