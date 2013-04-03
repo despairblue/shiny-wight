@@ -1,5 +1,6 @@
 {
   "sounds": {
+    "prefix": "sounds/",
     "sounds": [],
     "theme": "level1theme.mp3",
     "backgroundSounds":[
