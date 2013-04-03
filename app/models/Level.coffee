@@ -6,7 +6,8 @@ module.exports = class Level extends Model
   callback: null
 
   soundList: {}
-  backgroundSounds: {}
+  backgroundSoundList: {}
+  soundTheme: null
 
   soundCount: 0
 
@@ -51,9 +52,13 @@ module.exports = class Level extends Model
         # load sounds
         if mediator.playWithSounds
           # just copy sounds from the manifest and let the managers load it
-          @soundCount = @manifest.sounds.sounds.length + 1 + @manifest.sounds.backgroundSounds.length
-          @soundMap = mediator.soundManager.getSoundMap(@mapTiledObject)
-
+          @soundMap = mediator.soundManager.getSoundMap @mapTiledObject
+          mediator.soundManager.loadSounds @manifest.sounds, (soundList, backgroundSoundList, themeSound) =>
+            @soundList = soundList
+            @backgroundSoundList = backgroundSoundList
+            @themeSound = themeSound
+            @soundsLoaded = true
+            @checkIfDone()
 
 
   setup: =>
@@ -63,6 +68,6 @@ module.exports = class Level extends Model
       console.error "Don't call Level.setup() unless the manifest finished loading"
 
   checkIfDone: =>
-    if @bodiesLoaded and @mapLoaded
+    if @bodiesLoaded and @mapLoaded and @soundsLoaded
       @loadCompleted = true
       @callback() if @callback
