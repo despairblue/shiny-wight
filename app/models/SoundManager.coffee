@@ -23,17 +23,9 @@ module.exports = class SoundManager extends Model
 
   ###
   @param [String]
-  Start loading of level. The level to load is determined by the String LEVEL
-  @note later change listener based to observer based event system
+  @param [map]
+  Initializes soundMap for backgroundSounds
   ###
-  # load: (LEVEL) =>
-  #   @loadSounds LEVEL, mapSounds
-
-  # ###
-  # @param [String]
-  # @param [map]
-  # Initializes soundMap for backgroundSounds
-  # ###
   getSoundMap: (map) =>
     soundMap = []
     for x in [0..map.width - 1]
@@ -54,7 +46,6 @@ module.exports = class SoundManager extends Model
     return soundMap
 
 
-
   loadSounds: (mapSounds, callback) =>
     @soundCount = mapSounds.sounds.length + 1 + mapSounds.backgroundSounds.length
     @soundList = {}
@@ -71,8 +62,6 @@ module.exports = class SoundManager extends Model
 
     @themeSound[mapSounds.theme] = new SoundObj
     mediator.std.xhrGet mapSounds.prefix+mapSounds.theme, @bufferSounds, 'arraybuffer', mapSounds.theme, @themeSound, callback
-
-
 
 
   ###

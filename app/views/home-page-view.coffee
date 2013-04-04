@@ -30,11 +30,6 @@ module.exports = class HomePageView extends View
     @entitySpawnManager = new EntitySpawnManager()
     @mapManager = new TILEDMap()
 
-
-    # if mediator.playWithSounds
-    #   @subscribeEvent 'soundsLoaded', =>
-    #     @soundManager.startAll()
-
     @subscribeEvent 'changeLvl', =>
       console.log 'change to '+mediator.activeLevel if debug
       @setup(mediator.activeLevel)
@@ -44,17 +39,20 @@ module.exports = class HomePageView extends View
     @loadLevel level, =>
       @setup level
 
+
   loadLevel: (level, rest...) =>
-    # map = new TILEDMap 'callWhenRendered': =>
-      #@setup level
-
-      # if mediator.playWithSounds
-      #   @soundManager.load(level)
-
     return if mediator.levels[level]?
 
     mediator.levels[level] = new Level (level + '.json'), =>
       rest[0]() if rest[0]
+
+  # loads next levels
+  loadNextLevels: =>
+    # iterate through MapChanger Entities anl load levels they point to
+    for entity in mediator.entities
+      continue if !entity.levelToChangeTo?
+      @loadLevel(entity.levelToChangeTo)
+
 
   setup: (level) =>
     mediator.activeLevel = level
@@ -64,6 +62,7 @@ module.exports = class HomePageView extends View
     @soundManager.startAll() if mediator.playWithSounds
 
     window.requestAnimationFrame @doTheWork
+    @loadNextLevels()
 
 
   render: =>

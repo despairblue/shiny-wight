@@ -39,8 +39,6 @@ module.exports = class Level extends Model
             @checkIfDone()
 
 
-
-
       # load map
       mediator.std.xhrGet @manifest.map.prefix + '/' + @manifest.map.file, (data) =>
         @mapTiledObject = JSON.parse data.target.responseText
@@ -68,7 +66,7 @@ module.exports = class Level extends Model
       console.error "Don't call Level.setup() unless the manifest finished loading"
 
   checkIfDone: =>
-    if @bodiesLoaded and @mapLoaded and @soundsLoaded
+    if @bodiesLoaded and @mapLoaded and (@soundsLoaded or !mediator.playWithSounds)
       console.log "level load completed" if debug
       @loadCompleted = true
       @callback() if @callback

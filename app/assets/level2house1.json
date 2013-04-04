@@ -1,8 +1,11 @@
 {
   "sounds": {
-    "sounds": ["dundundun"],
+    "prefix": "sounds/",
+    "sounds": [],
+    "theme": "level2theme.mp3",
     "backgroundSounds":[
-      "water"
+      "dundundun.mp3",
+      "defaultStep.mp3"
     ]
   },
   "entities": {
