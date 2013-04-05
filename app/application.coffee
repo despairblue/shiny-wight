@@ -1,6 +1,7 @@
 Chaplin = require 'chaplin'
 Layout = require 'views/layout'
 mediator = require 'mediator'
+mapManager = require 'models/TILEDMap'
 routes = require 'routes'
 
 # The application object
@@ -58,7 +59,7 @@ module.exports = class Application extends Chaplin.Application
     mediator.map            = null
     mediator.physicsManager = null
     mediator.soundManager   = null
-    mediator.mapManager     = null
+    mediator.mapManager     = mapManager
     # used while developing, so wie don't have to load sounds if we don't need to
     mediator.playWithSounds = false
     mediator.factory        = {}

@@ -1,5 +1,4 @@
 View = require 'views/base/view'
-TILEDMap = require 'models/TILEDMap'
 InputManager = require 'models/InputManager'
 SoundManager = require 'models/SoundManager'
 PhysicsManager = require 'models/PhysicsManager'
@@ -28,7 +27,6 @@ module.exports = class HomePageView extends View
     @soundManager = new SoundManager() if mediator.playWithSounds
     @inputManager = new InputManager()
     @entitySpawnManager = new EntitySpawnManager()
-    @mapManager = new TILEDMap()
 
     @subscribeEvent 'changeLvl', =>
       console.log 'change to '+mediator.activeLevel if debug

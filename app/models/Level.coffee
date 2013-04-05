@@ -42,7 +42,7 @@ module.exports = class Level extends Model
       # load map
       mediator.std.xhrGet @manifest.map.prefix + '/' + @manifest.map.file, (data) =>
         @mapTiledObject = JSON.parse data.target.responseText
-        mediator.mapManager.renderZwei @mapTiledObject, (map, tileSets) =>
+        mediator.mapManager.parse @mapTiledObject, (map, tileSets) =>
           @mapCanvas = map
           @tileSets = tileSets
           @mapLoaded = true

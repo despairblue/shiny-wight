@@ -1,84 +1,28 @@
-Model = require 'models/base/model'
-mediator = require 'mediator'
-
 ###
 Loads and renders a level.
 @note emits `map:rendered` event when map ist fully rendered
 ###
-module.exports = class TILEDMap extends Model
-  defaults:
-    currMapData: null
-    tileset: []
-    numXTiles: 100
-    numYTiles: 100
-    tileSize:
-      x: 64
-      y: 64
-    pixelSize:
-      x: 64
-      y: 64
-    fullyLoaded: false
-    canvas: null
-    ctx: null
-
-
-  ###
-  @private
-  Initializes an instance.
-  ###
-  initialize: (options) ->
-    mediator.mapManager = @
-    super
-    # @callWhenRendered = options.callWhenRendered
-
-    #mediator.levels[LEVEL].gMap = @
-
-    @imgLoadCount = 0
-    canvas = document.createElement 'canvas'
-    ctx = canvas.getContext '2d'
-    @set 'canvas':canvas
-    @set 'ctx':ctx
-
-
-  ###
-  Loads the map, parses it and renders it
-  @param [String] map URI that points to the json output of TILED map editor
-  ###
-  load: (level) =>
-    lvl = mediator.levels[level]
-    mediator.std.xhrGet lvl.map.prefix + '/' + lvl.map.file, (data) =>
-      @parseMapJSON data.target.responseText
-
+module.exports = class TILEDMap
   ###
   @private
   Parses TILED map editor json data
-  @param [JSON] mapJSON the TILED map editor json data
+  @param [Object] mapTiledObject the parsed TILED map editor map data
   ###
-  parseMapJSON: (mapJSON, callback) =>
-    @currMapData = mapJSON
-    @numXTiles = @currMapData.width
-    @numYTiles = @currMapData.height
-
-    @tileSize =
-      x: @currMapData.tileheight
-      y: @currMapData.tilewidth
-
-    @pixelSize =
-      x: @numXTiles * @tileSize.x
-      y: @numYTiles * @tileSize.y
-
-    @set 'currMapData':@currMapData
-    @set 'numXTiles':@numXTiles
-    @set 'numYTiles':@numYTiles
-    @set 'tileSize':@tileSize
-    @set 'pixelSize':@pixelSize
+  @parseMapJSON: (mapTiledObject, callback) =>
 
     console.log 'Start loading atlasses'
 
-    @tilesets = for tileset in @currMapData.tilesets
-      @createTileSet tileset, callback
+    imgLoadCount = mapTiledObject.tilesets.length
 
-    @set 'tilesets':@tilesets
+    tilesets =
+      for tileset in mapTiledObject.tilesets
+        @createTileSet tileset, =>
+          imgLoadCount--
+          if imgLoadCount <= 0
+            callback(tilesets)
+          else
+            console.log "#{imgLoadCount} tile sets to go. Hang in there!" if debug
+
 
   ###
   @private
@@ -95,20 +39,14 @@ module.exports = class TILEDMap extends Model
       numXTiles: …   # number of tiles in x direction
       numYTiles: …   # number of tiles in y direction
   ###
-  createTileSet: (tileset, callback) =>
-    currMapData = @get 'currMapData'
-    tileSize = @get 'tileSize'
-    @imgLoadCount = 0
-
+  @createTileSet: (tileset, callback) =>
+    # Load tile set image
     img = new Image()
     img.onload = =>
-      @imgLoadCount++
-      if @imgLoadCount == currMapData.tilesets.length
-        callback()
-      else
-        console.log "#{currMapData.tilesets.length - @imgLoadCount} to go"
+      callback()
     img.src = 'atlases/' + tileset.image.replace /^.*[\\\/]/, ''
 
+    # create and return metadata object
     ts =
       firstgid: tileset.firstgid
       image: img
@@ -117,9 +55,10 @@ module.exports = class TILEDMap extends Model
       tileheight: tileset.tileheight
       tilewidth: tileset.tilewidth
       name: tileset.name
-      numXTiles: Math.floor (tileset.imagewidth  / (tileSize.x + tileset.spacing))
-      numYTiles: Math.floor (tileset.imageheight / (tileSize.y + tileset.spacing))
+      numXTiles: Math.floor (tileset.imagewidth  / (tileset.tilewidth + tileset.spacing))
+      numYTiles: Math.floor (tileset.imageheight / (tileset.tileheight + tileset.spacing))
       spacing: tileset.spacing
+
 
   ###
   @private
@@ -132,7 +71,7 @@ module.exports = class TILEDMap extends Model
       px: …  # x value of the top left corner in pixels
       py: …  # y value of the top left corner in pixels
   ###
-  getTilePacket: (tileIndex, tileSets) =>
+  @getTilePacket: (tileIndex, tileSets) =>
     pkt =
       img: null
       px: 0
@@ -163,46 +102,40 @@ module.exports = class TILEDMap extends Model
       pkt.py = lTileY * (tileSize.y + tile.spacing) + tile.spacing
       pkt.px = lTileX * (tileSize.x + tile.spacing) + tile.spacing
 
-    pkt
+    return pkt
+
 
   ###
   Renders the map into it's own off screen canvas.
   This means the whol background can be drawn with one single draw
   call instead of hundreads.
   ###
-  render: (mapJSON, callback) =>
+  @render: (mapTiledObject, tilesets) =>
     canvas = document.createElement 'canvas'
     ctx = canvas.getContext '2d'
 
-    currMapData = @get 'currMapData'
-    tileSize = @get 'tileSize'
-    numXTiles = @get 'numXTiles'
-    numYTiles = @get 'numYTiles'
-
-    canvas.width = numXTiles * tileSize.x
-    canvas.height = numYTiles * tileSize.y
+    canvas.width = mapTiledObject.width * mapTiledObject.tilewidth
+    canvas.height = mapTiledObject.height * mapTiledObject.tileheight
 
     console.log 'Finish loading atlasses'
 
-    for layer in currMapData.layers
+    for layer in mapTiledObject.layers
       continue if layer.type isnt 'tilelayer'
       continue if layer.name is 'sound' or layer.name is 'physics'
 
       for tID, tileIDX in layer.data
         continue if tID is 0
 
-        tPKT = @getTilePacket tID
+        tPKT = @getTilePacket tID, tilesets
         coords =
-          x: (tileIDX % numXTiles) * tileSize.x
-          y: Math.floor(tileIDX / numXTiles) * tileSize.y
+          x: (tileIDX % mapTiledObject.width) * mapTiledObject.tilewidth
+          y: Math.floor(tileIDX / mapTiledObject.width) * mapTiledObject.tileheight
 
-        ctx.drawImage tPKT.img, tPKT.px, tPKT.py, tileSize.x, tileSize.y, coords.x, coords.y, tileSize.x, tileSize.y
+        ctx.drawImage tPKT.img, tPKT.px, tPKT.py, mapTiledObject.tilewidth, mapTiledObject.tileheight, coords.x, coords.y, mapTiledObject.tilewidth, mapTiledObject.tileheight
 
     return canvas
 
-    @callWhenRendered()
 
-  renderZwei: (mapJSON, callback) =>
-    @parseMapJSON mapJSON, =>
-      callback( @render(mapJSON), @tilesets )
-
+  @parse: (mapTiledObject, callback) =>
+    @parseMapJSON mapTiledObject, (tilesets) =>
+      callback( @render(mapTiledObject, tilesets), tilesets )
