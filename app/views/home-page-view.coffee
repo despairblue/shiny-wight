@@ -48,7 +48,7 @@ module.exports = class HomePageView extends View
 
   # loads next levels
   loadNextLevels: =>
-    # iterate through MapChanger Entities anl load levels they point to
+    # iterate through MapChanger Entities and load levels they point to
     for entity in mediator.entities
       continue if !entity.levelToChangeTo?
       @loadLevel(entity.levelToChangeTo)
