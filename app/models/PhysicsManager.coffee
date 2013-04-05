@@ -144,12 +144,12 @@ module.exports = class PhysicsManager extends Model
     body.CreateFixture fixtureDefinition
 
   ###
-  @todo does not work
+  @todo movo to TiledMap
   ###
   createLevelBorder: (map) =>
     fixtureDefinition = new FixtureDef()
     fixtureDefinition.shape = new PolygonShape()
-    fixtureDefinition.shape.SetAsBox 0, map.tileheight
+    fixtureDefinition.shape.SetAsBox 0, map.tileheight * map.height
     mapBorder = new BodyDef()
     mapBorder.type = Body.b2_staticBody
     mapBorder.position.x = 0
@@ -159,17 +159,17 @@ module.exports = class PhysicsManager extends Model
 
     fixtureDefinition = new FixtureDef()
     fixtureDefinition.shape = new PolygonShape()
-    fixtureDefinition.shape.SetAsBox 0, map.tileheight
+    fixtureDefinition.shape.SetAsBox 0, map.tileheight * map.height
     mapBorder = new BodyDef()
     mapBorder.type = Body.b2_staticBody
-    mapBorder.position.x = map.tilewidth
+    mapBorder.position.x = map.tilewidth * map.width
     mapBorder.position.y = 0
     body = @registerBody mapBorder
     body.CreateFixture fixtureDefinition
 
     fixtureDefinition = new FixtureDef()
     fixtureDefinition.shape = new PolygonShape()
-    fixtureDefinition.shape.SetAsBox map.tilewidth, 0
+    fixtureDefinition.shape.SetAsBox map.tilewidth * map.width, 0
     mapBorder = new BodyDef()
     mapBorder.type = Body.b2_staticBody
     mapBorder.position.x = 0
@@ -179,11 +179,11 @@ module.exports = class PhysicsManager extends Model
 
     fixtureDefinition = new FixtureDef()
     fixtureDefinition.shape = new PolygonShape()
-    fixtureDefinition.shape.SetAsBox map.tilewidth, 0
+    fixtureDefinition.shape.SetAsBox map.tilewidth * map.width, 0
     mapBorder = new BodyDef()
     mapBorder.type = Body.b2_staticBody
     mapBorder.position.x = 0
-    mapBorder.position.y = map.tileheight
+    mapBorder.position.y = map.tileheight * map.height
     body = @registerBody mapBorder
     body.CreateFixture fixtureDefinition
 
