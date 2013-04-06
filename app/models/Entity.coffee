@@ -71,9 +71,21 @@ module.exports = class Entity extends Model
      x: x
      y: y
 
+    @size.x = width
+
     @size =
       x: width
       y: height
+
+    @entityDef =
+      ellipse: false
+      type: "dynamic"
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+      userData:
+        ent: null
 
     @entityDef.x = @position.x
     @entityDef.y = @position.y
