@@ -119,10 +119,10 @@ module.exports = class Entity extends Model
   onTouch: (body, point, impulse) =>
     # ...
 
-  onTouchBegin: (body, point, impulse) =>
+  onTouchBegin: (body, point) =>
     # ...
 
-  onTouchEnd: (body, point, impulse) =>
+  onTouchEnd: (body, point) =>
     # ...
 
   ###
