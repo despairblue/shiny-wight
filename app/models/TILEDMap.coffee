@@ -79,28 +79,15 @@ module.exports = class TILEDMap
 
     tile = null
 
-    if tileSets
-      for tile in tileSets by -1 when tile.firstgid <= tileIndex
-        break
+    for tile in tileSets by -1 when tile.firstgid <= tileIndex
+      break
 
-      pkt.img = tile.image
-      localIdx = tileIndex - tile.firstgid
-      lTileX = Math.floor localIdx % tile.numXTiles
-      lTileY = Math.floor localIdx / tile.numXTiles
-      pkt.py = lTileY * (tile.tileheight + tile.spacing) + tile.spacing
-      pkt.px = lTileX * (tile.tilewidth + tile.spacing) + tile.spacing
-    else
-      tilesets = @get 'tilesets'
-      tileSize = @get 'tileSize'
-      for tile in tilesets by -1 when tile.firstgid <= tileIndex
-        break
-
-      pkt.img = tile.image
-      localIdx = tileIndex - tile.firstgid
-      lTileX = Math.floor localIdx % tile.numXTiles
-      lTileY = Math.floor localIdx / tile.numXTiles
-      pkt.py = lTileY * (tileSize.y + tile.spacing) + tile.spacing
-      pkt.px = lTileX * (tileSize.x + tile.spacing) + tile.spacing
+    pkt.img = tile.image
+    localIdx = tileIndex - tile.firstgid
+    lTileX = Math.floor localIdx % tile.numXTiles
+    lTileY = Math.floor localIdx / tile.numXTiles
+    pkt.py = lTileY * (tile.tileheight + tile.spacing) + tile.spacing
+    pkt.px = lTileX * (tile.tilewidth + tile.spacing) + tile.spacing
 
     return pkt
 
