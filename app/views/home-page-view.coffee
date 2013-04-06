@@ -48,6 +48,15 @@ module.exports = class HomePageView extends View
       continue if !entity.levelToChangeTo?
       @loadLevel(entity.levelToChangeTo)
 
+# # if there is no MapChanger to active level,
+#       for entity in mediator.entities
+#         continue if !entity.levelToChangeTo?
+#         if entity.levelToChangeTo == mediator.activeLevel
+#           levelStillNeeded = true
+#           break
+
+#       mediator.levels[mediator.activeLevel] = null if !levelStillNeeded
+
 
   setup: (level) =>
     mediator.activeLevel = level

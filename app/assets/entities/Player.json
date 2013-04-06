@@ -1,7 +1,7 @@
 {
   "tiledName": "Player",
   "name": "Player",
-  "VELOCITY": 300,
+  "velocity": 300,
   "spriteState": {
     "moving": false,
     "viewDirection": 0,
@@ -27,12 +27,7 @@
     "y": "will be overidden by `@position.y`",
     "halfWidth": 8,
     "halfHeight": 8,
-    "damping": 0,
-    "angle": 0,
-    "categories": [""],
-    "collidesWith": ["all"],
     "userData": {
-      "id": "Player",
       "ent": "will be overidden by `this`"
     }
   }

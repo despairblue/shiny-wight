@@ -9,7 +9,7 @@ module.exports = class Level extends Model
   # Sounds
   soundList: {}
   backgroundSoundList: {}
-  soundTheme: null
+  #soundTheme: null
 
   soundCount: 0
 

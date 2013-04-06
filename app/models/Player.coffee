@@ -16,13 +16,6 @@ module.exports = class Player extends Entity
 
     @spriteState.creationTime = Date.now()
 
-    @entityDef.x = @position.x
-    @entityDef.y = @position.y
-    @entityDef.userData.ent = @
-
-    @physBody = @level.physicsManager.addBody @entityDef, @level.b2World
-    @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
-
   kill: =>
     mediator.physicsManager.removeBody @physBody
     @physBody = null

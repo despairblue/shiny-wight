@@ -65,6 +65,14 @@ module.exports = class Entity extends Model
       x: width
       y: height
 
+    @entityDef.x = @position.x
+    @entityDef.y = @position.y
+    @entityDef.userData.ent = @
+
+    @physBody = @level.physicsManager.addBody @entityDef, @level.b2World
+    @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
+
+
 
   ###
   @private

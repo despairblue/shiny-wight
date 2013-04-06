@@ -125,7 +125,11 @@ module.exports = class SoundManager extends Model
       for name, sound of mediator.getActiveLevel().backgroundSoundList
         @stop name, mediator.getActiveLevel().backgroundSoundList
 
-      @stop mediator.activeLevel+'theme.mp3', mediator.getActiveLevel().themeSound
+      for name, sound of mediator.getActiveLevel().themeSound
+        @stop name, mediator.getActiveLevel().themeSound
+
+
+      #@stop mediator.activeLevel+'theme.mp3', mediator.getActiveLevel().themeSound
 
     catch e
       console.log e.toString() if debug

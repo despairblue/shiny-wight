@@ -5,8 +5,28 @@ module.exports = class MapChanger extends Entity
 
   mediator.factory['MapChanger'] = this
 
-  update: =>
-    if mediator.player.position.y <= 20 && (480 < mediator.player.position.x < 500)
-      mediator.soundManager.stopAll() if mediator.playWithSounds
-      mediator.activeLevel = @levelToChangeTo
-      @publishEvent 'changeLvl'
+  entityDef:
+    type: "static"
+    x: 0
+    y: 0
+    halfWidth: 16
+    halfHeight: 1
+    userData:
+      ent: null
+
+  levelToChangeTo: ""
+
+
+  constructor: (x, y, width, height, owningLevel, settings) ->
+
+    super x, y, width, height, owningLevel, settings
+    levelToChangeTo = "pisse"
+
+
+
+
+  onTouchBegin: (body, point, impulse) =>
+    mediator.soundManager.stopAll() if mediator.playWithSounds
+    mediator.levels[mediator.activeLevel] = null
+    mediator.activeLevel = @levelToChangeTo
+    @publishEvent 'changeLvl'
