@@ -66,26 +66,26 @@
                  "name":"MapChangerToLevel2House1",
                  "properties":
                     {
-
+                     "levelToChangeTo":"level2house1"
                     },
                  "type":"MapChanger",
                  "visible":true,
                  "width":25,
-                 "x":258,
-                 "y":546
+                 "x":259,
+                 "y":561
                 }, 
                 {
                  "height":5,
                  "name":"MapChangerToLevel2House2",
                  "properties":
                     {
-
+                     "levelToChangeTo":"level2house2"
                     },
                  "type":"MapChanger",
                  "visible":true,
                  "width":23,
                  "x":452,
-                 "y":545
+                 "y":562
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -103,7 +103,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/atlases\/wood_tileset_3.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/wood_tileset_3.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -118,7 +118,7 @@
         }, 
         {
          "firstgid":257,
-         "image":"..\/atlases\/grass.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/grass.png",
          "imageheight":192,
          "imagewidth":96,
          "margin":0,
@@ -133,7 +133,7 @@
         }, 
         {
          "firstgid":275,
-         "image":"..\/atlases\/marioficke.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/marioficke.png",
          "imageheight":1258,
          "imagewidth":852,
          "margin":2,
@@ -148,7 +148,7 @@
         }, 
         {
          "firstgid":1200,
-         "image":"..\/atlases\/physics.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/physics.png",
          "imageheight":32,
          "imagewidth":160,
          "margin":0,

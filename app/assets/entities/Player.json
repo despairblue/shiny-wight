@@ -1,4 +1,5 @@
 {
+  "tiledName": "Player",
   "name": "Player",
   "VELOCITY": 300,
   "spriteState": {

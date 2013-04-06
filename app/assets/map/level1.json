@@ -169,17 +169,17 @@
                  "y":224
                 }, 
                 {
-                 "height":0,
+                 "height":4,
                  "name":"MapChangerToLevel2",
                  "properties":
                     {
-
+                     "levelToChangeTo":"level2"
                     },
                  "type":"MapChanger",
                  "visible":true,
-                 "width":85,
-                 "x":479,
-                 "y":1
+                 "width":88,
+                 "x":480,
+                 "y":2
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -323,7 +323,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/atlases\/PathAndObjects_0.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/PathAndObjects_0.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -338,7 +338,7 @@
         }, 
         {
          "firstgid":257,
-         "image":"..\/atlases\/Castle2.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/Castle2.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -353,7 +353,7 @@
         }, 
         {
          "firstgid":513,
-         "image":"..\/atlases\/wood_tileset_3.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/wood_tileset_3.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -368,7 +368,7 @@
         }, 
         {
          "firstgid":769,
-         "image":"..\/atlases\/mountain_landscape_23.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/mountain_landscape_23.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -383,7 +383,7 @@
         }, 
         {
          "firstgid":1025,
-         "image":"..\/atlases\/sound_map.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/sound_map.png",
          "imageheight":64,
          "imagewidth":320,
          "margin":0,
@@ -398,7 +398,7 @@
         }, 
         {
          "firstgid":1045,
-         "image":"..\/atlases\/physics.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/physics.png",
          "imageheight":32,
          "imagewidth":160,
          "margin":0,

@@ -41,7 +41,7 @@ module.exports = class Level extends Model
       for file in @manifest.entities.files
         mediator.std.xhrGet @manifest.entities.prefix + '/' + file, (data) =>
           ent = JSON.parse data.target.responseText
-          @entities[ent.name] = ent
+          @entities[ent.tiledName] = ent
           @bodyCount--
           if @bodyCount <= 0
             @bodiesLoaded = true
@@ -127,8 +127,18 @@ module.exports = class Level extends Model
     # get constructor and json config
     Ent = mediator.factory[object.type]
 
-    # TODO: object.name goes to object.tiled_name
-    conf = @entities[object.name]
+
+    # use the properties defined in tiled
+    if Object.keys(object.properties).length isnt 0
+      conf = {}
+      conf[prop] = content for prop, content of object.properties
+    else
+      # otherwise use a configuration file
+      conf = @entities[object.name]
+
+    if not conf
+      console.error "No configuration file found for #{object.name}"
+      return "No configuration found!"
 
     # sanitize constructor attributes
     x = Math.floor object.x
