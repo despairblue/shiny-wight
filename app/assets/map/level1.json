@@ -156,6 +156,21 @@
          "name":"spawnpoints",
          "objects":[
                 {
+                 "height":4,
+                 "name":"MapChangerToLevel2",
+                 "properties":
+                    {
+                     "levelToChangeTo":"level2",
+                     "physicsType":"static"
+                    },
+                 "type":"MapChanger",
+                 "visible":true,
+                 "width":88,
+                 "x":480,
+                 "y":2
+                }, 
+                {
+                 "ellipse":true,
                  "height":32,
                  "name":"Player",
                  "properties":
@@ -165,21 +180,8 @@
                  "type":"Player",
                  "visible":true,
                  "width":32,
-                 "x":64,
-                 "y":224
-                }, 
-                {
-                 "height":0,
-                 "name":"MapChangerToLevel2",
-                 "properties":
-                    {
-
-                    },
-                 "type":"MapChanger",
-                 "visible":true,
-                 "width":89,
-                 "x":481,
-                 "y":15
+                 "x":128,
+                 "y":192
                 }],
          "opacity":1,
          "type":"objectgroup",
