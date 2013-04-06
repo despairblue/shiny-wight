@@ -2,8 +2,8 @@
   "sounds": {
     "prefix": "sounds/",
     "sounds": [],
-    "theme": "underground.mp3",
-    "backgroundSounds": []
+    "theme": "level3theme.mp3",
+    "backgroundSounds":[]
   },
   "entities": {
     "prefix": "entities",

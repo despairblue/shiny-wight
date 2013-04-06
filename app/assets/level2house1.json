@@ -3,7 +3,11 @@
     "prefix": "sounds/",
     "sounds": [],
     "theme": "level2theme.mp3",
+<<<<<<< HEAD
     "backgroundSounds": []
+=======
+    "backgroundSounds":["dungeonAndScream.mp3"]
+>>>>>>> Remove useless code
   },
   "entities": {
     "prefix": "entities",

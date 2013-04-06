@@ -3,6 +3,7 @@ PhysicsManager = require 'models/PhysicsManager'
 mediator = require 'mediator'
 
 module.exports = class Level extends Model
+
   constructor: (manifestUri, @_callback) ->
     # Object Properties
     @manifest            = null

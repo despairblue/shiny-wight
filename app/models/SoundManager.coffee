@@ -109,8 +109,7 @@ module.exports = class SoundManager extends Model
   Stop sound in list
   ###
   stop: (sound, list) =>
-    @fade sound, list, 0
-    list[sound].sourceNode.stop(@audioContext.currentTime+@FADE_TIME_INTERVAL)
+    list[sound].sourceNode.stop(@audioContext.currentTime)
     list[sound].isPlaying = false
     console.log sound+'.mp3 stopped' if debug
 
@@ -143,6 +142,11 @@ module.exports = class SoundManager extends Model
       @playSound name, mediator.getActiveLevel().backgroundSoundList, 0, true
       sound.isPlaying = true
 
+  startThemeSound: () =>
+    for name, sound of mediator.getActiveLevel().themeSound
+      @playSound name, mediator.getActiveLevel().themeSound, 1, true
+      sound.isPlaying = true
+
   ###
   @param [Object]
   Look for backgroundSounds to play on the player position on the soundMap and update their gain
@@ -172,7 +176,7 @@ module.exports = class SoundManager extends Model
 
 
   startAll: =>
-    @playSound(mediator.activeLevel+'theme.mp3',mediator.getActiveLevel().themeSound, 1, true)
+    @startThemeSound()
     @startBackgroundSounds()
-    @updateBackgroundSounds(mediator.player.position)
+    @updateBackgroundSounds(mediator.getActiveLevel().player.position)
 
