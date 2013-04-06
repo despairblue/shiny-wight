@@ -112,7 +112,7 @@ module.exports = class Level extends Model
 
   checkIfDone: =>
     if @bodiesLoaded and @mapLoaded and (@soundsLoaded or !mediator.playWithSounds)
-      console.log "level load completed" if debug
+      console.log "load level completed" if debug
       @loadCompleted = true
       @_callback() if @_callback
 

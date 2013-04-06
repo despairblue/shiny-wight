@@ -879,7 +879,8 @@
                  "name":"MapChangerToLevel4",
                  "properties":
                     {
-
+                     "levelToChangeTo":"level5",
+                     "physicsType":"static"
                     },
                  "type":"MapChanger",
                  "visible":true,
