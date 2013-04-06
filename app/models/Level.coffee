@@ -4,7 +4,7 @@ mediator = require 'mediator'
 
 module.exports = class Level extends Model
   manifest: null
-  callback: null
+  _callback: null
 
   # Sounds
   soundList: {}
@@ -32,7 +32,7 @@ module.exports = class Level extends Model
   mapLoaded: false
   loadCompleted: false
 
-  constructor: (manifestUri, @callback) ->
+  constructor: (manifestUri, @_callback) ->
     mediator.std.xhrGet manifestUri, (data) =>
       @manifest = JSON.parse data.target.responseText
 
@@ -87,7 +87,7 @@ module.exports = class Level extends Model
     if @bodiesLoaded and @mapLoaded and (@soundsLoaded or !mediator.playWithSounds)
       console.log "level load completed" if debug
       @loadCompleted = true
-      @callback() if @callback
+      @_callback() if @_callback
 
 
   initialSpawn: (level) =>
