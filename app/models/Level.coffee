@@ -9,12 +9,11 @@ module.exports = class Level extends Model
   # Sounds
   soundList: {}
   backgroundSoundList: {}
-  #soundTheme: null
+  soundTheme: null
 
   soundCount: 0
 
   # Physics
-  physicsMap: []
   b2World: null
   physicsLoopHZ: 1/25
 
@@ -36,6 +35,9 @@ module.exports = class Level extends Model
   setupped: false
 
   constructor: (manifestUri, @_callback) ->
+    @entities = {}
+    @entityObjects = []
+
     mediator.std.xhrGet manifestUri, (data) =>
       @manifest = JSON.parse data.target.responseText
 

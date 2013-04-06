@@ -19,6 +19,7 @@ module.exports = class HomePageView extends View
     new Std()
 
     window.homepageview = @ if debug
+    window.mediator = mediator if debug
     mediator.playWithSounds = true
     mediator.playWithSounds = confirm("Load Sounds?") if debug
 
@@ -122,7 +123,7 @@ module.exports = class HomePageView extends View
       moveDir.Multiply(player.velocity)
 
       player.physBody.SetLinearVelocity moveDir
-      player.onPositionChange(mediator.player.position) if mediator.playWithSounds
+      player.onPositionChange() if mediator.playWithSounds
       player.spriteState.moving = true
     else
       player.physBody.SetLinearVelocity new Vec2 0, 0
@@ -164,7 +165,7 @@ module.exports = class HomePageView extends View
     sh = dh = pixelSize.y if sh - sy > pixelSize.y
 
     # @ctx.drawImageTiled (@gMap.get 'canvas'), sx, sy, sw, sh, dx, dy, dw, dh, tileSize.x, tileSize.y
-    @ctx.drawImage (mediator.levels[mediator.activeLevel].mapCanvas), sx, sy, sw, sh, dx, dy, dw, dh
+    @ctx.drawImage (lvl.mapCanvas), sx, sy, sw, sh, dx, dy, dw, dh
 
-    for entity in mediator.entities
+    for entity in lvl.entityObjects
       entity.render(@ctx, sx, sy)
