@@ -6,7 +6,6 @@ module.exports = class Level extends Model
   constructor: (manifestUri, @_callback) ->
     # Object Properties
     @manifest            = null
-    @_callback           = null
 
     # Sounds
     @soundList           = {}
