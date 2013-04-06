@@ -3,40 +3,37 @@ PhysicsManager = require 'models/PhysicsManager'
 mediator = require 'mediator'
 
 module.exports = class Level extends Model
-  manifest: null
-  _callback: null
-
-  # Sounds
-  soundList: {}
-  backgroundSoundList: {}
-  soundTheme: null
-
-  soundCount: 0
-
-  # Physics
-  b2World: null
-  physicsLoopHZ: 1/25
-
-  # Entities
-  entities: {}
-  entityObjects: []
-  player: null
-  bodyCount: 0
-
-  # Tiled Map
-  mapCanvas: null
-  mapTiledObject: null
-  tileSets: null
-
-  # Loading States
-  bodiesLoaded: false
-  mapLoaded: false
-  loadCompleted: false
-  setupped: false
-
   constructor: (manifestUri, @_callback) ->
-    @entities = {}
-    @entityObjects = []
+    # Object Properties
+    @manifest            = null
+    @_callback           = null
+
+    # Sounds
+    @soundList           = {}
+    @backgroundSoundList = {}
+    @soundTheme          = null
+    @soundCount          = 0
+
+    # Physics
+    @b2World             = null
+    @physicsLoopHZ       = 1/25
+
+    # Entities
+    @entities            = {}
+    @entityObjects       = []
+    @player              = null
+    @bodyCount           = 0
+
+    # Tiled Map
+    @mapCanvas           = null
+    @mapTiledObject      = null
+    @tileSets            = null
+
+    # Loading States
+    @bodiesLoaded        = false
+    @mapLoaded           = false
+    @loadCompleted       = false
+    @setupped            = false
 
     mediator.std.xhrGet manifestUri, (data) =>
       @manifest = JSON.parse data.target.responseText
