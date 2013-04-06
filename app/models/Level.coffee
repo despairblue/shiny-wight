@@ -40,13 +40,14 @@ module.exports = class Level extends Model
       # load the config files for the entities
       @bodyCount = @manifest.entities.files.length
       for file in @manifest.entities.files
-        mediator.std.xhrGet @manifest.entities.prefix + '/' + file, (data) =>
+        uri = @manifest.entities.prefix + '/' + file
+        mediator.std.xhrGet uri, (data) =>
           try
             ent = JSON.parse data.target.responseText
             @entities[ent.tiledName] = ent
           catch e
             console.error e
-            console.error 'Your manifest might reference a non existing file!'
+            console.error "Error loading #{uri}!"
 
           @bodyCount--
           if @bodyCount <= 0
