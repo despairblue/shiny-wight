@@ -34,6 +34,7 @@ module.exports = class HomePageView extends View
     level = 'level1'
     @loadLevel level, =>
       @setup level
+      window.requestAnimationFrame @doTheWork
 
 
   loadLevel: (level, rest...) =>
@@ -66,7 +67,7 @@ module.exports = class HomePageView extends View
     lvl.setup() unless lvl.setupped
     @soundManager.startAll() if mediator.playWithSounds
 
-    window.requestAnimationFrame @doTheWork
+    # window.requestAnimationFrame @doTheWork
     @loadNextLevels()
 
 
