@@ -61,6 +61,11 @@ module.exports = class Level extends Model
 
           # create physics world
           @physicsManager = new PhysicsManager(@mapTiledObject)
+          @physicsManager.addContactListener PostSolve: (bodyA, bodyB, impulse) ->
+            dataA = bodyA.GetUserData()
+            dataB = bodyB.GetUserData()
+            dataA?.ent.onTouch bodyB, null, impulse
+            dataB?.ent.onTouch bodyA, null, impulse
 
           @checkIfDone()
         # load sounds

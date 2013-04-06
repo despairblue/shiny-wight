@@ -181,9 +181,15 @@ module.exports = class PhysicsManager
   addContactListener: (callbacks) =>
     listener = new Box2D.Dynamics.b2ContactListener()
 
+    if callbacks.BeginContact
+      listener.BeginContact = (contact) ->
+        callbacks.BeginContact contact.GetFixtureA().GetBody(), contact.GetFixtureB().GetBody()
+    if callbacks.EndContact
+      listener.EndContact = (contact) ->
+        callbacks.EndContact contact.GetFixtureA().GetBody(), contact.GetFixtureB().GetBody()
     if callbacks.PostSolve
-      listener.PostSolve = (contact, impulse) =>
-        callbacks.PostSolve contact.GetFixtureA().GetBody(), contact.GetFixtureB.GetBody, impulse.normalImpulses[0]
+      listener.PostSolve = (contact, impulse) ->
+        callbacks.PostSolve contact.GetFixtureA().GetBody(), contact.GetFixtureB().GetBody(), impulse.normalImpulses[0]
 
     @world.SetContactListener listener
 

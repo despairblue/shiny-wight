@@ -116,6 +116,8 @@ module.exports = class Entity extends Model
   render: =>
     # ..
 
+  onTouch: (body) =>
+    # ...
   ###
   Is called each tick/frame.
   ###

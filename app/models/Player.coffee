@@ -37,6 +37,8 @@ module.exports = class Player extends Entity
     @set 'atlas':img
 
   onTouch: (otherBody, point, impulse) =>
+    console.log "BAM with #{impulse}" if debug
+
     return false if not @physBody?
     return false if not otherBody.GetUserData()?
 
