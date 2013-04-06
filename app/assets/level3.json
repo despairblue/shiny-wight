@@ -3,14 +3,11 @@
     "prefix": "sounds/",
     "sounds": [],
     "theme": "underground.mp3",
-    "backgroundSounds":[]
+    "backgroundSounds": []
   },
   "entities": {
     "prefix": "entities",
-    "files":[
-      "Player.json",
-      "MapChangerToLevel4.json"
-    ]
+    "files": ["Player.json"]
   },
   "map": {
     "prefix": "map",
