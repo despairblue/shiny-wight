@@ -37,7 +37,7 @@ module.exports = class Entity extends Model
   Entity' velocity
   Standart velocity = 10
   ###
-  VELOCITY: 400
+  velocity: 400
 
   ###
   @property [Integer]

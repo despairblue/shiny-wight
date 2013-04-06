@@ -117,7 +117,7 @@ module.exports = class HomePageView extends View
 
     if moveDir.LengthSquared()
       moveDir.Normalize()
-      moveDir.Multiply(player.VELOCITY)
+      moveDir.Multiply(player.velocity)
 
       player.physBody.SetLinearVelocity moveDir
       player.onPositionChange(mediator.player.position) if mediator.playWithSounds
