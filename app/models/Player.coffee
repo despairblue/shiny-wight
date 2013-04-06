@@ -11,6 +11,8 @@ module.exports = class Player extends Entity
   animationState: [0, 1, 2, 1]
 
   constructor: (x, y, width, height, owningLevel, settings) ->
+    settings.ellipse = true
+
     super x, y, width/2, height/2, owningLevel, settings
 
     @size.x = width
