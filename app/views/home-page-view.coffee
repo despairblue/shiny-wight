@@ -24,7 +24,6 @@ module.exports = class HomePageView extends View
 
     @soundManager = new SoundManager() if mediator.playWithSounds
     @inputManager = new InputManager()
-    @entitySpawnManager = new EntitySpawnManager()
 
     @subscribeEvent 'changeLvl', =>
       console.log 'change to '+mediator.activeLevel if debug
@@ -53,7 +52,7 @@ module.exports = class HomePageView extends View
   setup: (level) =>
     mediator.activeLevel = level
     mediator.entities = []
-    @entitySpawnManager.initialSpawn()
+    mediator.levels[level].setup()
     @soundManager.startAll() if mediator.playWithSounds
 
     window.requestAnimationFrame @doTheWork
