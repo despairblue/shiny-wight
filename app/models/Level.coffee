@@ -66,6 +66,16 @@ module.exports = class Level extends Model
             dataB = bodyB.GetUserData()
             dataA?.ent.onTouch bodyB, null, impulse
             dataB?.ent.onTouch bodyA, null, impulse
+          , BeginContact: (bodyA, bodyB, impulse) ->
+            dataA = bodyA.GetUserData()
+            dataB = bodyB.GetUserData()
+            dataA?.ent.onTouchBegin bodyB, null, impulse
+            dataB?.ent.onTouchBegin bodyA, null, impulse
+          , EndContact: (bodyA, bodyB, impulse) ->
+            dataA = bodyA.GetUserData()
+            dataB = bodyB.GetUserData()
+            dataA?.ent.onTouchEnd bodyB, null, impulse
+            dataB?.ent.onTouchEnd bodyA, null, impulse
 
           @checkIfDone()
         # load sounds

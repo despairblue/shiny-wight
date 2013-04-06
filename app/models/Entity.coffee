@@ -116,79 +116,17 @@ module.exports = class Entity extends Model
   render: =>
     # ..
 
-  onTouch: (body) =>
+  onTouch: (body, point, impulse) =>
     # ...
+
+  onTouchBegin: (body, point, impulse) =>
+    # ...
+
+  onTouchEnd: (body, point, impulse) =>
+    # ...
+
   ###
   Is called each tick/frame.
   ###
   update: =>
     # update method
-
-  # TODO: reimplement animation
-  # ###
-  # Move the Entity one tile upwards.
-  # @note It won't let `@position.y` be negative.
-  # ###
-  # moveUp: =>
-  #   newPosition =
-  #     x: @position.x
-  #     y: @position.y - @VELOCITY
-  #   newPosition.y = 0 if newPosition.y < 0
-
-  #   if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
-  #     @position = newPosition
-
-  #   @updateViewAndAnimation(0)
-
-  # ###
-  # Move the Entity one tile downwards.
-  # It won't let @position.y be larger than map.numYTiles.
-  # @note This method relies on `mediator.map` being set
-  # ###
-  # moveDown: =>
-  #   # get attributes
-  #   pixelSize = @map.get 'pixelSize'
-
-  #   newPosition =
-  #     x: @position.x
-  #     y: @position.y + @VELOCITY
-  #   newPosition.y = pixelSize.y - @size.y if newPosition.y > pixelSize.y - @size.y
-
-  #   if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
-  #     @position = newPosition
-
-  #   @updateViewAndAnimation(2)
-
-  # ###
-  # Move the Entity one tile to the right.
-  # It won't let @position.y be larger than map.numXTiles.
-  # @note This method relies on `mediator.map` being set
-  # ###
-  # moveRight: =>
-  #   # get attributes
-  #   pixelSize = @map.get 'pixelSize'
-
-  #   newPosition =
-  #     x: @position.x + @VELOCITY
-  #     y: @position.y
-  #   newPosition.x = pixelSize.x - @size.x if newPosition.x > pixelSize.x - @size.x
-
-  #   if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
-  #     @position = newPosition
-
-  #   @updateViewAndAnimation(1)
-
-  # ###
-  # Move the Entity one tile upwards.
-  # @note It won't let `@position.x` be negative.
-  # ###
-  # moveLeft: =>
-  #   newPosition =
-  #     x: @position.x - @VELOCITY
-  #     y: @position.y
-  #   newPosition.x = 0 if newPosition.x < 0
-
-  #   if mediator.physicsManager.canIMoveThere(newPosition.x, newPosition.y)
-  #     @position = newPosition
-
-  #   @updateViewAndAnimation(3)
