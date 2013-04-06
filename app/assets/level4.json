@@ -2,7 +2,7 @@
   "sounds": {
     "prefix": "sounds/",
     "sounds": [],
-    "theme": "level4theme.mp3",
+    "theme": "underground.mp3",
     "backgroundSounds": []
   },
   "entities": {
