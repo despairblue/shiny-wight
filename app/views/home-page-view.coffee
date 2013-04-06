@@ -59,9 +59,11 @@ module.exports = class HomePageView extends View
 
 
   setup: (level) =>
+    lvl = mediator.levels[level]
+
     mediator.activeLevel = level
     mediator.entities = []
-    mediator.levels[level].setup()
+    lvl.setup() unless lvl.setupped
     @soundManager.startAll() if mediator.playWithSounds
 
     window.requestAnimationFrame @doTheWork

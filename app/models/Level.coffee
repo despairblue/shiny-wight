@@ -31,6 +31,7 @@ module.exports = class Level extends Model
   bodiesLoaded: false
   mapLoaded: false
   loadCompleted: false
+  setupped: false
 
   constructor: (manifestUri, @_callback) ->
     mediator.std.xhrGet manifestUri, (data) =>
@@ -93,9 +94,13 @@ module.exports = class Level extends Model
 
   setup: =>
     if @loadCompleted
-      @initialSpawn()
+      if not @setupped
+        @setupped = true
+        @initialSpawn()
+      else
+        console.error "Level already set up!"
     else
-      console.error "Don't call Level.setup() unless the manifest finished loading"
+      console.error "Don't call Level.setup() unless the manifest finished loading!"
 
 
   checkIfDone: =>
