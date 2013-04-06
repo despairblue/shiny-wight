@@ -9,6 +9,7 @@ module.exports = class MapChanger extends Entity
 
 
   constructor: (x, y, width, height, owningLevel, settings) ->
+    settings.physicsType = 'static'
 
     super x, y, width, height, owningLevel, settings
     levelToChangeTo = "pisse"
