@@ -116,21 +116,85 @@
       </nav>
       <div id='filecontents'>
         <h1>Shiny Wight (working title)</h1><p>This will be an HTML 5 game for <a href="https://www.udacity.com/wiki/CS255/contest">this</a> contest</p><h2>Getting started</h2>
+<h3>Dependencies</h3>
 <ul>
-<li><p>Dependencies</p><ul>
 <li><a href="http://git-scm.com/">git</a></li>
-<li><a href="https://github.com/petervanderdoes/gitflow/wiki">git-flow-avh</a> (optional)</li>
 <li><a href="http://www.mapeditor.org/">Tiled Map Editor</a> (only needed for level design)</li>
 <li><a href="http://nodejs.org/">node</a></li>
 </ul>
-</li>
-<li><p><code>git clone https://github.com/despairblue/shiny-wight.git</code></p></li>
+<h3>Setup</h3>
+<ol>
+<li><code>git clone https://github.com/despairblue/shiny-wight.git</code></li>
 <li>Run <code>npm install -g brunch</code></li>
 <li>In the project root dir run <code>npm install</code></li>
 <li>In the project root dir run <code>npm up</code></li>
 <li>In the project root dir run <code>npm start</code>.</li>
 <li>Open Browser at <code>localhost:3333</code></li>
+</ol>
+<h3>Level Design</h3><p>We use <a href="http://www.mapeditor.org/">Tiled Map Editor</a> for the level design.
+When designing a level there are some things to watch out for.</p><p><strong>TODO:</strong> Write docs for background sounds, spawners and config files</p><h4>Naming Conventions</h4>
+<ul>
+<li>All physic layers must be called <code>physics</code></li>
+<li>All object layers for spawning objects must be called <code>spawnpoints</code><ul>
+<li>In these layers the object&#39;s name must match the one in its config file (See config files)</li>
+<li>the object&#39;s type must match its class</li>
 </ul>
+</li>
+<li>All the sound layer must be called <code>sound</code></li>
+</ul>
+<h4>Physics</h4><p>Shiny-Wight uses two kinds of background physics:</p><ol>
+<li>A tile layer for crude background physics. It must be called &#39;physics&#39;<ul>
+<li>The tileset used here is called <code>physics.png</code> and can be found in the <code>atlases</code> folder. This tileset must be used for now as the tile order is hardcoded, for more sophisticated physics use the object layer.</li>
+</ul>
+</li>
+<li>An object layer for more sophisticated physics.<ul>
+<li>The object&#39;s <em>name</em> and <em>type</em> can be arbitrary.</li>
+<li>You can use <em>boxes</em> and <em>polygons</em>. <em>Polylines</em> are not supported.</li>
+<li><em>Polygons</em> must be: <strong>convex</strong>, have <strong>no more than 8 corners</strong>, <strong>drawn clockwise</strong></li>
+</ul>
+</li>
+</ol>
+<h4>Background Sounds</h4>
+<h4>Spawners</h4>
+<h4>Config Files</h4>
+<pre><code class="lang-JSON">{
+  &quot;name&quot;: &quot;Player&quot;,
+  &quot;velocity&quot;: 300,
+  &quot;spriteState&quot;: {
+    &quot;moving&quot;: false,
+    &quot;viewDirection&quot;: 0,
+    &quot;creationTime&quot;: &quot;Will be overidden by `Date.Now()`&quot;,
+    &quot;animationRate&quot;: 100,
+    &quot;normal&quot;: 1
+  },
+  &quot;tileSet&quot;: {
+    &quot;image&quot;: &quot;atlases/warrior_m.png&quot;,
+    &quot;tilesX&quot;: 3,
+    &quot;tilesY&quot;: 4,
+    &quot;tileheight&quot;: 32,
+    &quot;tilewidth&quot;: 32,
+    &quot;offset&quot;: {
+      &quot;x&quot;: 16,
+      &quot;y&quot;:24
+    }
+  },
+  &quot;entityDef&quot;: {
+    &quot;id&quot;: &quot;Player&quot;,
+    &quot;type&quot;: &quot;dynamic&quot;,
+    &quot;x&quot;: &quot;will be overidden by `@position.x`&quot;,
+    &quot;y&quot;: &quot;will be overidden by `@position.y`&quot;,
+    &quot;halfWidth&quot;: 8,
+    &quot;halfHeight&quot;: 8,
+    &quot;damping&quot;: 0,
+    &quot;angle&quot;: 0,
+    &quot;categories&quot;: [&quot;&quot;],
+    &quot;collidesWith&quot;: [&quot;all&quot;],
+    &quot;userData&quot;: {
+      &quot;id&quot;: &quot;Player&quot;,
+      &quot;ent&quot;: &quot;will be overidden by `this`&quot;
+    }
+  }
+}</code></pre>
 <h2>Used Assets</h2><p><a href="http://opengameart.org/content/rpg-tiles-cobble-stone-paths-town-objects">PathAndObjects_0.png</a>
 <img src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" alt=""></p><p><a href="http://opengameart.org/content/castle-tiles-for-rpgs">Castle2.png</a>
 <img src="http://i.creativecommons.org/l/by/3.0/80x15.png" alt=""></p><p><a href="http://opengameart.org/content/2d-lost-garden-zelda-style-tiles-resized-to-32x32-with-additions">mountain_landscape.png</a>
@@ -149,11 +213,11 @@
     </div>
     <div id='footer'>
   Generated on
-  Tue Apr 02 2013 03:29:17 GMT+0200 (CEST)
+  Sat Apr 06 2013 23:00:08 GMT+0200 (CEST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.6.0
-  (Node.js v0.10.2).
+  (Node.js v0.10.3).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
   &#10034;

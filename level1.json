@@ -1,15 +1,20 @@
 {
   "sounds": {
-    "sounds": ["level1theme"],
+    "prefix": "sounds/",
+    "sounds": [],
+    "theme": "level1theme.mp3",
     "backgroundSounds":[
-      "water",
-      "fire",
-      "wood"
+      "water.mp3",
+      "fire.mp3",
+      "wood.mp3"
     ]
   },
   "entities": {
     "prefix": "entities",
-    "files": ["Player.json"]
+    "files":[
+      "Player.json",
+      "MapChangerToLevel2.json"
+    ]
   },
   "map": {
     "prefix": "map",

@@ -166,9 +166,9 @@
         <dd class='desc'>
           <p>What sprite to draw</p>
         </dd>
-        <dt id='VELOCITY-property'>
+        <dt id='velocity-property'>
           <span class='signature'>
-            (Integer) <strong>VELOCITY</strong>
+            (Integer) <strong>velocity</strong>
           </span>
         </dt>
         <dd class='desc'>
@@ -193,7 +193,7 @@ Standart velocity = 10</p>
   <li>
     <span class='signature'>
       <a href='#constructor-instance'>
-        - (void) <strong>constructor</strong>(x, y, width, height, settings)
+        - (void) <strong>constructor</strong>(x, y, width, height, owningLevel, settings)
       </a>
     </span>
     <span class='constructor note title'>Constructor</span>
@@ -236,6 +236,61 @@ Standart velocity = 10</p>
   </li>
   <li>
     <span class='signature'>
+      <a href='#load-instance'>
+        - (void) <strong>load</strong>()
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#render-instance'>
+        - (void) <strong>render</strong>()
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onTouch-instance'>
+        - (void) <strong>onTouch</strong>(body, point, impulse)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onTouchBegin-instance'>
+        - (void) <strong>onTouchBegin</strong>(body, point)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#onTouchEnd-instance'>
+        - (void) <strong>onTouchEnd</strong>(body, point)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#update-instance'>
         - (void) <strong>update</strong>()
       </a>
@@ -250,7 +305,7 @@ Standart velocity = 10</p>
       <div class='methods'>
   <div class='method_details'>
     <p class='signature' id='constructor-instance'>
-      - (void) <strong>constructor</strong>(x, y, width, height, settings)
+      - (void) <strong>constructor</strong>(x, y, width, height, owningLevel, settings)
     </p>
     <div class='tags'>
 </div>
@@ -312,6 +367,46 @@ Will try to get the map from the mediator.</p>
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='load-instance'>
+      - (void) <strong>load</strong>()
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='render-instance'>
+      - (void) <strong>render</strong>()
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onTouch-instance'>
+      - (void) <strong>onTouch</strong>(body, point, impulse)
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onTouchBegin-instance'>
+      - (void) <strong>onTouchBegin</strong>(body, point)
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='onTouchEnd-instance'>
+      - (void) <strong>onTouchEnd</strong>(body, point)
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='update-instance'>
       - (void) <strong>update</strong>()
       (bound)
@@ -326,11 +421,11 @@ Will try to get the map from the mediator.</p>
     </div>
     <div id='footer'>
   Generated on
-  Tue Apr 02 2013 03:29:17 GMT+0200 (CEST)
+  Sat Apr 06 2013 23:00:08 GMT+0200 (CEST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.6.0
-  (Node.js v0.10.2).
+  (Node.js v0.10.3).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
   &#10034;

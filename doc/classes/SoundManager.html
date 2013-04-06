@@ -156,35 +156,24 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#load-instance'>
-        - (void) <strong>load</strong>(LEVEL)
+      <a href='#getSoundMap-instance'>
+        - (void) <strong>getSoundMap</strong>(map)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      @param [String] Start loading of level.
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#initializeSoundMap-instance'>
-        - (void) <strong>initializeSoundMap</strong>(LEVEL, map)
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      @param [String] @param [map] Reads levelX.json file and to all sounds of the level
+      @param [String] @param [map] Initializes soundMap for backgroundSounds
     </span>
   </li>
   <li>
     <span class='signature'>
       <a href='#loadSounds-instance'>
-        - (void) <strong>loadSounds</strong>(LEVEL, mapSounds)
+        - (void) <strong>loadSounds</strong>(mapSounds, callback)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      @param [String] @param [Array of String] Load all sounds in soundMap
+      
     </span>
   </li>
   <li>
@@ -291,45 +280,24 @@ Create a new audio context and bind soundManager to mediator</p>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='load-instance'>
-      - (void) <strong>load</strong>(LEVEL)
-      (bound)
-    </p>
-    <div class='docstring'>
-  <div class='note'>
-    <strong>Note:</strong>
-    later change listener based to observer based event system
-  </div>
-  <p>@param [String]
-Start loading of level. The level to load is determined by the String LEVEL</p>
-</div>
-<div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='initializeSoundMap-instance'>
-      - (void) <strong>initializeSoundMap</strong>(LEVEL, map)
+    <p class='signature' id='getSoundMap-instance'>
+      - (void) <strong>getSoundMap</strong>(map)
       (bound)
     </p>
     <div class='docstring'>
   <p>@param [String]
 @param [map]
-Reads levelX.json file and to all sounds of the level</p>
+Initializes soundMap for backgroundSounds</p>
 </div>
 <div class='tags'>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='loadSounds-instance'>
-      - (void) <strong>loadSounds</strong>(LEVEL, mapSounds)
+      - (void) <strong>loadSounds</strong>(mapSounds, callback)
       (bound)
     </p>
-    <div class='docstring'>
-  <p>@param [String]
-@param [Array of String]
-Load all sounds in soundMap</p>
-</div>
-<div class='tags'>
+    <div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -440,11 +408,11 @@ Fade sound in list to gain</p>
     </div>
     <div id='footer'>
   Generated on
-  Tue Apr 02 2013 03:29:17 GMT+0200 (CEST)
+  Sat Apr 06 2013 23:00:08 GMT+0200 (CEST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.6.0
-  (Node.js v0.10.2).
+  (Node.js v0.10.3).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
   &#10034;

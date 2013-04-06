@@ -113,12 +113,6 @@
           <td>Defined in:</td>
           <td>app&#47;models&#47;TILEDMap.coffee</td>
         </tr>
-        <tr>
-          <td>Inherits:</td>
-          <td>
-            <a href='../classes/Model.html'>Model</a>
-          </td>
-        </tr>
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
@@ -130,34 +124,12 @@
 </div>
 <div class='tags'>
 </div>
-      <h2>Instance Method Summary</h2>
+      <h2>Class Method Summary</h2>
       <ul class='summary'>
   <li>
     <span class='signature'>
-      <a href='#initialize-instance'>
-        - (void) <strong>initialize</strong>(options)
-      </a>
-    </span>
-    <span class='note private title'>Private</span>
-    <span class='desc'>
-      Initializes an instance.
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#load-instance'>
-        - (void) <strong>load</strong>(level)
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      Loads the map, parses it and renders it
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#parseMapJSON-instance'>
-        - (void) <strong>parseMapJSON</strong>(mapJSON)
+      <a href='#parseMapJSON-class'>
+        + (void) <strong>parseMapJSON</strong>(mapTiledObject, callback)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -168,8 +140,8 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#createTileSet-instance'>
-        - (Object) <strong>createTileSet</strong>(tileset)
+      <a href='#createTileSet-class'>
+        + (Object) <strong>createTileSet</strong>(tileset, callback)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -180,8 +152,8 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#getTilePacket-instance'>
-        - (Object) <strong>getTilePacket</strong>(tileIndex)
+      <a href='#getTilePacket-class'>
+        + (Object) <strong>getTilePacket</strong>(tileIndex, tileSets)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -192,8 +164,8 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#render-instance'>
-        - (void) <strong>render</strong>()
+      <a href='#render-class'>
+        + (void) <strong>render</strong>(mapTiledObject, tilesets)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -201,45 +173,23 @@
       Renders the map into it&#39;s own off screen canvas.
     </span>
   </li>
+  <li>
+    <span class='signature'>
+      <a href='#parse-class'>
+        + (void) <strong>parse</strong>(mapTiledObject, callback)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
 </ul>
-      <h2>Instance Method Details</h2>
+      <h2>Class Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='initialize-instance'>
-      - (void) <strong>initialize</strong>(options)
-      (private)
-    </p>
-    <div class='docstring'>
-  <p>Initializes an instance.</p>
-</div>
-<div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='load-instance'>
-      - (void) <strong>load</strong>(level)
-      (bound)
-    </p>
-    <div class='docstring'>
-  <p>Loads the map, parses it and renders it</p>
-</div>
-<div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='name'>map</span>
-      <span class='type'>
-        (<tt>String</tt>)
-      </span>
-      &mdash;
-      <span class='desc'>URI that points to the json output of TILED map editor</span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='parseMapJSON-instance'>
-      - (void) <strong>parseMapJSON</strong>(mapJSON)
+    <p class='signature' id='parseMapJSON-class'>
+      + (void) <strong>parseMapJSON</strong>(mapTiledObject, callback)
       (bound)
       (private)
     </p>
@@ -250,19 +200,19 @@
   <h3>Parameters:</h3>
   <ul class='param'>
     <li>
-      <span class='name'>mapJSON</span>
+      <span class='name'>mapTiledObject</span>
       <span class='type'>
-        (<tt>JSON</tt>)
+        (<tt>Object</tt>)
       </span>
       &mdash;
-      <span class='desc'>the TILED map editor json data</span>
+      <span class='desc'>the parsed TILED map editor map data</span>
     </li>
   </ul>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='createTileSet-instance'>
-      - (Object) <strong>createTileSet</strong>(tileset)
+    <p class='signature' id='createTileSet-class'>
+      + (Object) <strong>createTileSet</strong>(tileset, callback)
       (bound)
       (private)
     </p>
@@ -307,8 +257,8 @@
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='getTilePacket-instance'>
-      - (Object) <strong>getTilePacket</strong>(tileIndex)
+    <p class='signature' id='getTilePacket-class'>
+      + (Object) <strong>getTilePacket</strong>(tileIndex, tileSets)
       (bound)
       (private)
     </p>
@@ -349,8 +299,8 @@
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='render-instance'>
-      - (void) <strong>render</strong>()
+    <p class='signature' id='render-class'>
+      + (void) <strong>render</strong>(mapTiledObject, tilesets)
       (bound)
     </p>
     <div class='docstring'>
@@ -361,15 +311,23 @@ call instead of hundreads.</p>
 <div class='tags'>
 </div>
   </div>
+  <div class='method_details'>
+    <p class='signature' id='parse-class'>
+      + (void) <strong>parse</strong>(mapTiledObject, callback)
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
 </div>
     </div>
     <div id='footer'>
   Generated on
-  Tue Apr 02 2013 03:29:17 GMT+0200 (CEST)
+  Sat Apr 06 2013 23:00:08 GMT+0200 (CEST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.6.0
-  (Node.js v0.10.2).
+  (Node.js v0.10.3).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
   &#10034;

@@ -1,14 +1,16 @@
 {
   "sounds": {
-    "sounds": ["level2theme"],
-    "backgroundSounds":[
-      "dundundun",
-      "defaultStep"
-    ]
+    "prefix": "sounds/",
+    "sounds": [],
+    "theme": "level2theme.mp3",
+    "backgroundSounds":[]
   },
   "entities": {
     "prefix": "entities",
-    "files": ["Player.json"]
+    "files": ["Player.json",
+              "MapChangerToLevel2House1.json",
+              "MapChangerToLevel2House2.json"
+             ]
   },
   "map": {
     "prefix": "map",

@@ -1,0 +1,18 @@
+{
+  "sounds": {
+    "prefix": "sounds/",
+    "sounds": [],
+    "theme": "level2theme.mp3",
+    "backgroundSounds":[]
+  },
+  "entities": {
+    "prefix": "entities",
+    "files": ["Player.json",
+              "MapChangerToLevel2.json"
+             ]
+  },
+  "map": {
+    "prefix": "map",
+    "file": "level2house1.json"
+  }
+}
