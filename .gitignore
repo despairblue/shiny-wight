@@ -34,3 +34,6 @@ doc/
 # sublime
 *.sublime-project
 *.sublime-workspace
+
+# tracker
+*.mediaartlocal
