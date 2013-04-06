@@ -41,8 +41,13 @@ module.exports = class Level extends Model
       @bodyCount = @manifest.entities.files.length
       for file in @manifest.entities.files
         mediator.std.xhrGet @manifest.entities.prefix + '/' + file, (data) =>
-          ent = JSON.parse data.target.responseText
-          @entities[ent.tiledName] = ent
+          try
+            ent = JSON.parse data.target.responseText
+            @entities[ent.tiledName] = ent
+          catch e
+            console.error e
+            console.error 'Your manifest might reference a non existing file!'
+
           @bodyCount--
           if @bodyCount <= 0
             @bodiesLoaded = true
