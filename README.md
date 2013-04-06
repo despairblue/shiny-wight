@@ -47,7 +47,7 @@ Shiny-Wight uses two kinds of background physics:
 ``` JSON
 {
   "name": "Player",
-  "VELOCITY": 300,
+  "velocity": 300,
   "spriteState": {
     "moving": false,
     "viewDirection": 0,
