@@ -130,7 +130,8 @@ module.exports = class Level extends Model
 
         @entityObjects.push(obj)
         if object.type == "Player"
-            @player = obj
+          @player = obj
+
 
   createEntity: (object) =>
     # get constructor and json config
