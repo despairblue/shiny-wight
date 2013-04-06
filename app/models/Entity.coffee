@@ -39,6 +39,16 @@ module.exports = class Entity extends Model
   ###
   velocity: 400
 
+  entityDef:
+    ellipse: false
+    type: "dynamic"
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+    userData:
+      ent: null
+
   ###
   @property [Integer]
   In what direction the entity looks
@@ -67,7 +77,10 @@ module.exports = class Entity extends Model
 
     @entityDef.x = @position.x
     @entityDef.y = @position.y
+    @entityDef.width = width
+    @entityDef.height = height
     @entityDef.userData.ent = @
+    @entityDef.ellipse = true if settings.ellipse
 
     @physBody = @level.physicsManager.addBody @entityDef, @level.b2World
     @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))

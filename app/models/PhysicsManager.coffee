@@ -201,28 +201,29 @@ module.exports = class PhysicsManager
   addBody: (entityDef) =>
     bodyDef = new BodyDef()
 
-    id = entityDef.id
+    halfWidth = Math.floor entityDef.width / 2
+    halfHeight = Math.floor entityDef.height / 2
 
     if entityDef.type == 'static'
       bodyDef.type = Body.b2_staticBody
     else
       bodyDef.type = Body.b2_dynamicBody
 
-    bodyDef.position.x = entityDef.x
-    bodyDef.position.y = entityDef.y
+    bodyDef.position.x = entityDef.x + halfWidth
+    bodyDef.position.y = entityDef.y + halfHeight
 
     bodyDef.userData = entityDef.userData if entityDef.userData
 
-    body = @registerBody bodyDef, @world
+    body = @registerBody bodyDef
     fixtureDefinition = new FixtureDef()
 
     # TODO: remove hard coding
-    if id is 'Player'
+    if entityDef.ellipse
       fixtureDefinition.shape = new CircleShape()
-      fixtureDefinition.shape.SetRadius entityDef.halfWidth
+      fixtureDefinition.shape.SetRadius halfWidth
     else
       fixtureDefinition.shape = new PolygonShape()
-      fixtureDefinition.shape.SetAsBox entityDef.halfWidth, entityDef.halfHeight
+      fixtureDefinition.shape.SetAsBox halfWidth, halfHeight
 
     body.CreateFixture fixtureDefinition
 

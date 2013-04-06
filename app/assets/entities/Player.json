@@ -19,16 +19,5 @@
       "x": 16,
       "y":24
     }
-  },
-  "entityDef": {
-    "id": "Player",
-    "type": "dynamic",
-    "x": "will be overidden by `@position.x`",
-    "y": "will be overidden by `@position.y`",
-    "halfWidth": 8,
-    "halfHeight": 8,
-    "userData": {
-      "ent": "will be overidden by `this`"
-    }
   }
 }

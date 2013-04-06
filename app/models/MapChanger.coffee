@@ -5,15 +5,6 @@ module.exports = class MapChanger extends Entity
 
   mediator.factory['MapChanger'] = this
 
-  entityDef:
-    type: "static"
-    x: 0
-    y: 0
-    halfWidth: 16
-    halfHeight: 1
-    userData:
-      ent: null
-
   levelToChangeTo: ""
 
 

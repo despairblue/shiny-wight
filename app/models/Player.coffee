@@ -11,8 +11,10 @@ module.exports = class Player extends Entity
   animationState: [0, 1, 2, 1]
 
   constructor: (x, y, width, height, owningLevel, settings) ->
+    super x, y, width/2, height/2, owningLevel, settings
 
-    super x, y, width, height, owningLevel, settings
+    @size.x = width
+    @size.y = height
 
     @spriteState.creationTime = Date.now()
 

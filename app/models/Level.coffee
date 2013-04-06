@@ -140,6 +140,8 @@ module.exports = class Level extends Model
       console.error "No configuration file found for #{object.name}"
       return "No configuration found!"
 
+    conf.ellipse = true if object.ellipse
+
     # sanitize constructor attributes
     x = Math.floor object.x
     y = Math.floor object.y
