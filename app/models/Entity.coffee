@@ -94,6 +94,7 @@ module.exports = class Entity extends Model
     @entityDef.userData.ent = @
     @entityDef.ellipse = true if settings.ellipse
     @entityDef.type = settings.physicsType if settings.physicsType
+    @entityDef.isSensor = true if settings.isSensor
 
     @physBody = @level.physicsManager.addBody @entityDef, @level.b2World
     @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))

@@ -217,7 +217,8 @@ module.exports = class PhysicsManager
     body = @registerBody bodyDef
     fixtureDefinition = new FixtureDef()
 
-    # TODO: remove hard coding
+    fixtureDefinition.isSensor = true if entityDef.isSensor
+
     if entityDef.ellipse
       fixtureDefinition.shape = new CircleShape()
       fixtureDefinition.shape.SetRadius halfWidth
