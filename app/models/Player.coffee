@@ -43,7 +43,7 @@ module.exports = class Player extends Entity
       # do smth
 
   onTouchBegin: (otherBody, point) =>
-    console.log "Player hit his head with!" if debug
+    console.log "Player hit his head!" if debug
 
   update: =>
     @position.x = @physBody.GetPosition().x if @physBody.GetPosition().x?
