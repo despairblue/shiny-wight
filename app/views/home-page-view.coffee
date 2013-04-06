@@ -44,7 +44,7 @@ module.exports = class HomePageView extends View
   # loads next levels
   loadNextLevels: =>
     # iterate through MapChanger Entities and load levels they point to
-    for entity in mediator.entities
+    for entity in mediator.getActiveLevel().entityObjects
       continue if !entity.levelToChangeTo?
       @loadLevel(entity.levelToChangeTo)
 
@@ -62,7 +62,6 @@ module.exports = class HomePageView extends View
     lvl = mediator.levels[level]
 
     mediator.activeLevel = level
-    mediator.entities = []
     lvl.setup() unless lvl.setupped
     @soundManager.startAll() if mediator.playWithSounds
 
@@ -78,10 +77,11 @@ module.exports = class HomePageView extends View
 
   doTheWork: =>
     setTimeout =>
+      lvl = mediator.getActiveLevel()
       window.requestAnimationFrame @doTheWork
       @handleInput()
-      ent.update() for ent in mediator.entities
-      mediator.getActiveLevel().update()
+      ent.update() for ent in lvl.entityObjects
+      lvl.update()
       @draw()
     , 1000/25
 
@@ -90,7 +90,7 @@ module.exports = class HomePageView extends View
     # get attributes
     actions = @inputManager.get 'actions'
     moveDir = new Vec2 0, 0
-    player = mediator.player
+    player = mediator.getActiveLevel().player
 
     if actions['move-up']
       moveDir.y -= 1
@@ -145,7 +145,7 @@ module.exports = class HomePageView extends View
       x: numXTiles * tileSize.x
       y: numYTiles * tileSize.y
 
-    pos = mediator.player.position
+    pos = lvl.player.position
     radiusOfSight = 6 * tileSize.x
 
     sx = (pos.x - radiusOfSight)

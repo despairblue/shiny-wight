@@ -20,6 +20,8 @@ module.exports = class Level extends Model
 
   # Entities
   entities: {}
+  entityObjects: []
+  player: null
   bodyCount: 0
 
   # Tiled Map
@@ -124,9 +126,9 @@ module.exports = class Level extends Model
 
         obj = @createEntity object
 
-        mediator.entities.push(obj)
+        @entityObjects.push(obj)
         if object.type == "Player"
-            mediator.player = obj
+            @player = obj
 
   createEntity: (object) =>
     # get constructor and json config
