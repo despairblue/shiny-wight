@@ -1,13 +1,12 @@
-View = require 'views/base/view'
-InputManager = require 'models/InputManager'
-SoundManager = require 'models/SoundManager'
-PhysicsManager = require 'models/PhysicsManager'
-EntitySpawnManager = require 'models/EntitySpawnManager'
-mediator = require 'mediator'
-Std = require 'models/Std'
-Level = require 'models/Level'
-Player = require 'models/Player'
-MapChanger = require 'models/MapChanger'
+View           = require 'views/base/view'
+InputManager   = require 'models/InputManager'
+SoundManager   = require 'models/SoundManager'
+mediator       = require 'mediator'
+Std            = require 'models/Std'
+Level          = require 'models/Level'
+Player         = require 'models/Player'
+MapChanger     = require 'models/MapChanger'
+Vec2           = Box2D.Common.Math.b2Vec2
 
 
 module.exports = class HomePageView extends View
@@ -23,7 +22,6 @@ module.exports = class HomePageView extends View
     mediator.playWithSounds = true
     mediator.playWithSounds = confirm("Load Sounds?") if debug
 
-    @physicsManager = new PhysicsManager()
     @soundManager = new SoundManager() if mediator.playWithSounds
     @inputManager = new InputManager()
     @entitySpawnManager = new EntitySpawnManager()
@@ -55,7 +53,6 @@ module.exports = class HomePageView extends View
   setup: (level) =>
     mediator.activeLevel = level
     mediator.entities = []
-    @physicsManager.setup()
     @entitySpawnManager.initialSpawn()
     @soundManager.startAll() if mediator.playWithSounds
 
@@ -74,7 +71,7 @@ module.exports = class HomePageView extends View
       window.requestAnimationFrame @doTheWork
       @handleInput()
       ent.update() for ent in mediator.entities
-      @physicsManager.update()
+      mediator.getActiveLevel().update()
       @draw()
     , 1000/25
 
@@ -82,7 +79,7 @@ module.exports = class HomePageView extends View
   handleInput: =>
     # get attributes
     actions = @inputManager.get 'actions'
-    moveDir = new @physicsManager.Vec2 0, 0
+    moveDir = new Vec2 0, 0
     player = mediator.player
 
     if actions['move-up']
@@ -118,7 +115,7 @@ module.exports = class HomePageView extends View
       player.onPositionChange(mediator.player.position) if mediator.playWithSounds
       player.spriteState.moving = true
     else
-      player.physBody.SetLinearVelocity new @physicsManager.Vec2 0, 0
+      player.physBody.SetLinearVelocity new Vec2 0, 0
       player.spriteState.moving = false
 
   draw: =>

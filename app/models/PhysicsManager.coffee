@@ -18,7 +18,7 @@ Contains a map with all physics bodies.
 Can be used by Entities to decide whether they can move to a specific tile.
 @note The PhysicsManager expects only only one physics layer to be present
 ###
-module.exports = class PhysicsManager extends Model
+module.exports = class PhysicsManager
   world: null
   physicsLoopHZ: 1/25
 
@@ -38,31 +38,15 @@ module.exports = class PhysicsManager extends Model
   @private
   Initializes an instance
   ###
-  initialize: ->
-    super
-    mediator.physicsManager = @
-    ###
-    @subscribeEvent 'map:rendered', =>
-      @setup()
-    ###
-
-  ###
-  Look for the physics layer inside the map.
-  Fills in a local representation of it.
-  @note The PhysicsManager expects only only one physics layer to be present
-  ###
-  setup: =>
-    map = mediator.levels[mediator.activeLevel].mapTiledObject
+  constructor: (@map) ->
     @world = new World(new Vec2(0, 0), false)
     debugDraw = new Box2D.Dynamics.b2DebugDraw()
     dCanvas = document.getElementById('debug-canvas')
     dCtx = dCanvas.getContext '2d'
 
-    @createLevelBorder(map)
+    @createLevelBorder(@map)
 
-    # initialize debugging canvas
-    # document.getElementById('debug-container').appendChild dCanvas
-
+    # initialize debug drawing
     dCanvas.width = window.innerWidth/2 - 100
     dCanvas.height = window.innerHeight
     debugDraw.SetSprite dCtx
@@ -72,10 +56,11 @@ module.exports = class PhysicsManager extends Model
     debugDraw.SetFlags Box2D.Dynamics.b2DebugDraw.e_shapeBit | Box2D.Dynamics.b2DebugDraw.e_jointBit
     @world.SetDebugDraw debugDraw
 
-    @addBackgroundRigidBodies(map)
+    @addBackgroundRigidBodies(@map)
 
-  addBackgroundRigidBodies: (map) =>
-    for layer in map.layers
+
+  addBackgroundRigidBodies: () =>
+    for layer in @map.layers
       continue if layer.name isnt 'physics'
 
       # create polygons
@@ -94,12 +79,12 @@ module.exports = class PhysicsManager extends Model
         for tileID, tileIndex in layer.data
           continue if tileID is 0
 
-          x = (tileIndex % map.width) * map.tilewidth
-          y = Math.floor(tileIndex / map.width) * map.tileheight
+          x = (tileIndex % @map.width) * @map.tilewidth
+          y = Math.floor(tileIndex / @map.width) * @map.tileheight
 
-          pkt = mediator.mapManager.getTilePacket tileID, mediator.getActiveLevel().tileSets
-          physicsTile = pkt.px / map.tilewidth
-          tileSize = map.tilewidth
+          pkt = mediator.mapManager.getTilePacket tileID, @map.processedTileSets
+          physicsTile = pkt.px / @map.tilewidth
+          tileSize = @map.tilewidth
 
           if physicsTile is 0
             @createStaticBodyWithBox x, y, tileSize, tileSize
@@ -115,10 +100,6 @@ module.exports = class PhysicsManager extends Model
           else if physicsTile is 4
             vec2Array = [new Vec2(0, 0), new Vec2(tileSize, 0), new Vec2(0, tileSize)]
             @createStaticBodyWithPolygon vec2Array, x, y
-
-
-
-
 
 
   createStaticBodyWithBox: (x, y, w, h) =>
@@ -146,45 +127,45 @@ module.exports = class PhysicsManager extends Model
   ###
   @todo movo to TiledMap
   ###
-  createLevelBorder: (map) =>
+  createLevelBorder: () =>
     fixtureDefinition = new FixtureDef()
     fixtureDefinition.shape = new PolygonShape()
-    fixtureDefinition.shape.SetAsBox 0, map.tileheight * map.height
+    fixtureDefinition.shape.SetAsBox 0, @map.tileheight * @map.height
     mapBorder = new BodyDef()
     mapBorder.type = Body.b2_staticBody
     mapBorder.position.x = 0
     mapBorder.position.y = 0
-    body = @registerBody mapBorder
+    body = @registerBody mapBorder, @world
     body.CreateFixture fixtureDefinition
 
     fixtureDefinition = new FixtureDef()
     fixtureDefinition.shape = new PolygonShape()
-    fixtureDefinition.shape.SetAsBox 0, map.tileheight * map.height
+    fixtureDefinition.shape.SetAsBox 0, @map.tileheight * @map.height
     mapBorder = new BodyDef()
     mapBorder.type = Body.b2_staticBody
-    mapBorder.position.x = map.tilewidth * map.width
+    mapBorder.position.x = @map.tilewidth * @map.width
     mapBorder.position.y = 0
-    body = @registerBody mapBorder
+    body = @registerBody mapBorder, @world
     body.CreateFixture fixtureDefinition
 
     fixtureDefinition = new FixtureDef()
     fixtureDefinition.shape = new PolygonShape()
-    fixtureDefinition.shape.SetAsBox map.tilewidth * map.width, 0
+    fixtureDefinition.shape.SetAsBox @map.tilewidth * @map.width, 0
     mapBorder = new BodyDef()
     mapBorder.type = Body.b2_staticBody
     mapBorder.position.x = 0
     mapBorder.position.y = 0
-    body = @registerBody mapBorder
+    body = @registerBody mapBorder, @world
     body.CreateFixture fixtureDefinition
 
     fixtureDefinition = new FixtureDef()
     fixtureDefinition.shape = new PolygonShape()
-    fixtureDefinition.shape.SetAsBox map.tilewidth * map.width, 0
+    fixtureDefinition.shape.SetAsBox @map.tilewidth * @map.width, 0
     mapBorder = new BodyDef()
     mapBorder.type = Body.b2_staticBody
     mapBorder.position.x = 0
-    mapBorder.position.y = map.tileheight * map.height
-    body = @registerBody mapBorder
+    mapBorder.position.y = @map.tileheight * @map.height
+    body = @registerBody mapBorder, @world
     body.CreateFixture fixtureDefinition
 
 
@@ -206,8 +187,10 @@ module.exports = class PhysicsManager extends Model
 
     @world.SetContactListener listener
 
+
   registerBody: (bodyDef) =>
     body = @world.CreateBody bodyDef
+
 
   addBody: (entityDef) =>
     bodyDef = new BodyDef()
@@ -224,7 +207,7 @@ module.exports = class PhysicsManager extends Model
 
     bodyDef.userData = entityDef.userData if entityDef.userData
 
-    body = @registerBody bodyDef
+    body = @registerBody bodyDef, @world
     fixtureDefinition = new FixtureDef()
 
     # TODO: remove hard coding
@@ -242,15 +225,4 @@ module.exports = class PhysicsManager extends Model
   removeBody: (obj) =>
     @world.DestroyBody obj
 
-  # ###
-  # Checks if the position is free
-  # @param [Integer] x the x value of the position
-  # @param [Integer] y the y value of the position
-  # ###
-  # canIMoveThere: (x, y) =>
-  #   # TODO: just a temporary fix, use box2d later
-  #   x = Math.floor x/32
-  #   y = Math.floor y/32
-  #   if mediator.levels[mediator.activeLevel].physicsMap[x][y] is false
-  #     return true
 

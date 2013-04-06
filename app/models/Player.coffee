@@ -10,9 +10,9 @@ module.exports = class Player extends Entity
 
   animationState: [0, 1, 2, 1]
 
-  constructor: (x, y, width, height, settings) ->
+  constructor: (x, y, width, height, owningLevel, settings) ->
 
-    super x, y, width, height, settings
+    super x, y, width, height, owningLevel, settings
 
     @spriteState.creationTime = Date.now()
 
@@ -20,8 +20,8 @@ module.exports = class Player extends Entity
     @entityDef.y = @position.y
     @entityDef.userData.ent = @
 
-    @physBody = mediator.physicsManager.addBody @entityDef
-    @physBody.SetLinearVelocity(new mediator.physicsManager.Vec2(0, 0))
+    @physBody = @level.physicsManager.addBody @entityDef, @level.b2World
+    @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
 
   kill: =>
     mediator.physicsManager.removeBody @physBody

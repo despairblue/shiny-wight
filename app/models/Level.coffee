@@ -1,24 +1,33 @@
 Model = require 'models/base/model'
+PhysicsManager = require 'models/PhysicsManager'
 mediator = require 'mediator'
 
 module.exports = class Level extends Model
   manifest: null
   callback: null
 
+  # Sounds
   soundList: {}
   backgroundSoundList: {}
   soundTheme: null
 
   soundCount: 0
 
+  # Physics
   physicsMap: []
+  b2World: null
+  physicsLoopHZ: 1/25
 
+  # Entities
   entities: {}
   bodyCount: 0
 
+  # Tiled Map
   mapCanvas: null
   mapTiledObject: null
+  tileSets: null
 
+  # Loading States
   bodiesLoaded: false
   mapLoaded: false
   loadCompleted: false
@@ -45,7 +54,14 @@ module.exports = class Level extends Model
         mediator.mapManager.parse @mapTiledObject, (map, tileSets) =>
           @mapCanvas = map
           @tileSets = tileSets
+          # TODO: this is ugly and only needed for physicsmanager
+          @mapTiledObject.processedTileSets = @tileSets
           @mapLoaded = true
+          # done parsing and rendering tiled map
+
+          # create physics world
+          @physicsManager = new PhysicsManager(@mapTiledObject)
+
           @checkIfDone()
         # load sounds
         if mediator.playWithSounds
@@ -70,3 +86,5 @@ module.exports = class Level extends Model
       console.log "level load completed" if debug
       @loadCompleted = true
       @callback() if @callback
+  update: =>
+    @physicsManager.update()

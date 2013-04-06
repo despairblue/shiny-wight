@@ -57,7 +57,6 @@ module.exports = class Application extends Chaplin.Application
     # Add additional application-specific properties and methods
     # e.g. mediator.prop = null
     mediator.map            = null
-    mediator.physicsManager = null
     mediator.soundManager   = null
     mediator.mapManager     = mapManager
     # used while developing, so wie don't have to load sounds if we don't need to

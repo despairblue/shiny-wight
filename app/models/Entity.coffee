@@ -50,10 +50,12 @@ module.exports = class Entity extends Model
   ###
   viewDirection: 0
 
-  constructor: (x, y, width, height, settings) ->
+  constructor: (x, y, width, height, owningLevel, settings) ->
     super
 
     @[prop] = content for prop, content of settings
+
+    @level = owningLevel
 
     @position =
      x: x
