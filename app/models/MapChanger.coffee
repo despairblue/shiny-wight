@@ -15,6 +15,9 @@ module.exports = class MapChanger extends Entity
 
   onTouchBegin: (body, point, impulse) =>
     if body.GetUserData().ent.name == 'Player'
-      mediator.soundManager.stopAll() if mediator.playWithSounds
+      if mediator.playWithSounds
+        mediator.soundManager.stopAll config =
+          sounds: true
+          backgroundSounds: true
       mediator.activeLevel = @levelToChangeTo
       @publishEvent 'changeLvl'

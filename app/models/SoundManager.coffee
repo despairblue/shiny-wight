@@ -81,12 +81,16 @@ module.exports = class SoundManager extends Model
     sound = request.additionalAttributes[0]
     callback = request.additionalAttributes[1]
 
+    console.time "bufferSounds #{sound}"
     buffer = @audioContext.createBuffer(request.response, false)
+    console.timeEnd "bufferSounds #{sound}"
+
     @globalSoundList[sound].buffer = buffer
 
     console.log sound+' loaded' if debug
 
     callback()
+
 
   ###
   @param [String]
@@ -124,15 +128,23 @@ module.exports = class SoundManager extends Model
   ###
   Stop all sounds in active level
   ###
-  stopAll: =>
+  stopAll: (config) =>
     theme = mediator.getActiveLevel().themeSound
+    soundsToStop = []
+    if config?.themeSound
+      soundsToStop.push mediator.getActiveLevel().themeSound
+    else
+      @lastLevelTheme = mediator.getActiveLevel().themeSound
+    if config?.backgroundSounds
+      for sound in mediator.getActiveLevel().backgroundSoundList
+        soundsToStop.push sound
+    if config?.sounds
+      for sound in mediator.getActiveLevel().mapSoundList
+        soundsToStop.push sound
     try
       for name, sound of @globalSoundList
-        if name == theme
-          @lastLevelTheme = theme
-          continue
-        @stop name
-
+        if (soundsToStop.indexOf name) isnt -1
+          @stop name
     catch e
       console.log e.toString() if debug
 
