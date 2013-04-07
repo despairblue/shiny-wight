@@ -1,6 +1,6 @@
-Model = require 'models/base/model'
-PhysicsManager = require 'models/PhysicsManager'
-mediator = require 'mediator'
+Model           = require 'models/base/model'
+PhysicsManager  = require 'models/PhysicsManager'
+mediator        = require 'mediator'
 
 module.exports = class Level extends Model
 
@@ -9,7 +9,7 @@ module.exports = class Level extends Model
     @manifest            = null
 
     # Sounds
-    @soundList           = {}
+    @mapSoundList     = {}
     @backgroundSoundList = {}
     @soundTheme          = null
     @soundCount          = 0
@@ -90,12 +90,17 @@ module.exports = class Level extends Model
         if mediator.playWithSounds
           # just copy sounds from the manifest and let the managers load it
           @soundMap = mediator.soundManager.getSoundMap @mapTiledObject
-          mediator.soundManager.loadSounds @manifest.sounds, (soundList, backgroundSoundList, themeSound) =>
-            @soundList = soundList
-            @backgroundSoundList = backgroundSoundList
-            @themeSound = themeSound
-            @soundsLoaded = true
-            @checkIfDone()
+          @mapSoundList         = @manifest.sounds.sounds
+          @backgroundSoundList  = @manifest.sounds.backgroundSounds
+          @themeSound           = @manifest.sounds.theme
+
+          @soundCount = @mapSoundList.length + @backgroundSoundList.length + 1
+
+          mediator.soundManager.loadSounds @manifest.sounds, =>
+            @soundCount--
+            if @soundCount <= 0
+              @soundsLoaded = true
+              @checkIfDone()
             # done loading sounds
 
 
