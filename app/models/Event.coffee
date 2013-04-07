@@ -1,4 +1,4 @@
-Entity = require 'models/Entity'
+Entity   = require 'models/Entity'
 mediator = require 'mediator'
 
 module.exports = class Event extends Entity
@@ -15,4 +15,16 @@ module.exports = class Event extends Entity
 
   onTouchBegin: (body, point, impulse) =>
     if @name == 'FirstYeti'
-      alert 'da fucking yetis come and get you'
+      @name = ''
+      @level.tasks.push =>
+        yeti =
+          name: 'Yeti'
+          type: 'Yeti'
+          x: 16*32
+          y: 16
+          width: 32
+          height: 32
+          properties: {
+          }
+
+        @level.addEntity yeti
