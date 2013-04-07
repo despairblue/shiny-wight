@@ -29,8 +29,9 @@ module.exports = class Event extends Entity
 
         @level.addEntity yeti
 
-        mediator.soundManager.stopAll config =
-          themeSound: true
-          backgroundSounds: true
+        if mediator.playWithSounds
+          mediator.soundManager.stopAll config =
+            themeSound: true
+            backgroundSounds: true
 
-        mediator.soundManager.playSound @level.manifest.sounds.sounds[0], 1, true
+          mediator.soundManager.playSound @level.manifest.sounds.sounds[0], 1, true
