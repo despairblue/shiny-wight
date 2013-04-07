@@ -28,3 +28,6 @@ module.exports = class Event extends Entity
           }
 
         @level.addEntity yeti
+
+        mediator.soundManager.stopAll()
+        mediator.soundManager.playSound @level.manifest.sounds.sounds[0], 1, true
