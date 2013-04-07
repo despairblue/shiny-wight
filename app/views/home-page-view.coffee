@@ -134,9 +134,6 @@ module.exports = class HomePageView extends View
   draw: =>
     lvl = mediator.getActiveLevel()
 
-    # Resize canvas to window size
-    @canvas.width  = window.innerWidth/2
-    @canvas.height = window.innerHeight
 
     # get attributes
     numXTiles = lvl.mapTiledObject.width
@@ -165,6 +162,10 @@ module.exports = class HomePageView extends View
     # check boundaries, level might be smaller than radius of sight
     sw = dw = pixelSize.x if sw - sx > pixelSize.x
     sh = dh = pixelSize.y if sh - sy > pixelSize.y
+
+    # Resize canvas to window size
+    @canvas.width  = sw
+    @canvas.height = sh
 
     # @ctx.drawImageTiled (@gMap.get 'canvas'), sx, sy, sw, sh, dx, dy, dw, dh, tileSize.x, tileSize.y
     @ctx.drawImage (lvl.mapCanvas), sx, sy, sw, sh, dx, dy, dw, dh
