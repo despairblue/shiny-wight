@@ -162,7 +162,9 @@ module.exports = class Level extends Model
           @player = obj
 
   addEntity: (object) =>
-    @entityObjects.push @createEntity object
+    obj = @createEntity object
+    @entityObjects.push obj
+    return obj
 
   createEntity: (object) =>
     # get constructor and json config
