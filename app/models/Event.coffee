@@ -13,7 +13,38 @@ module.exports = class Event extends Entity
     super x, y, width, height, owningLevel, settings
 
 
+  onTouchEnd: (body, point, impulse) =>
+    $('#dialog').empty()
+    @y.moveDown 150
+    @y.moveLeft 200
+    @y.moveRight 10
+    @y.moveLeft 10
+    @y.moveRight 10
+    @y.moveLeft 10
+    @y.moveRight 10
+    @y.moveLeft 10
+    @y.moveRight 10
+    @y.moveLeft 10
+    @y.moveRight 10
+    @y.moveLeft 10
+
+
   onTouchBegin: (body, point, impulse) =>
+    source = document.getElementById 'some-template'
+    template = Handlebars.compile(source.innerText)
+
+    data =
+      "text": "Can I help you?"
+      "options": [
+        {"text": "Can I go into your cellar, please.", "id":1},
+        {"text": "Nothing. Bye", "id":2},
+        {"text": "Nice skin. Can i have it?"}
+        {"text": "eine vierte option hinzufuegen"}]
+
+    result = $ template(data)
+
+    $('#dialog').append result
+
     if @name == 'FirstYeti'
       @name = ''
       @level.tasks.push =>
@@ -27,7 +58,7 @@ module.exports = class Event extends Entity
           properties: {
           }
 
-        @level.addEntity yeti
+        @y = @level.addEntity yeti
 
         if mediator.playWithSounds
           mediator.soundManager.stopAll config =

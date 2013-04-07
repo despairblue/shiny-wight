@@ -87,6 +87,13 @@ module.exports = class Entity extends Model
       userData:
         ent: null
 
+    @tasks = []
+    @moving =
+      up: false
+      down: false
+      right: false
+      left: false
+
     @entityDef.x = @position.x
     @entityDef.y = @position.y
     @entityDef.width = width
@@ -177,6 +184,59 @@ module.exports = class Entity extends Model
     @physBody.SetLinearVelocity @oldVelocity
 
 
+  moveDown: (pixel) =>
+    console.error 'argument must be an positive integer' if pixel < 0
+    @tasks.push (context) ->
+      context.targetPos =
+        x: context.position.x
+        y: context.position.y + pixel
+      context.moving.down = true
+      context.spriteState.moving = true
+      context.spriteState.viewDirection = 2
+
+
+  moveUp: (pixel) =>
+    console.error 'argument must be an positive integer' if pixel < 0
+    @tasks.push (context) ->
+      context.targetPos =
+        x: context.position.x
+        y: context.position.y - pixel
+      context.moving.up = true
+      context.spriteState.moving = true
+      context.spriteState.viewDirection = 0
+
+
+  moveRight: (pixel) =>
+    console.error 'argument must be an positive integer' if pixel < 0
+    @tasks.push (context) ->
+      context.targetPos =
+        x: context.position.x + pixel
+        y: context.position.y
+      context.moving.right = true
+      context.spriteState.moving = true
+      context.spriteState.viewDirection = 1
+
+
+  moveLeft: (pixel) =>
+    console.error 'argument must be an positive integer' if pixel < 0
+    @tasks.push (context) ->
+      context.targetPos =
+        x: context.position.x - pixel
+        y: context.position.y
+      context.moving.left = true
+      context.spriteState.moving = true
+      context.spriteState.viewDirection = 3
+
+
+  stopMovement: (pixel) =>
+    @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
+    @moving.down        = false
+    @moving.up          = false
+    @moving.left        = false
+    @moving.right       = false
+    @spriteState.moving = false
+
+
   ###
   Is called each tick/frame.
   ###
@@ -184,3 +244,26 @@ module.exports = class Entity extends Model
     @position.x = @physBody.GetPosition().x if @physBody.GetPosition().x?
     @position.y = @physBody.GetPosition().y if @physBody.GetPosition().y?
 
+    if @moving.down
+      if @position.y > @targetPos.y
+        @stopMovement()
+      else
+        @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, @velocity))
+    else if @moving.up
+      if @position.y < @targetPos.y
+        @stopMovement()
+      else
+        @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, -@velocity))
+    else if @moving.right
+      if @position.x > @targetPos.x
+        @stopMovement()
+      else
+        @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(@velocity, 0))
+    else if @moving.left
+      if @position.x < @targetPos.x
+        @stopMovement()
+      else
+        @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(-@velocity, 0))
+    else
+      task = @tasks.shift()
+      task(@) if task
