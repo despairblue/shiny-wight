@@ -3,13 +3,12 @@
     "prefix": "sounds/",
     "sounds": [],
     "theme": "level2theme.mp3",
-    "backgroundSounds":[]
+    "themeIntensity": 0.3,
+    "backgroundSounds": []
   },
   "entities": {
     "prefix": "entities",
-    "files": ["Player.json",
-              "MapChangerToLevel2.json"
-             ]
+    "files": ["Player.json"]
   },
   "map": {
     "prefix": "map",

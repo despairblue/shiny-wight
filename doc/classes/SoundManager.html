@@ -131,14 +131,23 @@
         <dd>
           <pre><code class='coffee'>'sounds/'</code></pre>
         </dd>
-        <dt id='FADE_TIME_INTERVAL-constant'>
-          FADE_TIME_INTERVAL
+        <dt id='FADE_BACKGROUND_INTERVAL-constant'>
+          FADE_BACKGROUND_INTERVAL
           =
           <div class='tags'>
 </div>
         </dt>
         <dd>
           <pre><code class='coffee'>1</code></pre>
+        </dd>
+        <dt id='FADE_THEME_INTERVAL-constant'>
+          FADE_THEME_INTERVAL
+          =
+          <div class='tags'>
+</div>
+        </dt>
+        <dd>
+          <pre><code class='coffee'>0.3</code></pre>
         </dd>
       </dl>
       <h2>Instance Method Summary</h2>
@@ -190,7 +199,7 @@
   <li>
     <span class='signature'>
       <a href='#playSound-instance'>
-        - (void) <strong>playSound</strong>(sound, list, volume, loops)
+        - (void) <strong>playSound</strong>(sound, volume, loops)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -201,7 +210,7 @@
   <li>
     <span class='signature'>
       <a href='#stop-instance'>
-        - (void) <strong>stop</strong>(sound, list)
+        - (void) <strong>stop</strong>(sound)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -212,7 +221,7 @@
   <li>
     <span class='signature'>
       <a href='#stopAll-instance'>
-        - (void) <strong>stopAll</strong>()
+        - (void) <strong>stopAll</strong>(config)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -233,6 +242,17 @@
   </li>
   <li>
     <span class='signature'>
+      <a href='#startThemeSound-instance'>
+        - (void) <strong>startThemeSound</strong>()
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#updateBackgroundSounds-instance'>
         - (void) <strong>updateBackgroundSounds</strong>(PlayerPosition)
       </a>
@@ -245,7 +265,7 @@
   <li>
     <span class='signature'>
       <a href='#fade-instance'>
-        - (void) <strong>fade</strong>(sound, list, volume)
+        - (void) <strong>fade</strong>(sound, volume, interval)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -318,7 +338,7 @@ Buffer the sound we just got from xhrGet request and put it into the correspondi
   </div>
   <div class='method_details'>
     <p class='signature' id='playSound-instance'>
-      - (void) <strong>playSound</strong>(sound, list, volume, loops)
+      - (void) <strong>playSound</strong>(sound, volume, loops)
       (bound)
     </p>
     <div class='docstring'>
@@ -333,7 +353,7 @@ Play sound of list with volume and loop</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='stop-instance'>
-      - (void) <strong>stop</strong>(sound, list)
+      - (void) <strong>stop</strong>(sound)
       (bound)
     </p>
     <div class='docstring'>
@@ -346,7 +366,7 @@ Stop sound in list</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='stopAll-instance'>
-      - (void) <strong>stopAll</strong>()
+      - (void) <strong>stopAll</strong>(config)
       (bound)
     </p>
     <div class='docstring'>
@@ -367,6 +387,14 @@ Stop sound in list</p>
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='startThemeSound-instance'>
+      - (void) <strong>startThemeSound</strong>()
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='updateBackgroundSounds-instance'>
       - (void) <strong>updateBackgroundSounds</strong>(PlayerPosition)
       (bound)
@@ -384,7 +412,7 @@ Look for backgroundSounds to play on the player position on the soundMap and upd
   </div>
   <div class='method_details'>
     <p class='signature' id='fade-instance'>
-      - (void) <strong>fade</strong>(sound, list, volume)
+      - (void) <strong>fade</strong>(sound, volume, interval)
       (bound)
     </p>
     <div class='docstring'>
@@ -408,7 +436,7 @@ Fade sound in list to gain</p>
     </div>
     <div id='footer'>
   Generated on
-  Sat Apr 06 2013 23:00:08 GMT+0200 (CEST)
+  Sun Apr 07 2013 17:22:29 GMT+0200 (CEST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.6.0

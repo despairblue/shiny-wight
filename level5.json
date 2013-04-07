@@ -1,0 +1,15 @@
+{
+  "sounds": {
+    "prefix": "sounds/",
+    "sounds": [],
+    "theme": "level2theme.mp3",
+    "backgroundSounds": []
+  },
+  "entities": {
+    "prefix": "entities"
+  },
+  "map": {
+    "prefix": "map",
+    "file": "level5.json"
+  }
+}

@@ -6,11 +6,7 @@
     "backgroundSounds":[]
   },
   "entities": {
-    "prefix": "entities",
-    "files":[
-      "Player.json",
-      "MapChangerToLevel4.json"
-    ]
+    "prefix": "entities"
   },
   "map": {
     "prefix": "map",

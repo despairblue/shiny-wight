@@ -3,14 +3,10 @@
     "prefix": "sounds/",
     "sounds": [],
     "theme": "level2theme.mp3",
-    "backgroundSounds":[]
+    "backgroundSounds": []
   },
   "entities": {
-    "prefix": "entities",
-    "files": ["Player.json",
-              "MapChangerToLevel2House1.json",
-              "MapChangerToLevel2House2.json"
-             ]
+    "prefix": "entities"
   },
   "map": {
     "prefix": "map",

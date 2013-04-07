@@ -2,15 +2,11 @@
   "sounds": {
     "prefix": "sounds/",
     "sounds": [],
-    "theme": "level4theme.mp3",
-    "backgroundSounds":[]
+    "theme": "underground.mp3",
+    "backgroundSounds": []
   },
   "entities": {
-    "prefix": "entities",
-    "files":[
-      "Player.json",
-      "MapChangerToLevel5.json"
-    ]
+    "prefix": "entities"
   },
   "map": {
     "prefix": "map",

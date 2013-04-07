@@ -1,20 +1,16 @@
 {
   "sounds": {
     "prefix": "sounds/",
-    "sounds": [],
+    "sounds": ["jtTheme.mp3"],
     "theme": "level1theme.mp3",
-    "backgroundSounds":[
+    "backgroundSounds": [
       "water.mp3",
       "fire.mp3",
-      "wood.mp3"
-    ]
+      "wood.mp3"]
   },
   "entities": {
     "prefix": "entities",
-    "files":[
-      "Player.json",
-      "MapChangerToLevel2.json"
-    ]
+    "files": ["Yeti.json"]
   },
   "map": {
     "prefix": "map",

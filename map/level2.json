@@ -53,7 +53,8 @@
                  "name":"MapChangerToLevel2House1",
                  "properties":
                     {
-                     "levelToChangeTo":"level2house1"
+                     "levelToChangeTo":"level2house1",
+                     "physicsType":"static"
                     },
                  "type":"MapChanger",
                  "visible":true,
@@ -66,7 +67,8 @@
                  "name":"MapChangerToLevel2House2",
                  "properties":
                     {
-                     "levelToChangeTo":"level2house2"
+                     "levelToChangeTo":"level2house2",
+                     "physicsType":"static"
                     },
                  "type":"MapChanger",
                  "visible":true,
@@ -104,7 +106,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/wood_tileset_3.png",
+         "image":"..\/atlases\/wood_tileset_3.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -119,7 +121,7 @@
         }, 
         {
          "firstgid":257,
-         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/grass.png",
+         "image":"..\/atlases\/grass.png",
          "imageheight":192,
          "imagewidth":96,
          "margin":0,
@@ -134,7 +136,7 @@
         }, 
         {
          "firstgid":275,
-         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/marioficke.png",
+         "image":"..\/atlases\/marioficke.png",
          "imageheight":1258,
          "imagewidth":852,
          "margin":2,
@@ -149,7 +151,7 @@
         }, 
         {
          "firstgid":1200,
-         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/physics.png",
+         "image":"..\/atlases\/physics.png",
          "imageheight":32,
          "imagewidth":160,
          "margin":0,

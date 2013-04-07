@@ -1,6 +1,5 @@
 {
   "tiledName": "Player",
-  "name": "Player",
   "velocity": 300,
   "spriteState": {
     "moving": false,
@@ -17,7 +16,7 @@
     "tilewidth": 32,
     "offset": {
       "x": 16,
-      "y":24
+      "y": 24
     }
   }
 }
