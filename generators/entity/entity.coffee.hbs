@@ -1,0 +1,35 @@
+Entity = require 'models/Entity'
+mediator = require 'mediator'
+
+module.exports = class {{#camelize}}{{name}}{{/camelize}} extends Entity
+
+  ###
+    Don't forget to require the file home page view!
+  ###
+  mediator.factory['{{#camelize}}{{name}}{{/camelize}}'] = this
+
+
+  constructor: (x, y, width, height, owningLevel, settings) ->
+    ###
+
+    ###
+    ###
+      Is the object Static or Dynamic?
+    ###
+    #settings.physicsType = 'static'
+    #settings.physicsType = 'dynamic'
+
+    ###
+      If the entity is a Sensor it means that the player can walk through it
+    ###
+    #settings.isSensor    = true
+
+
+    super x, y, width, height, owningLevel, settings
+
+
+  onTouchBegin: (body, point, impulse) =>
+    alert 'da fucking yetis come and get you'
+    # mediator.soundManager.stopAll() if mediator.playWithSounds
+    # mediator.activeLevel = @levelToChangeTo
+    # @publishEvent 'changeLvl'

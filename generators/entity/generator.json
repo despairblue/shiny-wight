@@ -1,0 +1,10 @@
+{
+  "files": [
+    {
+      "from": "entity.coffee.hbs",
+      "to": "app/models/{{name}}.coffee"
+    }
+  ],
+  "dependencies": [
+  ]
+}
