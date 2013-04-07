@@ -27,7 +27,7 @@ module.exports = class Yeti extends Entity
 
     @spriteState.creationTime = Date.now()
 
-    @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(10, 10))
+    @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
 
 
   load: =>
@@ -49,7 +49,6 @@ module.exports = class Yeti extends Entity
 
 
   onTouch: (body, point, impulse) =>
-    console.log @physBody.GetLinearVelocity()
     console.log 'Hey, why do you keep touching me?'
 
 
