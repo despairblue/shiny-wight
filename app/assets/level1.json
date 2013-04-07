@@ -1,7 +1,7 @@
 {
   "sounds": {
     "prefix": "sounds/",
-    "sounds": [],
+    "sounds": ["jtTheme.mp3"],
     "theme": "level1theme.mp3",
     "backgroundSounds": [
       "water.mp3",
