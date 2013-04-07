@@ -181,4 +181,6 @@ module.exports = class Entity extends Model
   Is called each tick/frame.
   ###
   update: =>
-    # update method
+    @position.x = @physBody.GetPosition().x if @physBody.GetPosition().x?
+    @position.y = @physBody.GetPosition().y if @physBody.GetPosition().y?
+

@@ -63,8 +63,7 @@ module.exports = class Yeti extends Entity
     ###
       synchronize the visial position with the physical one
     ###
-    @position.x = @physBody.GetPosition().x if @physBody.GetPosition().x?
-    @position.y = @physBody.GetPosition().y if @physBody.GetPosition().y?
+    super
 
 
   getSpritePacket: =>

@@ -48,8 +48,7 @@ module.exports = class Player extends Entity
     console.log "Player hit his head!" if debug
 
   update: =>
-    @position.x = @physBody.GetPosition().x if @physBody.GetPosition().x?
-    @position.y = @physBody.GetPosition().y if @physBody.GetPosition().y?
+    super
 
   getSpritePacket: =>
     x = Math.floor((Date.now() - @spriteState.creationTime)/@spriteState.animationRate) % @tileSet.tilesX
