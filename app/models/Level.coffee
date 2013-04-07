@@ -38,24 +38,6 @@ module.exports = class Level extends Model
     mediator.std.xhrGet manifestUri, (data) =>
       @manifest = JSON.parse data.target.responseText
 
-      # load the config files for the entities
-      @bodyCount = @manifest.entities.files.length
-      for file in @manifest.entities.files
-        uri = @manifest.entities.prefix + '/' + file
-        mediator.std.xhrGet uri, (data) =>
-          try
-            ent = JSON.parse data.target.responseText
-            @entities[ent.tiledName] = ent
-          catch e
-            console.error e
-            console.error "Error loading #{uri}!"
-
-          @bodyCount--
-          if @bodyCount <= 0
-            @bodiesLoaded = true
-            @checkIfDone()
-
-
       # load map
       mediator.std.xhrGet @manifest.map.prefix + '/' + @manifest.map.file, (data) =>
         @mapTiledObject = JSON.parse data.target.responseText
@@ -66,6 +48,9 @@ module.exports = class Level extends Model
           @mapTiledObject.processedTileSets = @tileSets
           @mapLoaded = true
           # done parsing and rendering tiled map
+
+          # load the config files for the entities
+          @loadEntitiesConfigs()
 
           # create physics world
           @physicsManager = new PhysicsManager(@mapTiledObject)
@@ -102,6 +87,40 @@ module.exports = class Level extends Model
               @soundsLoaded = true
               @checkIfDone()
             # done loading sounds
+
+  loadEntitiesConfigs: =>
+    if not @mapLoaded
+      console.error 'Do not call loadEntities unless the map finished loading and parsing!'
+
+    list = []
+
+    for layer in @mapTiledObject.layers
+      continue if layer.type is 'tilelayer'
+      continue if layer.name isnt 'spawnpoints'
+
+      for object in layer.objects
+        continue if object.type is ''
+
+        if Object.keys(object.properties).length is 0
+          list.push object.name + '.json'
+
+    @bodyCount = list.length
+    for file in list
+      uri = @manifest.entities.prefix + '/' + file
+      mediator.std.xhrGet uri, (data) =>
+        try
+          ent = JSON.parse data.target.responseText
+          @entities[ent.tiledName] = ent
+        catch e
+          console.error e
+          console.error "Error loading #{uri}!"
+
+        @bodyCount--
+        if @bodyCount <= 0
+          @bodiesLoaded = true
+          @checkIfDone()
+
+    return list
 
 
   setup: =>

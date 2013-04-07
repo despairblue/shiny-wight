@@ -9,8 +9,7 @@
       "wood.mp3"]
   },
   "entities": {
-    "prefix": "entities",
-    "files": ["Player.json"]
+    "prefix": "entities"
   },
   "map": {
     "prefix": "map",
