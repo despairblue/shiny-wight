@@ -1,6 +1,5 @@
 {
   "tiledName": "Player",
-  "name": "Player",
   "velocity": 300,
   "spriteState": {
     "moving": false,

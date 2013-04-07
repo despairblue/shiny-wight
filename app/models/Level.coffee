@@ -156,7 +156,9 @@ module.exports = class Level extends Model
 
     if not conf
       console.error "No configuration file found for #{object.name}"
-      return "No configuration found!"
+      return null
+
+    conf.name = object.name
 
     conf.ellipse = true if object.ellipse
 
