@@ -9,8 +9,6 @@ module.exports = class SoundManager extends Model
   PATH: 'sounds/'
   FADE_TIME_INTERVAL: 1
 
-  globalSoundList: {}
-
   ###
   Initialize Soundmanager.
   Create a new audio context and bind soundManager to mediator
@@ -49,7 +47,7 @@ module.exports = class SoundManager extends Model
 
 
   loadSounds: (mapSounds, callback) =>
-    @soundCount = mapSounds.sounds.length + mapSounds.backgroundSounds.length + mapSounds.themeSound.length
+    @soundCount = mapSounds.sounds.length + mapSounds.backgroundSounds.length + 1
 
     @soundList = {}
     @backgroundSounds = {}
