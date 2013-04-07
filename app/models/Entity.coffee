@@ -145,20 +145,34 @@ module.exports = class Entity extends Model
   onPositionChange: =>
     # method to be overloaded
 
+
   load: =>
     # ..
+
 
   render: =>
     # ..
 
+
   onTouch: (body, point, impulse) =>
     # ...
+
 
   onTouchBegin: (body, point) =>
     # ...
 
+
   onTouchEnd: (body, point) =>
     # ...
+
+
+  makeMeStatic: () =>
+    @physBody.SetType Box2D.Dynamics.b2Body.b2_staticBody
+
+
+  makeMeDynamic: () =>
+    @physBody.SetType Box2D.Dynamics.b2Body.b2_dynamicBody
+
 
   ###
   Is called each tick/frame.
