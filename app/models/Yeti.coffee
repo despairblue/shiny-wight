@@ -13,8 +13,8 @@ module.exports = class Yeti extends Entity
     ###
       Is the object Static or Dynamic?
     ###
-    settings.physicsType = 'static'
-    #settings.physicsType = 'dynamic'
+    # settings.physicsType = 'static'
+    settings.physicsType = 'dynamic'
 
     settings.ellipse = true
 
@@ -26,6 +26,8 @@ module.exports = class Yeti extends Entity
     super x, y, width, height, owningLevel, settings
 
     @spriteState.creationTime = Date.now()
+
+    @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(10, 10))
 
 
   load: =>
@@ -43,14 +45,18 @@ module.exports = class Yeti extends Entity
   onTouchBegin: (body, point) =>
     console.log  'Hey, why do you start bumping into me?'
     @spriteState.moving = true
+    @makeMeStatic() if body.GetUserData()?.ent.name is 'Player'
 
 
   onTouch: (body, point, impulse) =>
+    console.log @physBody.GetLinearVelocity()
     console.log 'Hey, why do you keep touching me?'
+
 
   onTouchEnd: (body, point) =>
     console.log 'Hey, why do you stop touching me?'
     @spriteState.moving = false
+    @makeMeDynamic() if body.GetUserData()?.ent.name is 'Player'
 
 
   update: =>
