@@ -141,12 +141,8 @@ module.exports = class Level extends Model
       @_callback() if @_callback
 
 
-  initialSpawn: (level) =>
-    level = mediator.getActiveLevel() unless level
-
-    map = level.mapTiledObject
-
-    for layer in map.layers
+  initialSpawn: () =>
+    for layer in @mapTiledObject.layers
       continue if layer.type is 'tilelayer'
       continue if layer.name isnt 'spawnpoints'
 
