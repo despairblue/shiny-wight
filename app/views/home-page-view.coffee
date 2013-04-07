@@ -45,6 +45,7 @@ module.exports = class HomePageView extends View
     mediator.levels[level] = new Level (level + '.json'), =>
       rest[0]() if rest[0]
 
+
   # loads next levels
   loadNextLevels: =>
     # iterate through MapChanger Entities and load levels they point to

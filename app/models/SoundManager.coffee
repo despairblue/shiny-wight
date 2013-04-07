@@ -23,7 +23,6 @@ module.exports = class SoundManager extends Model
     @globalSoundList = {}
     @lastLevelTheme = ""
 
-    @subscribeEvent 'stopCurrentSounds', @stopAll
 
   ###
   @param [String]

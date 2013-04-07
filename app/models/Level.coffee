@@ -92,6 +92,7 @@ module.exports = class Level extends Model
               @checkIfDone()
             # done loading sounds
 
+
   loadEntitiesConfigs: =>
     if not @mapLoaded
       console.error 'Do not call loadEntities unless the map finished loading and parsing!'
