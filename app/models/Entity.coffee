@@ -167,11 +167,14 @@ module.exports = class Entity extends Model
 
 
   makeMeStatic: () =>
+    @oldVelocity = _.clone @physBody.GetLinearVelocity()
     @physBody.SetType Box2D.Dynamics.b2Body.b2_staticBody
 
 
   makeMeDynamic: () =>
     @physBody.SetType Box2D.Dynamics.b2Body.b2_dynamicBody
+    @physBody.SetAwake true
+    @physBody.SetLinearVelocity @oldVelocity
 
 
   ###
