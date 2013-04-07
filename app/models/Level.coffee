@@ -155,9 +155,8 @@ module.exports = class Level extends Model
       for object in layer.objects
         continue if object.type is ''
 
-        obj = @createEntity object
+        obj = @addEntity object
 
-        @entityObjects.push(obj)
         if object.type == "Player"
           @player = obj
 
