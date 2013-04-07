@@ -6,5 +6,6 @@
     }
   ],
   "dependencies": [
+    {"name": "entity-configuration", "params": "{{name}}"}
   ]
 }
