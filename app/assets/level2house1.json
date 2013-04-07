@@ -3,7 +3,8 @@
     "prefix": "sounds/",
     "sounds": [],
     "theme": "level2theme.mp3",
-    "backgroundSounds":[]
+    "themeIntensity": 0.3,
+    "backgroundSounds": []
   },
   "entities": {
     "prefix": "entities",

@@ -79,6 +79,9 @@ module.exports = class Level extends Model
           @mapSoundList         = @manifest.sounds.sounds
           @backgroundSoundList  = @manifest.sounds.backgroundSounds
           @themeSound           = @manifest.sounds.theme
+          if @manifest.sounds.themeIntensity?
+            @themeIntensity     = @manifest.sounds.themeIntensity
+          else @themeIntensity  = 1
 
           @soundCount = @mapSoundList.length + @backgroundSoundList.length + 1
 

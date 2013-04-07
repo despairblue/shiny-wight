@@ -7,7 +7,8 @@ module.exports = class SoundManager extends Model
   audioContext: null
 
   PATH: 'sounds/'
-  FADE_TIME_INTERVAL: 1
+  FADE_BACKGROUND_INTERVAL: 1
+  FADE_THEME_INTERVAL: 0.3
 
 
   ###
@@ -20,6 +21,7 @@ module.exports = class SoundManager extends Model
 
     @audioContext = new webkitAudioContext()
     @globalSoundList = {}
+    @lastLevelTheme = ""
 
     @subscribeEvent 'stopCurrentSounds', @stopAll
 
@@ -106,7 +108,7 @@ module.exports = class SoundManager extends Model
 
       sourceNode.start(0)
       @globalSoundList[sound].isPlaying = true
-    else @fade sound, volume
+    else @fade sound, volume, @FADE_THEME_INTERVAL
 
   ###
   @param [String]
@@ -123,8 +125,12 @@ module.exports = class SoundManager extends Model
   Stop all sounds in active level
   ###
   stopAll: =>
+    theme = mediator.getActiveLevel().themeSound
     try
       for name, sound of @globalSoundList
+        if name == theme
+          @lastLevelTheme = theme
+          continue
         @stop name
 
     catch e
@@ -139,7 +145,13 @@ module.exports = class SoundManager extends Model
       @playSound sound, 0, true
 
   startThemeSound: () =>
-      @playSound mediator.getActiveLevel().themeSound, 1, true
+    theme = mediator.getActiveLevel().themeSound
+    intensity = mediator.getActiveLevel().themeIntensity
+    if @lastLevelTheme == theme
+      @fade theme, intensity, @FADE_THEME_INTERVAL
+    else
+      @stop @lastLevelTheme if @globalSoundList[@lastLevelTheme]?
+      @playSound theme, intensity, true
 
   ###
   @param [Object]
@@ -152,12 +164,12 @@ module.exports = class SoundManager extends Model
     lvl = mediator.getActiveLevel()
     for sound in lvl.soundMap[Math.floor(PlayerPosition.x/32)][Math.floor(PlayerPosition.y/32)]
       # sound.type is the name of the sound here
-      @fade sound.type+'.mp3', sound.intensity/100
+      @fade sound.type+'.mp3', sound.intensity/100, @FADE_BACKGROUND_INTERVAL
       @backgroundSoundsToPlay.push(sound.type+'.mp3')
 
     for sound in lvl.backgroundSoundList
       if @backgroundSoundsToPlay.indexOf(sound) == -1
-        @fade sound, 0
+        @fade sound, 0, @FADE_BACKGROUND_INTERVAL
 
   ###
   @param [String]
@@ -165,9 +177,9 @@ module.exports = class SoundManager extends Model
   @param [Double]
   Fade sound in list to gain
   ###
-  fade: (sound, volume) =>
-    # exponentially approaching the target value <volume> at the given time with a rate <@FADE_TIME_INTERVAL>
-    @globalSoundList[sound].sourceNode.gain.setTargetAtTime(volume, @audioContext.currentTime, @FADE_TIME_INTERVAL)
+  fade: (sound, volume, interval) =>
+    # exponentially approaching the target value <volume> at the given time with a rate <interval>
+    @globalSoundList[sound].sourceNode.gain.setTargetAtTime(volume, @audioContext.currentTime, interval)
 
 
   startAll: =>
