@@ -20,6 +20,11 @@ module.exports = class {{#camelize}}{{name}}{{/camelize}} extends Entity
     #settings.physicsType = 'dynamic'
 
     ###
+      Is the object a circle?
+    ###
+    #settings.ellipse = true
+
+    ###
       If the entity is a Sensor it means that the player can walk through it
     ###
     #settings.isSensor    = true
@@ -41,13 +46,33 @@ module.exports = class {{#camelize}}{{name}}{{/camelize}} extends Entity
     @atlas = img
 
 
+
   onTouchBegin: (body, point) =>
     console.log  'Hey, why do you start bumping into me?'
     @spriteState.moving = true
 
+    ###
+      Do not call `@level.addEntity object` directly or you break box2d.
+      Use the @level.tasks array.
+      The Level will call the task the next update cycle
+    ###
+    #@level.tasks.push =>
+    #   obj =
+    #     name: 'Some Entity config'
+    #     type: 'Some Class'
+    #     x: 16*32
+    #     y: 16
+    #     width: 32
+    #     height: 32
+    #     properties: {
+    #     }
+    #
+    #   @level.addEntity obj
+
 
   onTouch: (body, point, impulse) =>
     console.log 'Hey, why do you keep touching me?'
+
 
   onTouchEnd: (body, point) =>
     console.log 'Hey, why do you stop touching me?'
