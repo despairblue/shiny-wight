@@ -6,6 +6,7 @@ Std            = require 'models/Std'
 Level          = require 'models/Level'
 Player         = require 'models/Player'
 MapChanger     = require 'models/MapChanger'
+Event          = require 'models/Event'
 Vec2           = Box2D.Common.Math.b2Vec2
 
 

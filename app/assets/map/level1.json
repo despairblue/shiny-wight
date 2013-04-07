@@ -156,7 +156,7 @@
          "name":"spawnpoints",
          "objects":[
                 {
-                 "height":4,
+                 "height":0,
                  "name":"MapChangerToLevel2",
                  "properties":
                     {
@@ -165,8 +165,8 @@
                     },
                  "type":"MapChanger",
                  "visible":true,
-                 "width":88,
-                 "x":480,
+                 "width":220,
+                 "x":384,
                  "y":2
                 }, 
                 {
@@ -182,6 +182,20 @@
                  "width":32,
                  "x":128,
                  "y":192
+                }, 
+                {
+                 "height":176,
+                 "name":"FirstYeti",
+                 "properties":
+                    {
+                     "isSensor":"true",
+                     "physicsType":"static"
+                    },
+                 "type":"Event",
+                 "visible":true,
+                 "width":54,
+                 "x":191,
+                 "y":116
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -325,7 +339,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/atlases\/PathAndObjects_0.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/PathAndObjects_0.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -340,7 +354,7 @@
         }, 
         {
          "firstgid":257,
-         "image":"..\/atlases\/Castle2.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/Castle2.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -355,7 +369,7 @@
         }, 
         {
          "firstgid":513,
-         "image":"..\/atlases\/wood_tileset_3.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/wood_tileset_3.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -370,7 +384,7 @@
         }, 
         {
          "firstgid":769,
-         "image":"..\/atlases\/mountain_landscape_23.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/mountain_landscape_23.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -385,7 +399,7 @@
         }, 
         {
          "firstgid":1025,
-         "image":"..\/atlases\/sound_map.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/sound_map.png",
          "imageheight":64,
          "imagewidth":320,
          "margin":0,
@@ -400,7 +414,7 @@
         }, 
         {
          "firstgid":1045,
-         "image":"..\/atlases\/physics.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/physics.png",
          "imageheight":32,
          "imagewidth":160,
          "margin":0,
