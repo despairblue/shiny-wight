@@ -9,7 +9,8 @@
       "wood.mp3"]
   },
   "entities": {
-    "prefix": "entities"
+    "prefix": "entities",
+    "files": ["Yeti.json"]
   },
   "map": {
     "prefix": "map",
