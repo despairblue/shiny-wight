@@ -65,8 +65,6 @@ module.exports = class Player extends Entity
   render: (ctx, cx, cy) =>
     tileSet = @tileSet
 
-    animationState = @animationState
-
     img = @get 'atlas'
     spritePkt = @getSpritePacket()
 
