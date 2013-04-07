@@ -92,7 +92,8 @@ module.exports = class Level extends Model
     if not @mapLoaded
       console.error 'Do not call loadEntities unless the map finished loading and parsing!'
 
-    list = []
+    @manifest.entities.files = [] unless @manifest.entities.files?
+    list = @manifest.entities.files
 
     for layer in @mapTiledObject.layers
       continue if layer.type is 'tilelayer'
@@ -107,13 +108,14 @@ module.exports = class Level extends Model
     @bodyCount = list.length
     for file in list
       uri = @manifest.entities.prefix + '/' + file
+      console.log "Try to load #{uri}"
       mediator.std.xhrGet uri, (data) =>
         try
           ent = JSON.parse data.target.responseText
           @entities[ent.tiledName] = ent
         catch e
           console.error e
-          console.error "Error loading #{uri}!"
+          console.error "Error loading config file!"
 
         @bodyCount--
         if @bodyCount <= 0
