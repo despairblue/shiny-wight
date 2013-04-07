@@ -3,7 +3,9 @@ mediator = require 'mediator'
 
 module.exports = class SoundObj extends Model
 
-  sourceNode: null
-  gainNode: null
-  buffer: null
-  isPlaying: false
+  constructor: ->
+    super
+    @sourceNode = null
+    @gainNode = null
+    @buffer = null
+    @isPlaying = false
