@@ -80,6 +80,7 @@ module.exports = class SoundManager extends Model
     sound = request.additionalAttributes[0]
     callback = request.additionalAttributes[1]
 
+    # TODO: use webworkers, some day (http://www.html5rocks.com/en/tutorials/workers/basics/)
     console.time "bufferSounds #{sound}"
     buffer = @audioContext.createBuffer(request.response, false)
     console.timeEnd "bufferSounds #{sound}"
