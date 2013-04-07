@@ -1,6 +1,6 @@
 {
   "tiledName": "Yeti",
-  "velocity": 0,
+  "velocity": 300,
   "spriteState": {
     "moving": false,
     "viewDirection": 0,
