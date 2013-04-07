@@ -7,6 +7,7 @@ module.exports = class Level extends Model
   constructor: (manifestUri, @_callback) ->
     # Object Properties
     @manifest            = null
+    @tasks = []
 
     # Sounds
     @mapSoundList     = {}
@@ -194,4 +195,9 @@ module.exports = class Level extends Model
 
 
   update: =>
+    for task, index in @tasks
+      task()
+
+    @tasks = []
+
     @physicsManager.update()
