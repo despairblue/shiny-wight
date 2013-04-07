@@ -172,3 +172,6 @@ module.exports = class HomePageView extends View
 
     for entity in lvl.entityObjects
       entity.render(@ctx, sx, sy)
+
+    # always draw the player on top of everything again
+    lvl.player.render(@ctx, sx, sy)
