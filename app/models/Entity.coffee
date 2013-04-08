@@ -383,16 +383,17 @@ module.exports = class Entity extends Model
         return
 
 
-      if      ax > ay and not context.tryOtherDirection # if absolute distance x > absolute distance y
+      # needs mor tweaking, yeti still gets stuck
+      if      ax >= ay and not context.tryOtherDirection # if absolute distance x > absolute distance y
         context.moveOnXAxis(ax, dx)
 
-      else if ax > ay and context.tryOtherDirection
+      else if ax >= ay and context.tryOtherDirection
         context.tryOtherDirection = false
         context.moveOnYAxis(ay, dy)
 
-      else if ax < ay and not context.tryOtherDirection # if absolute distance x < absolute distance y
+      else if ax <= ay and not context.tryOtherDirection # if absolute distance x < absolute distance y
         context.moveOnYAxis(ay, dy)
 
-      else if ax < ay and context.tryOtherDirection
+      else if ax <= ay and context.tryOtherDirection
         context.tryOtherDirection = false
         context.moveOnXAxis(ax, dx)
