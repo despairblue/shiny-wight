@@ -363,6 +363,9 @@ module.exports = class Entity extends Model
         context.savedTasks = _.clone(context.tasks)
         context.tasks = []
 
+      threshold = context.velocity/60000
+      threshold = 1 if threshold < 1
+
       # dx = x2 - x1
       dx = Math.floor(positionToMoveTo.x - context.position.x)
       dy = Math.floor(positionToMoveTo.y - context.position.y)
@@ -371,7 +374,7 @@ module.exports = class Entity extends Model
       ay = Math.abs(dy)
 
       # if positionToMoveTo reached stop
-      if (ax <= 20 and ay <= 20) or (context.position.x == positionToMoveTo.x and context.position.y == positionToMoveTo.y)
+      if (ax <= threshold and ay <= threshold) or (context.position.x == positionToMoveTo.x and context.position.y == positionToMoveTo.y)
         context.position.x = positionToMoveTo.x
         context.position.y = positionToMoveTo.y
         context.positionToMoveTo = null
