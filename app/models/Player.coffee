@@ -31,7 +31,7 @@ module.exports = class Player extends Entity
     img = new Image()
     img.src = tileSet.image
 
-    @set 'atlas':img
+    @atlas = img
 
   onTouch: (otherBody, point, impulse) =>
     return false if not @physBody?
@@ -64,7 +64,6 @@ module.exports = class Player extends Entity
   render: (ctx, cx, cy) =>
     tileSet = @tileSet
 
-    img = @get 'atlas'
     spritePkt = @getSpritePacket()
 
     # position of first pixel at [sx, sy] in atlas
@@ -87,7 +86,7 @@ module.exports = class Player extends Entity
     dx = dx - @tileSet.offset.x
     dy = dy - @tileSet.offset.y
 
-    ctx.drawImage img, sx, sy, sw, sh, dx, dy, dw, dh
+    ctx.drawImage @atlas, sx, sy, sw, sh, dx, dy, dw, dh
 
 
   # override from Entity class
