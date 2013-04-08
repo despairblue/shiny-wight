@@ -12,41 +12,59 @@ module.exports = class Event extends Entity
 
     super x, y, width, height, owningLevel, settings
 
+    @triggered = false
+
 
   onTouchEnd: (body, point, impulse) =>
-    $('#dialog').empty()
-    @y.blockInput()
-    @y.moveDown 150
-    @y.moveLeft 200
-    @y.moveRight 10
-    @y.moveLeft 10
-    @y.moveRight 10
-    @y.moveLeft 10
-    @y.moveRight 10
-    @y.moveLeft 10
-    @y.moveRight 10
-    @y.moveLeft 10
-    @y.moveRight 10
-    @y.moveLeft 10
-    @y.unblockInput()
+    if not @triggered
+      @triggered = true
+      player = body.GetUserData().ent
+      that = @
+      dm = mediator.dialogManager
+
+      dm.hideDialog()
+
+      @y.blockInput()
+      @y.moveDown 150
+      @y.moveLeft 200
+      @y.moveRight 10
+      @y.moveLeft 10
+      @y.moveRight 10
+      @y.moveLeft 10
+      @y.moveRight 10
+      @y.moveLeft 10
+      @y.moveRight 10
+      @y.moveLeft 10
+      @y.moveRight 10
+      @y.moveLeft 10
+      @y.addTask ->
+        data =
+          "text": "Nice skin! Give it to me!"
+          "options": [
+            "Ok!",
+            "NO!"]
+
+        dm.showDialog data, (result) ->
+          if result is 1
+            player.atlas.src = 'atlases/nick.png'
+            data =
+              "text": "Very good choice!"
+              "options": [
+                "F... You"
+              ]
+            dm.showDialog data, ->
+              that.unblockInput()
+          else if result is 2
+            data =
+              "text": "Well, ok, what now?"
+              "options": [
+                "Follow me and everything will be alright!"
+              ]
+            dm.showDialog data, ->
+              that.unblockInput()
 
 
   onTouchBegin: (body, point, impulse) =>
-    source = document.getElementById 'some-template'
-    template = Handlebars.compile(source.innerText)
-
-    data =
-      "text": "Can I help you?"
-      "options": [
-        {"text": "Can I go into your cellar, please.", "id":1},
-        {"text": "Nothing. Bye", "id":2},
-        {"text": "Nice skin. Can i have it?"}
-        {"text": "eine vierte option hinzufuegen"}]
-
-    result = $ template(data)
-
-    $('#dialog').append result
-
     if @name == 'FirstYeti'
       @name = ''
       @level.tasks.push =>
