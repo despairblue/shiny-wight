@@ -14,6 +14,10 @@ module.exports = class InputManager extends Model
       'w': 87
       'd': 68
       's': 83
+      'arrowLeft': 37
+      'arrowUp': 38
+      'arrowRight': 39
+      'arrowDown': 40
       'enter': 13
       'escape': 27
       'space': 32
@@ -28,6 +32,10 @@ module.exports = class InputManager extends Model
     @bind keyCodes['a'], 'move-left'
     @bind keyCodes['s'], 'move-down'
     @bind keyCodes['d'], 'move-right'
+    @bind keyCodes['arrowUp'], 'move-up'
+    @bind keyCodes['arrowLeft'], 'move-left'
+    @bind keyCodes['arrowDown'], 'move-down'
+    @bind keyCodes['arrowRight'], 'move-right'
     @bind keyCodes['enter'], 'interact'
     @bind keyCodes['space'], 'interact'
     @bind keyCodes['escape'], 'cancel'
