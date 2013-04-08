@@ -10,21 +10,17 @@
   <script src="javascripts/vendor.js"></script>
   <script src="javascripts/app.js"></script>
   <script>require('initialize');</script>
-  <script id="some-template" type="text/x-handlebars-template">
-        <div style="padding:60px 10px 10px 10px; display:block; height:590px;">
-            <div style="float:right;width:360px;color:white">
-              Hello I have {{options.length}} options. Here we go!
-              {{#options}}
-                <div style="padding-top:10px;" id={{id}}>
-                    {{text}}
-                </div>
-              {{/options}}
-            </div>
-            <div style="clear:both;"></div>
-            <div style="text-align:center;font-size:140%;position:absolute;bottom:0px;width:700px;">
-                <span onclick="getElementById('intro1').style.display='none';getElementById('intro2').style.display='block';" onmouseover="document.body.style.cursor='pointer';" onmouseout="document.body.style.cursor='default';">Next &gt;&gt;</span>
-            </div>
+  <script id="dialog-template" type="text/x-handlebars-template">
+    <div class='dialog-box'>
+      <div class='dialog-text'>
+        {{text}}
+      </div>
+      {{#options}}
+        <div class='dialog-option' id={{@index}}>
+            {{this}}
         </div>
+      {{/options}}
+    </div>
   </script>
 </head>
 <body>
@@ -34,7 +30,7 @@
     <div class='page-container' id='debug-container'>
       <canvas id='debug-canvas'></canvas>
     </div>
-    <div class='page-container' id='dialog'>
+    <div class='dialog-box-container' id='dialog'>
     </div>
   </div>
 </body>
