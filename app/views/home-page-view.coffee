@@ -129,13 +129,9 @@ module.exports = class HomePageView extends View
 
     if actions['interact']
       player.onAction()
-      placeholder = true
-      mediator.getActiveLevel().entityObjects[3].moveToPosition(player.position, 50)
-      # code
 
     if actions['cancel']
       placeholder = true
-      # code
 
     if moveDir.LengthSquared() and not mediator.blockInput
       moveDir.Normalize()
