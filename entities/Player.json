@@ -1,6 +1,6 @@
 {
   "tiledName": "Player",
-  "velocity": 300,
+  "velocity": 200,
   "spriteState": {
     "moving": false,
     "viewDirection": 0,
