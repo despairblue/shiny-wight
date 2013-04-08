@@ -40,7 +40,6 @@ module.exports = class HomePageView extends View
 
     now = Date.now()
     @lastPhysicsUpdate = now
-    @lastGameUpdate    = now
     @lastRenderUpdate  = now
 
     @subscribeEvent 'changeLvl', =>
@@ -87,13 +86,10 @@ module.exports = class HomePageView extends View
     lvl = mediator.getActiveLevel()
 
     while @lastPhysicsUpdate < timeNow
-      lvl.updatePhysics()
-      @lastPhysicsUpdate += PHYSICS_LOOP
-
-    while @lastGameUpdate < timeNow
       @handleInput()
+      lvl.updatePhysics()
       lvl.update()
-      @lastGameUpdate += GAME_LOOP
+      @lastPhysicsUpdate += PHYSICS_LOOP
 
     while @lastRenderUpdate < timeNow
       @draw()
