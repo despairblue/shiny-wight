@@ -45,7 +45,14 @@ module.exports = class Player extends Entity
       # do smth
 
   onTouchBegin: (otherBody, point) =>
+    @touchingEntity = otherBody.GetUserData()?.ent
     console.log "Player hit his head!" if debug
+
+  onTouchEnd: (otherBody, point) =>
+    @touchingEntity = null
+
+  onAction: () =>
+    @touchingEntity?.onAction @
 
   update: =>
     super
