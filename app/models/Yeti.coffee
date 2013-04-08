@@ -7,6 +7,14 @@ module.exports = class Yeti extends Entity
 
 
   constructor: (x, y, width, height, owningLevel, settings) ->
+    settings.ellipse = true
+
+    super x, y, width/2, height/2, owningLevel, settings
+
+    @size.x = width
+    @size.y = height
+
+    @spriteState.creationTime = Date.now()
     ###
       TODO: uncomment properties if needed
     ###
@@ -16,18 +24,15 @@ module.exports = class Yeti extends Entity
     # settings.physicsType = 'static'
     settings.physicsType = 'dynamic'
 
-    settings.ellipse = true
 
     ###
       If the entity is a Sensor it means that the player can walk through it
     ###
     #settings.isSensor    = true
 
-    super x, y, width, height, owningLevel, settings
-
-    @spriteState.creationTime = Date.now()
-
     @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
+
+
 
 
   load: =>
