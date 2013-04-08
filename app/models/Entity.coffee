@@ -363,7 +363,7 @@ module.exports = class Entity extends Model
         context.savedTasks = _.clone(context.tasks)
         context.tasks = []
 
-      threshold = context.velocity/60000
+      threshold = context.velocity / 50
       threshold = 1 if threshold < 1
 
       # dx = x2 - x1
