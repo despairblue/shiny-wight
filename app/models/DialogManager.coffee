@@ -4,6 +4,7 @@ module.exports = class DialogManager
   constructor: ->
     @source = document.getElementById 'dialog-template'
     @template = Handlebars.compile(@source.innerText)
+    @canvas = document.getElementById 'game-canvas'
     mediator.dialogManager = @
 
   showDialog: (data, callback) =>
@@ -17,8 +18,8 @@ module.exports = class DialogManager
 
     $('#dialog').append(result).
     css('left', 0).
-    css('top', homepageview.canvas.height + 2).
-    css('width', homepageview.canvas.width).
+    css('top', @canvas.height + 2).
+    css('width', @canvas.width).
     fadeIn()
 
 
