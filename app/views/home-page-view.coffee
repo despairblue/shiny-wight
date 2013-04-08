@@ -122,7 +122,7 @@ module.exports = class HomePageView extends View
       placeholder = true
       # code
 
-    if moveDir.LengthSquared()
+    if moveDir.LengthSquared() and not mediator.blockInput
       moveDir.Normalize()
       moveDir.Multiply(player.velocity)
 

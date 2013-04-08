@@ -271,3 +271,13 @@ module.exports = class Entity extends Model
 
   addTask: (task) =>
     @tasks.push task
+
+
+  blockInput: () =>
+    @tasks.push ->
+      require('mediator').blockInput = true
+
+
+  unblockInput: () =>
+    @tasks.push ->
+      require('mediator').blockInput = false

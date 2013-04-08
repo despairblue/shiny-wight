@@ -15,6 +15,7 @@ module.exports = class Event extends Entity
 
   onTouchEnd: (body, point, impulse) =>
     $('#dialog').empty()
+    @y.blockInput()
     @y.moveDown 150
     @y.moveLeft 200
     @y.moveRight 10
@@ -27,6 +28,7 @@ module.exports = class Event extends Entity
     @y.moveLeft 10
     @y.moveRight 10
     @y.moveLeft 10
+    @y.unblockInput()
 
 
   onTouchBegin: (body, point, impulse) =>
