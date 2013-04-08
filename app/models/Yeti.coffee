@@ -48,17 +48,14 @@ module.exports = class Yeti extends Entity
 
 
   onTouchBegin: (body, point) =>
-    console.log  'Hey, why do you start bumping into me?'
     @spriteState.moving = true
     @makeMeStatic() if body.GetUserData()?.ent.name is 'Player'
 
 
   onTouch: (body, point, impulse) =>
-    console.log 'Hey, why do you keep touching me?'
 
 
   onTouchEnd: (body, point) =>
-    console.log 'Hey, why do you stop touching me?'
     @spriteState.moving = false
     @makeMeDynamic() if body.GetUserData()?.ent.name is 'Player'
 
