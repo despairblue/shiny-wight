@@ -26,51 +26,41 @@ module.exports = class Event extends Entity
 
       @y.blockInput()
       @y.moveDown 150
-      ###
-      @y.moveLeft 200
-      @y.moveRight 10
-      @y.moveLeft 10
-      @y.moveRight 10
-      @y.moveLeft 10
-      @y.moveRight 10
-      @y.moveLeft 10
-      @y.moveRight 10
-      @y.moveLeft 10
-      @y.moveRight 10
-      @y.moveLeft 10
-      ###
-
-      pos =
-        x: 324
-        y: 188
-
-      @y.moveToPosition(pos, 42)
-      @y.addTask ->
+      @y.moveLeft 60
+      @y.addTask =>
         data =
-          "text": "Nice skin! Give it to me!"
+          "text": "SnowSam: \"Look Jt! A fresh human over there!\""
           "options": [
-            "Ok!",
-            "NO!"]
-
-        dm.showDialog data, (result) ->
+            "Next"]
+        dm.showDialog data, (result) =>
           if result is 1
-            player.atlas.src = 'atlases/nick.png'
-            data =
-              "text": "Very good choice!"
-              "options": [
-                "F... You"
-              ]
-            dm.showDialog data, ->
-              that.unblockInput()
-          else if result is 2
-            data =
-              "text": "Well, ok, what now?"
-              "options": [
-                "Follow me and everything will be alright!"
-              ]
-            dm.showDialog data, ->
-              that.y.moveToPosition(player.position, 30)
-              that.unblockInput()
+            @y.moveToPosition(@mediator.getActiveLevel().player.position, 42)
+            @y.addTask ->
+              data =
+                "text": "Nice skin! Give it to me!"
+                "options": [
+                  "Ok!",
+                  "NO!"]
+
+              dm.showDialog data, (result) ->
+                if result is 1
+                  player.atlas.src = 'atlases/nick.png'
+                  data =
+                    "text": "Very good choice!"
+                    "options": [
+                      "F... You"
+                    ]
+                  dm.showDialog data, ->
+                    that.unblockInput()
+                else if result is 2
+                  data =
+                    "text": "Well, ok, what now?"
+                    "options": [
+                      "Follow me and everything will be alright!"
+                    ]
+                  dm.showDialog data, ->
+                    that.y.moveToPosition(player.position, 30)
+                    that.unblockInput()
 
 
   onTouchBegin: (body, point, impulse) =>
