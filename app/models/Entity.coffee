@@ -75,9 +75,13 @@ module.exports = class Entity extends Model
       x: 0
       y: 0
 
+    # TODO the fewest entities need this block (only player and NPCs/Monsters, in my humble opinion)
     @maxDistance = 0
     @positionToMoveTo = null
     @onFollow = false
+    @positionCheckTimer = Date.now()
+    @counter = 0
+    @tryOtherDirection = false
 
     @size.x = width
 
@@ -249,28 +253,56 @@ module.exports = class Entity extends Model
   Is called each tick/frame.
   ###
   update: =>
-    @oldPosition = @position
+
+    checkPosition = false
+
+    # TODO not all entities need the following block.. actually the fewest entities need this
+    # so move it into a subclass to increase performance
+    @counter +=1
+    if @counter % 10 == 0
+      @counter = 1
+      if Date.now() - @positionCheckTimer > 2000
+        checkPosition = true
+        @positionCheckTimer == Date.now()
+
+
     @position.x = @physBody.GetPosition().x if @physBody.GetPosition().x?
     @position.y = @physBody.GetPosition().y if @physBody.GetPosition().y?
 
     if @moving.down
       if @position.y > @targetPos.y
         @stopMovement()
+      # TODO 1 vs 3 comparisons if checkposition is false
+      #     else if checkPosition
+      #       if @position.y == @oldPosition.y
+      #         ...
+      else if checkPosition and @position.y == @oldPosition.y
+        @stopMovement()
+        @tryOtherDirection = true
       else
         @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, @velocity))
     else if @moving.up
       if @position.y < @targetPos.y
         @stopMovement()
+      else if checkPosition and @position.y == @oldPosition.y
+        @stopMovement()
+        @tryOtherDirection = true
       else
         @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, -@velocity))
     else if @moving.right
       if @position.x > @targetPos.x
         @stopMovement()
+      else if checkPosition and @position.x == @oldPosition.x
+        @stopMovement()
+        @tryOtherDirection = true
       else
         @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(@velocity, 0))
     else if @moving.left
       if @position.x < @targetPos.x
         @stopMovement()
+      else if checkPosition and @position.x == @oldPosition.x
+        @stopMovement()
+        @tryOtherDirection = true
       else
         @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(-@velocity, 0))
     else
@@ -279,6 +311,9 @@ module.exports = class Entity extends Model
         task(@)
       else if @onFollow
         @moveToPosition(@positionToMoveTo, @maxDistance)
+
+    # TODO the fewest entities need this block
+    @oldPosition = _.clone(@position) if checkPosition
 
 
   addTask: (task) =>
@@ -294,31 +329,43 @@ module.exports = class Entity extends Model
     @tasks.push ->
       require('mediator').blockInput = false
 
-  # moveToPos(posToMoveTo)
-  #   newPos == oldPos
-  #     unless other distance is 0 go that distance
-  #     else return
-  #
-  #   evaluate distance and pick Axis to walk on
-  #   push task: walk on axis in desired direction
-
-
 
   getActualMoveDistance: (distance) =>
     return @maxDistance if distance > @maxDistance
     return distance
 
-  moveToPosition:(positionToMoveTo, maxDistance) =>
-    # if positionToMoveTo reached stop
-    @positionToMoveTo = positionToMoveTo
-    @onFollow = true
-    # max distance the entity can move in one timeStep
-    @maxDistance = maxDistance
 
+  moveOnXAxis: (ax, dx) =>
+    distance = @getActualMoveDistance(ax)
+    # if dx > 0 move right else move left
+    if dx > 0
+      @moveRight(distance)
+    else
+      @moveLeft(distance)
+
+  moveOnYAxis: (ay, dy) =>
+    distance = @getActualMoveDistance(ay)
+    # if dy > 0 move down else move up
+    if dy > 0
+      @moveDown(distance)
+    else
+      @moveUp(distance)
+
+
+  moveToPosition:(positionToMoveTo, maxDistance) =>
+    # first call
+    if not @onFollow
+      @positionToMoveTo = positionToMoveTo
+      @onFollow = true
+      # max distance the entity can move in one timeStep
+      @maxDistance = maxDistance
+
+    # if positionToMoveTo reached stop
     if @position == positionToMoveTo
       @positionToMoveTo = null
       @onFollow = false
       return
+
     # dx = d(x1, x2) = x2 - x1
     dx = positionToMoveTo.x - @position.x
     dy = positionToMoveTo.y - @position.y
@@ -327,18 +374,14 @@ module.exports = class Entity extends Model
 
 
     # if absolute distance x > absolute distance y
-    if ax > ay
-      distance = @getActualMoveDistance(ax)
-      # if dx > 0 move right else move left
-      if dx > 0
-        @moveRight(distance)
-      else
-        @moveLeft(distance)
+    if      ax > ay and not @tryOtherDirection
+      @moveOnXAxis(ax, dx)
+    else if ax > ay and @tryOtherDirection
+      @tryOtherDirection = false
+      @moveOnYAxis(ay, dy)
     # if absolute distance x < absolute distance y
-    else
-      distance = @getActualMoveDistance(ay)
-      # if dy > 0 move down else move up
-      if dy > 0
-        @moveDown(distance)
-      else
-        @moveUp(distance)
+    else if ax < ay and not @tryOtherDirection
+      @moveOnYAxis(ay, dy)
+    else if ax < ay and @tryOtherDirection
+      @tryOtherDirection = false
+      @moveOnXAxis(ax, dx)
