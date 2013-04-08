@@ -69,6 +69,7 @@ module.exports = class Event extends Entity
                 "Follow me and everything will be alright!"
               ]
             dm.showDialog data, ->
+              that.y.moveToPosition(player.position, 30)
               that.unblockInput()
 
 
