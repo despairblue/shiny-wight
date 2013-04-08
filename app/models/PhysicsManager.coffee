@@ -1,4 +1,4 @@
-Model = require 'models/base/model'
+Model    = require 'models/base/model'
 mediator = require 'mediator'
 
 Vec2             = Box2D.Common.Math.b2Vec2
@@ -13,6 +13,9 @@ CircleShape      = Box2D.Collision.Shapes.b2CircleShape
 DebugDraw        = Box2D.Dynamics.b2DebugDraw
 RevoluteJointDef = Box2D.Dynamics.Joints.b2RevoluteJointDef
 
+PHYSICS_LOOP    = 1/60
+
+
 ###
 Contains a map with all physics bodies.
 Can be used by Entities to decide whether they can move to a specific tile.
@@ -20,7 +23,6 @@ Can be used by Entities to decide whether they can move to a specific tile.
 ###
 module.exports = class PhysicsManager
   world: null
-  physicsLoopHZ: 1/25
 
   Vec2: Box2D.Common.Math.b2Vec2
   BodyDef: Box2D.Dynamics.b2BodyDef
@@ -170,13 +172,8 @@ module.exports = class PhysicsManager
 
 
   update: =>
-    start = Date.now()
-
-    @world.Step @physicsLoopHZ, 10, 10
-    @world.DrawDebugData() if debug
+    @world.Step PHYSICS_LOOP, 10, 10
     # @world.ClearForces() # not really sure what it's for and if we need it
-
-    Date.now() - start
 
   addContactListener: (callbacks) =>
     listener = new Box2D.Dynamics.b2ContactListener()

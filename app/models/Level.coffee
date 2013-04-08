@@ -202,9 +202,14 @@ module.exports = class Level extends Model
 
 
   update: =>
+    ent.update() for ent in @entityObjects
+
     for task, index in @tasks
       task()
 
     @tasks = []
 
+
+  updatePhysics: =>
     @physicsManager.update()
+

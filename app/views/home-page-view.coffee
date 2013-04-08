@@ -11,6 +11,11 @@ Event         = require 'models/Event'
 Yeti          = require 'models/Yeti'
 Vec2          = Box2D.Common.Math.b2Vec2
 
+GAME_LOOP     = 1000/60
+PHYSICS_LOOP  = 1000/60
+RENDER_LOOP   = 1000/25
+
+
 
 module.exports = class HomePageView extends View
   autoRender: yes
@@ -29,6 +34,11 @@ module.exports = class HomePageView extends View
     @soundManager = new SoundManager() if mediator.playWithSounds
     @inputManager = new InputManager()
     @dialogManager = new DialogManager()
+
+    now = Date.now()
+    @lastPhysicsUpdate = now
+    @lastGameUpdate    = now
+    @lastRenderUpdate  = now
 
     @subscribeEvent 'changeLvl', =>
       console.log 'change to '+mediator.activeLevel if debug
@@ -74,14 +84,25 @@ module.exports = class HomePageView extends View
 
 
   doTheWork: =>
-    setTimeout =>
-      lvl = mediator.getActiveLevel()
-      window.requestAnimationFrame @doTheWork
+    window.requestAnimationFrame @doTheWork
+    # setTimeout =>
+    timeNow = Date.now()
+    lvl = mediator.getActiveLevel()
+
+    while @lastPhysicsUpdate < timeNow
+      lvl.updatePhysics()
+      @lastPhysicsUpdate += PHYSICS_LOOP
+
+    while @lastGameUpdate < timeNow
       @handleInput()
-      ent.update() for ent in lvl.entityObjects
       lvl.update()
+      @lastGameUpdate += GAME_LOOP
+
+    while @lastRenderUpdate < timeNow
       @draw()
-    , 1000/25
+      lvl.physicsManager.world.DrawDebugData() if debug
+      @lastRenderUpdate += RENDER_LOOP
+    # , 1000/10
 
 
   handleInput: =>
@@ -107,6 +128,7 @@ module.exports = class HomePageView extends View
       player.spriteState.viewDirection = 1
 
     if actions['interact']
+      player.onAction()
       placeholder = true
       mediator.getActiveLevel().entityObjects[3].moveToPosition(player.position, 50)
       # code
@@ -126,9 +148,9 @@ module.exports = class HomePageView extends View
       player.physBody.SetLinearVelocity new Vec2 0, 0
       player.spriteState.moving = false
 
+
   draw: =>
     lvl = mediator.getActiveLevel()
-
 
     # get attributes
     numXTiles = lvl.mapTiledObject.width
