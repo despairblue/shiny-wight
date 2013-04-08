@@ -267,3 +267,7 @@ module.exports = class Entity extends Model
     else
       task = @tasks.shift()
       task(@) if task
+
+
+  addTask: (task) =>
+    @tasks.push task
