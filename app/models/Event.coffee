@@ -26,6 +26,7 @@ module.exports = class Event extends Entity
 
       @y.blockInput()
       @y.moveDown 150
+      ###
       @y.moveLeft 200
       @y.moveRight 10
       @y.moveLeft 10
@@ -37,6 +38,13 @@ module.exports = class Event extends Entity
       @y.moveLeft 10
       @y.moveRight 10
       @y.moveLeft 10
+      ###
+
+      pos =
+        x: 324
+        y: 188
+
+      @y.moveToPosition(pos, 42)
       @y.addTask ->
         data =
           "text": "Nice skin! Give it to me!"

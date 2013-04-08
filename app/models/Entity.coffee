@@ -353,35 +353,41 @@ module.exports = class Entity extends Model
 
 
   moveToPosition:(positionToMoveTo, maxDistance) =>
-    # first call
-    if not @onFollow
-      @positionToMoveTo = positionToMoveTo
-      @onFollow = true
-      # max distance the entity can move in one timeStep
-      @maxDistance = maxDistance
+    @tasks.push (context) ->
+      # first call
+      if not context.onFollow
+        context.positionToMoveTo = positionToMoveTo
+        context.onFollow = true
+        # max distance the entity can move in one timeStep
+        context.maxDistance = maxDistance
+        context.savedTasks = _.clone(context.tasks)
+        context.tasks = []
 
-    # if positionToMoveTo reached stop
-    if @position == positionToMoveTo
-      @positionToMoveTo = null
-      @onFollow = false
-      return
+      # if positionToMoveTo reached stop
+      if context.position.x == positionToMoveTo.x and context.position.y == positionToMoveTo.y
+        context.positionToMoveTo = null
+        context.onFollow = false
+        context.tasks = context.savedTasks
+        return
 
-    # dx = d(x1, x2) = x2 - x1
-    dx = positionToMoveTo.x - @position.x
-    dy = positionToMoveTo.y - @position.y
-    ax = Math.abs(dx)
-    ay = Math.abs(dy)
+      # dx = x2 - x1
+      dx = Math.floor(positionToMoveTo.x - context.position.x)
+      dy = Math.floor(positionToMoveTo.y - context.position.y)
+      # ax = |x2 - x1| = d(x1, x2)
+      ax = Math.abs(dx)
+      ay = Math.abs(dy)
 
 
-    # if absolute distance x > absolute distance y
-    if      ax > ay and not @tryOtherDirection
-      @moveOnXAxis(ax, dx)
-    else if ax > ay and @tryOtherDirection
-      @tryOtherDirection = false
-      @moveOnYAxis(ay, dy)
-    # if absolute distance x < absolute distance y
-    else if ax < ay and not @tryOtherDirection
-      @moveOnYAxis(ay, dy)
-    else if ax < ay and @tryOtherDirection
-      @tryOtherDirection = false
-      @moveOnXAxis(ax, dx)
+      if      ax > ay and not context.tryOtherDirection # if absolute distance x > absolute distance y
+        context.moveOnXAxis(ax, dx)
+
+      else if ax > ay and context.tryOtherDirection
+        context.tryOtherDirection = false
+        context.moveOnYAxis(ay, dy)
+
+      else if ax < ay and not context.tryOtherDirection # if absolute distance x < absolute distance y
+        context.moveOnYAxis(ay, dy)
+
+      else if ax < ay and context.tryOtherDirection
+        context.tryOtherDirection = false
+        context.moveOnXAxis(ax, dx)
