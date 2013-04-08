@@ -65,6 +65,10 @@ module.exports = class Yeti extends Entity
     super
 
 
+  onAction: (player) =>
+    mediator.dialogManager.showDialog {"text":"PIKACHU!!!","options":["Yeah...right."]}
+
+
   getSpritePacket: =>
     x = Math.floor((Date.now() - @spriteState.creationTime)/@spriteState.animationRate) % @tileSet.tilesX
     y = @spriteState.viewDirection
