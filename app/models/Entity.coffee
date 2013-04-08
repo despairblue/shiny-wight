@@ -68,8 +68,16 @@ module.exports = class Entity extends Model
     @level = owningLevel
 
     @position =
-     x: x
-     y: y
+      x: x
+      y: y
+
+    @oldPosition =
+      x: 0
+      y: 0
+
+    @maxDistance = 0
+    @positionToMoveTo = null
+    @onFollow = false
 
     @size.x = width
 
@@ -241,6 +249,7 @@ module.exports = class Entity extends Model
   Is called each tick/frame.
   ###
   update: =>
+    @oldPosition = @position
     @position.x = @physBody.GetPosition().x if @physBody.GetPosition().x?
     @position.y = @physBody.GetPosition().y if @physBody.GetPosition().y?
 
@@ -266,7 +275,10 @@ module.exports = class Entity extends Model
         @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(-@velocity, 0))
     else
       task = @tasks.shift()
-      task(@) if task
+      if task
+        task(@)
+      else if @onFollow
+        @moveToPosition(@positionToMoveTo, @maxDistance)
 
 
   addTask: (task) =>
@@ -281,3 +293,52 @@ module.exports = class Entity extends Model
   unblockInput: () =>
     @tasks.push ->
       require('mediator').blockInput = false
+
+  # moveToPos(posToMoveTo)
+  #   newPos == oldPos
+  #     unless other distance is 0 go that distance
+  #     else return
+  #
+  #   evaluate distance and pick Axis to walk on
+  #   push task: walk on axis in desired direction
+
+
+
+  getActualMoveDistance: (distance) =>
+    return @maxDistance if distance > @maxDistance
+    return distance
+
+  moveToPosition:(positionToMoveTo, maxDistance) =>
+    # if positionToMoveTo reached stop
+    @positionToMoveTo = positionToMoveTo
+    @onFollow = true
+    # max distance the entity can move in one timeStep
+    @maxDistance = maxDistance
+
+    if @position == positionToMoveTo
+      @positionToMoveTo = null
+      @onFollow = false
+      return
+    # dx = d(x1, x2) = x2 - x1
+    dx = positionToMoveTo.x - @position.x
+    dy = positionToMoveTo.y - @position.y
+    ax = Math.abs(dx)
+    ay = Math.abs(dy)
+
+
+    # if absolute distance x > absolute distance y
+    if ax > ay
+      distance = @getActualMoveDistance(ax)
+      # if dx > 0 move right else move left
+      if dx > 0
+        @moveRight(distance)
+      else
+        @moveLeft(distance)
+    # if absolute distance x < absolute distance y
+    else
+      distance = @getActualMoveDistance(ay)
+      # if dy > 0 move down else move up
+      if dy > 0
+        @moveDown(distance)
+      else
+        @moveUp(distance)

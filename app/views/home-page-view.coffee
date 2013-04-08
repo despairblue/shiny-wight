@@ -117,7 +117,7 @@ module.exports = class HomePageView extends View
 
     if actions['interact']
       placeholder = true
-      @loadLevel('level2')
+      mediator.getActiveLevel().entityObjects[3].moveToPosition(player.position, 30)
       # code
 
     if actions['cancel']
