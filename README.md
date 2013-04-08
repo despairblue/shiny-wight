@@ -105,6 +105,44 @@ Shiny-Wight uses two kinds of background physics:
 [warrior_*.png](http://opengameart.org/content/antifareas-rpg-sprite-set-1-enlarged-w-transparent-background)
 ![](http://i.creativecommons.org/l/by/3.0/80x15.png)
 
+[cavefuck.png](http://opengameart.org/content/cave-tileset-0)
+![](http://i.creativecommons.org/l/by/3.0/80x15.png)
+
+[Tilesheet-water.png](http://opengameart.org/content/32x32-water-and-land-map-tilesets)
+![](http://i.creativecommons.org/l/by/3.0/80x15.png)
+
+[fence.png](http://opengameart.org/content/lpc-farming-tilesets-magic-animations-and-ui-elements)
+![](http://i.creativecommons.org/l/by/3.0/80x15.png)
+
+[commterminal.png](http://opengameart.org/content/communication-terminal-32x32)
+![](http://i.creativecommons.org/l/by/3.0/80x15.png)
+
+## Used Sounds
+
+* [jtTheme][2]          = MTA
+* [Menu][2]             = Wah Game Loop
+* [snowsome_theme][2]   = Ice Flow
+* [underground][2]      = Gagool
+* [chasingMushrooms][2] = Stormfront
+* [forestDump][2]       = Eternal Hope
+* [wayToSouthPark][2]   = Majestic Hills
+* [garysTheme][2]       = Blockman
+* [woods][2]            = Senbazuru
+* [wood][1]             = birds-in-spring
+* [water][3]            = riviere-river + lake-waves-2
+* [fire][5]             = chimney-fire + fire
+* [level1theme][2]      = Somewhere Sunny (ver 2)
+* [level2theme][2]      = Ambler
+* [weichei]
+
+[1]: http://www.freesound.org/people/sverga/sounds/16726/
+[2]: http://incompetech.com/
+[3]: http://www.freesound.org/people/Glaneur%20de%20sons/sounds/24511/
+[4]: http://www.freesound.org/people/Benboncan/sounds/67884/
+[5]: http://www.freesound.org/people/reinsamba/sounds/18766/
+[6]: http://www.freesound.org/people/SoundIntervention/sounds/113510/
+
+
 ## Features
 * renders a map
 * renders character
