@@ -26,6 +26,9 @@ module.exports = class HomePageView extends View
     super
     new Std()
 
+    @canvas = document.getElementById 'game-canvas'
+    @ctx = @canvas.getContext '2d'
+
     window.homepageview = @ if debug
     window.mediator = mediator if debug
     mediator.playWithSounds = true
@@ -75,12 +78,6 @@ module.exports = class HomePageView extends View
 
     # window.requestAnimationFrame @doTheWork
     @loadNextLevels()
-
-
-  render: =>
-    @canvas = document.createElement 'canvas'
-    @ctx = @canvas.getContext '2d'
-    @el.appendChild @canvas
 
 
   doTheWork: =>
