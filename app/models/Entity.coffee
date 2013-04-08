@@ -363,19 +363,21 @@ module.exports = class Entity extends Model
         context.savedTasks = _.clone(context.tasks)
         context.tasks = []
 
-      # if positionToMoveTo reached stop
-      if context.position.x == positionToMoveTo.x and context.position.y == positionToMoveTo.y
-        context.positionToMoveTo = null
-        context.onFollow = false
-        context.tasks = context.savedTasks
-        return
-
       # dx = x2 - x1
       dx = Math.floor(positionToMoveTo.x - context.position.x)
       dy = Math.floor(positionToMoveTo.y - context.position.y)
       # ax = |x2 - x1| = d(x1, x2)
       ax = Math.abs(dx)
       ay = Math.abs(dy)
+
+      # if positionToMoveTo reached stop
+      if (ax <= 20 and ay <= 20) or (context.position.x == positionToMoveTo.x and context.position.y == positionToMoveTo.y)
+        context.position.x = positionToMoveTo.x
+        context.position.y = positionToMoveTo.y
+        context.positionToMoveTo = null
+        context.onFollow = false
+        context.tasks = context.savedTasks
+        return
 
 
       if      ax > ay and not context.tryOtherDirection # if absolute distance x > absolute distance y
