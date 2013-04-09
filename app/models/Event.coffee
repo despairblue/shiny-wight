@@ -34,7 +34,10 @@ module.exports = class Event extends Entity
             "Next"]
         dm.showDialog data, (result) =>
           if result is 1
-            @y.moveToPosition(mediator.getActiveLevel().player.position, 42)
+            @y.moveToPosition({
+              x: player.position.x + 30
+              y: player.position.y
+            }, 42)
             @y.addTask ->
               data =
                 "text": "Nice skin! Give it to me!"
