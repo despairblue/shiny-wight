@@ -198,46 +198,46 @@ module.exports = class Entity extends Model
 
   moveDown: (pixel) =>
     console.error 'argument must be an positive integer' if pixel < 0
-    @tasks.push (context) ->
-      context.targetPos =
-        x: context.position.x
-        y: context.position.y + pixel
-      context.moving.down = true
-      context.spriteState.moving = true
-      context.spriteState.viewDirection = 2
+    @tasks.push () ->
+      @targetPos =
+        x: @position.x
+        y: @position.y + pixel
+      @moving.down = true
+      @spriteState.moving = true
+      @spriteState.viewDirection = 2
 
 
   moveUp: (pixel) =>
     console.error 'argument must be an positive integer' if pixel < 0
-    @tasks.push (context) ->
-      context.targetPos =
-        x: context.position.x
-        y: context.position.y - pixel
-      context.moving.up = true
-      context.spriteState.moving = true
-      context.spriteState.viewDirection = 0
+    @tasks.push () ->
+      @targetPos =
+        x: @position.x
+        y: @position.y - pixel
+      @moving.up = true
+      @spriteState.moving = true
+      @spriteState.viewDirection = 0
 
 
   moveRight: (pixel) =>
     console.error 'argument must be an positive integer' if pixel < 0
-    @tasks.push (context) ->
-      context.targetPos =
-        x: context.position.x + pixel
-        y: context.position.y
-      context.moving.right = true
-      context.spriteState.moving = true
-      context.spriteState.viewDirection = 1
+    @tasks.push () ->
+      @targetPos =
+        x: @position.x + pixel
+        y: @position.y
+      @moving.right = true
+      @spriteState.moving = true
+      @spriteState.viewDirection = 1
 
 
   moveLeft: (pixel) =>
     console.error 'argument must be an positive integer' if pixel < 0
     @tasks.push (context) ->
-      context.targetPos =
-        x: context.position.x - pixel
-        y: context.position.y
-      context.moving.left = true
-      context.spriteState.moving = true
-      context.spriteState.viewDirection = 3
+      @targetPos =
+        x: @position.x - pixel
+        y: @position.y
+      @moving.left = true
+      @spriteState.moving = true
+      @spriteState.viewDirection = 3
 
 
   stopMovement: (pixel) =>
@@ -308,7 +308,7 @@ module.exports = class Entity extends Model
     else
       task = @tasks.shift()
       if task
-        task(@)
+        task.apply(@)
       else if @onFollow
         @moveToPosition(@positionToMoveTo, @maxDistance)
 
@@ -353,47 +353,47 @@ module.exports = class Entity extends Model
 
 
   moveToPosition:(positionToMoveTo, maxDistance) =>
-    @tasks.push (context) ->
+    @tasks.push () ->
       # first call
-      if not context.onFollow
-        context.positionToMoveTo = positionToMoveTo
-        context.onFollow = true
+      if not @onFollow
+        @positionToMoveTo = positionToMoveTo
+        @onFollow = true
         # max distance the entity can move in one timeStep
-        context.maxDistance = maxDistance
-        context.savedTasks = _.clone(context.tasks)
-        context.tasks = []
+        @maxDistance = maxDistance
+        @savedTasks = _.clone(@tasks)
+        @tasks = []
 
-      threshold = context.velocity / 50
+      threshold = @velocity / 50
       threshold = 1 if threshold < 1
 
       # dx = x2 - x1
-      dx = Math.floor(positionToMoveTo.x - context.position.x)
-      dy = Math.floor(positionToMoveTo.y - context.position.y)
+      dx = Math.floor(positionToMoveTo.x - @position.x)
+      dy = Math.floor(positionToMoveTo.y - @position.y)
       # ax = |x2 - x1| = d(x1, x2)
       ax = Math.abs(dx)
       ay = Math.abs(dy)
 
       # if positionToMoveTo reached stop
-      if (ax <= threshold and ay <= threshold) or (context.position.x == positionToMoveTo.x and context.position.y == positionToMoveTo.y)
-        context.position.x = positionToMoveTo.x
-        context.position.y = positionToMoveTo.y
-        context.positionToMoveTo = null
-        context.onFollow = false
-        context.tasks = context.savedTasks
+      if (ax <= threshold and ay <= threshold) or (@position.x == positionToMoveTo.x and @position.y == positionToMoveTo.y)
+        @position.x = positionToMoveTo.x
+        @position.y = positionToMoveTo.y
+        @positionToMoveTo = null
+        @onFollow = false
+        @tasks = @savedTasks
         return
 
 
       # needs mor tweaking, yeti still gets stuck
-      if      ax >= ay and not context.tryOtherDirection # if absolute distance x > absolute distance y
-        context.moveOnXAxis(ax, dx)
+      if      ax >= ay and not @tryOtherDirection # if absolute distance x > absolute distance y
+        @moveOnXAxis(ax, dx)
 
-      else if ax >= ay and context.tryOtherDirection
-        context.tryOtherDirection = false
-        context.moveOnYAxis(ay, dy)
+      else if ax >= ay and @tryOtherDirection
+        @tryOtherDirection = false
+        @moveOnYAxis(ay, dy)
 
-      else if ax <= ay and not context.tryOtherDirection # if absolute distance x < absolute distance y
-        context.moveOnYAxis(ay, dy)
+      else if ax <= ay and not @tryOtherDirection # if absolute distance x < absolute distance y
+        @moveOnYAxis(ay, dy)
 
-      else if ax <= ay and context.tryOtherDirection
-        context.tryOtherDirection = false
-        context.moveOnXAxis(ax, dx)
+      else if ax <= ay and @tryOtherDirection
+        @tryOtherDirection = false
+        @moveOnXAxis(ax, dx)
