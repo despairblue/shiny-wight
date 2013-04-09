@@ -4,12 +4,7 @@ mediator  = require 'mediator'
 
 module.exports = class SoundManager extends Model
 
-  audioContext: null
-
-  PATH: 'sounds/'
   FADE_BACKGROUND_INTERVAL: 1
-  FADE_THEME_INTERVAL: 0.3
-
 
   ###
   Initialize Soundmanager.
@@ -82,14 +77,14 @@ module.exports = class SoundManager extends Model
 
     # TODO: use webworkers, some day (http://www.html5rocks.com/en/tutorials/workers/basics/)
     console.time "bufferSounds #{sound}"
-    buffer = @audioContext.createBuffer(request.response, false)
-    console.timeEnd "bufferSounds #{sound}"
+    buffer = @audioContext.decodeAudioData request.response, (buffer) =>
+      console.timeEnd "bufferSounds #{sound}"
 
-    @globalSoundList[sound].buffer = buffer
+      @globalSoundList[sound].buffer = buffer
 
-    console.log sound+' loaded' if debug
+      console.log sound+' loaded' if debug
 
-    callback()
+      callback()
 
 
   ###
@@ -112,7 +107,7 @@ module.exports = class SoundManager extends Model
 
       sourceNode.start(0)
       @globalSoundList[sound].isPlaying = true
-    else @fade sound, volume, @FADE_THEME_INTERVAL
+    else @fade sound, volume, 0
 
   ###
   @param [String]
@@ -160,7 +155,7 @@ module.exports = class SoundManager extends Model
     theme = mediator.getActiveLevel().themeSound
     intensity = mediator.getActiveLevel().themeIntensity
     if @lastLevelTheme == theme
-      @fade theme, intensity, @FADE_THEME_INTERVAL
+      @fade theme, intensity, 0.2
     else
       @stop @lastLevelTheme if @globalSoundList[@lastLevelTheme]?
       @playSound theme, intensity, true
