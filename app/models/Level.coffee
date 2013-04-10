@@ -4,7 +4,7 @@ mediator        = require 'mediator'
 
 module.exports = class Level extends Model
 
-  constructor: (manifestUri, @_callback) ->
+  constructor: (manifestId, @_callback) ->
     # Object Properties
     @manifest            = null
     @tasks = []
@@ -36,58 +36,57 @@ module.exports = class Level extends Model
     @loadCompleted       = false
     @setupped            = false
 
-    mediator.std.xhrGet manifestUri, (data) =>
-      @manifest = JSON.parse data.target.responseText
+    @manifest = mediator.ConfigurationManager.configure {}, manifestId
 
-      # load map
-      mediator.std.xhrGet @manifest.map.prefix + '/' + @manifest.map.file, (data) =>
-        @mapTiledObject = JSON.parse data.target.responseText
-        mediator.mapManager.parse @mapTiledObject, (map, tileSets) =>
-          @mapCanvas = map
-          @tileSets = tileSets
-          # TODO: this is ugly and only needed for physicsmanager
-          @mapTiledObject.processedTileSets = @tileSets
-          @mapLoaded = true
-          # done parsing and rendering tiled map
+    # load map
+    mediator.std.xhrGet @manifest.map.prefix + '/' + @manifest.map.file, (data) =>
+      @mapTiledObject = JSON.parse data.target.responseText
+      mediator.mapManager.parse @mapTiledObject, (map, tileSets) =>
+        @mapCanvas = map
+        @tileSets = tileSets
+        # TODO: this is ugly and only needed for physicsmanager
+        @mapTiledObject.processedTileSets = @tileSets
+        @mapLoaded = true
+        # done parsing and rendering tiled map
 
-          # create physics world
-          @physicsManager = new PhysicsManager(@mapTiledObject)
-          @physicsManager.addContactListener PostSolve: (bodyA, bodyB, impulse) ->
-            dataA = bodyA.GetUserData()
-            dataB = bodyB.GetUserData()
-            dataA?.ent.onTouch bodyB, null, impulse
-            dataB?.ent.onTouch bodyA, null, impulse
-          , BeginContact: (bodyA, bodyB) ->
-            dataA = bodyA.GetUserData()
-            dataB = bodyB.GetUserData()
-            dataA?.ent.onTouchBegin bodyB, null
-            dataB?.ent.onTouchBegin bodyA, null
-          , EndContact: (bodyA, bodyB) ->
-            dataA = bodyA.GetUserData()
-            dataB = bodyB.GetUserData()
-            dataA?.ent.onTouchEnd bodyB, null
-            dataB?.ent.onTouchEnd bodyA, null
+        # create physics world
+        @physicsManager = new PhysicsManager(@mapTiledObject)
+        @physicsManager.addContactListener PostSolve: (bodyA, bodyB, impulse) ->
+          dataA = bodyA.GetUserData()
+          dataB = bodyB.GetUserData()
+          dataA?.ent.onTouch bodyB, null, impulse
+          dataB?.ent.onTouch bodyA, null, impulse
+        , BeginContact: (bodyA, bodyB) ->
+          dataA = bodyA.GetUserData()
+          dataB = bodyB.GetUserData()
+          dataA?.ent.onTouchBegin bodyB, null
+          dataB?.ent.onTouchBegin bodyA, null
+        , EndContact: (bodyA, bodyB) ->
+          dataA = bodyA.GetUserData()
+          dataB = bodyB.GetUserData()
+          dataA?.ent.onTouchEnd bodyB, null
+          dataB?.ent.onTouchEnd bodyA, null
 
-          @checkIfDone()
-        # load sounds
-        if mediator.playWithSounds
-          # just copy sounds from the manifest and let the managers load it
-          @soundMap = mediator.soundManager.getSoundMap @mapTiledObject
-          @mapSoundList         = @manifest.sounds.sounds
-          @backgroundSoundList  = @manifest.sounds.backgroundSounds
-          @themeSound           = @manifest.sounds.theme
-          if @manifest.sounds.themeIntensity?
-            @themeIntensity     = @manifest.sounds.themeIntensity
-          else @themeIntensity  = 1
+        @checkIfDone()
+      # load sounds
+      if mediator.playWithSounds
+        # just copy sounds from the manifest and let the managers load it
+        @soundMap = mediator.soundManager.getSoundMap @mapTiledObject
+        @mapSoundList         = @manifest.sounds.sounds
+        @backgroundSoundList  = @manifest.sounds.backgroundSounds
+        @themeSound           = @manifest.sounds.theme
+        if @manifest.sounds.themeIntensity?
+          @themeIntensity     = @manifest.sounds.themeIntensity
+        else @themeIntensity  = 1
 
-          @soundCount = @mapSoundList.length + @backgroundSoundList.length + 1
+        @soundCount = @mapSoundList.length + @backgroundSoundList.length + 1
 
-          mediator.soundManager.loadSounds @manifest.sounds, =>
-            @soundCount--
-            if @soundCount <= 0
-              @soundsLoaded = true
-              @checkIfDone()
-            # done loading sounds
+        mediator.soundManager.loadSounds @manifest.sounds, =>
+          @soundCount--
+          if @soundCount <= 0
+            @soundsLoaded = true
+            @checkIfDone()
+          # done loading sounds
 
 
   setup: =>

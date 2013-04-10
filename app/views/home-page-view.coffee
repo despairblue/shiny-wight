@@ -55,7 +55,7 @@ module.exports = class HomePageView extends View
   loadLevel: (level, rest...) =>
     return if mediator.levels[level]?
 
-    mediator.levels[level] = new Level (level + '.json'), =>
+    mediator.levels[level] = new Level (level), =>
       rest[0]() if rest[0]
 
 
