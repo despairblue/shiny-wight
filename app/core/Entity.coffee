@@ -48,6 +48,7 @@ module.exports = class Entity extends Module
   constructor: (x, y, width, height, owningLevel, settings) ->
     super
     @loadMethods = []
+    @updateMethods = []
 
     @[prop] = content for prop, content of settings
 
@@ -57,18 +58,6 @@ module.exports = class Entity extends Module
     @position =
       x: x
       y: y
-
-    @oldPosition =
-      x: 0
-      y: 0
-
-    # TODO the fewest entities need this block (only player and NPCs/Monsters, in my humble opinion)
-    @maxDistance = 0
-    @positionToMoveTo = null
-    @onFollow = false
-    @positionCheckTimer = Date.now()
-    @counter = 0
-    @tryOtherDirection = false
 
     @size.x = width
 
@@ -85,13 +74,6 @@ module.exports = class Entity extends Module
       height: 0
       userData:
         ent: null
-
-    @tasks = []
-    @moving =
-      up: false
-      down: false
-      right: false
-      left: false
 
     @entityDef.x = @position.x
     @entityDef.y = @position.y
@@ -120,7 +102,6 @@ module.exports = class Entity extends Module
     method.apply(@) for method in @loadMethods
 
 
-
   ###
   Is called when the Entity moved
   @note removed publish event 'anyEntityhere:moved' for much(!) better performance
@@ -129,6 +110,7 @@ module.exports = class Entity extends Module
     # method to be overloaded
 
 
+  # TODO: move to physics mixin
   onTouch: (body, point, impulse) =>
     # ...
 
@@ -152,59 +134,6 @@ module.exports = class Entity extends Module
     @physBody.SetLinearVelocity @oldVelocity
 
 
-  moveDown: (pixel) =>
-    console.error 'argument must be an positive integer' if pixel < 0
-    @tasks.push () ->
-      @targetPos =
-        x: @position.x
-        y: @position.y + pixel
-      @moving.down = true
-      @spriteState.moving = true
-      @spriteState.viewDirection = 2
-
-
-  moveUp: (pixel) =>
-    console.error 'argument must be an positive integer' if pixel < 0
-    @tasks.push () ->
-      @targetPos =
-        x: @position.x
-        y: @position.y - pixel
-      @moving.up = true
-      @spriteState.moving = true
-      @spriteState.viewDirection = 0
-
-
-  moveRight: (pixel) =>
-    console.error 'argument must be an positive integer' if pixel < 0
-    @tasks.push () ->
-      @targetPos =
-        x: @position.x + pixel
-        y: @position.y
-      @moving.right = true
-      @spriteState.moving = true
-      @spriteState.viewDirection = 1
-
-
-  moveLeft: (pixel) =>
-    console.error 'argument must be an positive integer' if pixel < 0
-    @tasks.push (context) ->
-      @targetPos =
-        x: @position.x - pixel
-        y: @position.y
-      @moving.left = true
-      @spriteState.moving = true
-      @spriteState.viewDirection = 3
-
-
-  stopMovement: (pixel) =>
-    @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
-    @moving.down        = false
-    @moving.up          = false
-    @moving.left        = false
-    @moving.right       = false
-    @spriteState.moving = false
-
-
   ###
   Is called each tick/frame.
   ###
@@ -222,60 +151,22 @@ module.exports = class Entity extends Module
         @positionCheckTimer == Date.now()
 
 
+    # TODO: move to physics mixin
     @position.x = @physBody.GetPosition().x if @physBody.GetPosition().x?
     @position.y = @physBody.GetPosition().y if @physBody.GetPosition().y?
 
-    if @moving.down
-      if @position.y > @targetPos.y
-        @stopMovement()
-      # TODO 1 vs 3 comparisons if checkposition is false
-      #     else if checkPosition
-      #       if @position.y == @oldPosition.y
-      #         ...
-      else if checkPosition and @position.y == @oldPosition.y
-        @stopMovement()
-        @tryOtherDirection = true
-      else
-        @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, @velocity))
-    else if @moving.up
-      if @position.y < @targetPos.y
-        @stopMovement()
-      else if checkPosition and @position.y == @oldPosition.y
-        @stopMovement()
-        @tryOtherDirection = true
-      else
-        @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, -@velocity))
-    else if @moving.right
-      if @position.x > @targetPos.x
-        @stopMovement()
-      else if checkPosition and @position.x == @oldPosition.x
-        @stopMovement()
-        @tryOtherDirection = true
-      else
-        @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(@velocity, 0))
-    else if @moving.left
-      if @position.x < @targetPos.x
-        @stopMovement()
-      else if checkPosition and @position.x == @oldPosition.x
-        @stopMovement()
-        @tryOtherDirection = true
-      else
-        @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(-@velocity, 0))
-    else
-      task = @tasks.shift()
-      if task
-        task.apply(@)
-      else if @onFollow
-        @moveToPosition(@positionToMoveTo, @maxDistance)
-
-    # TODO the fewest entities need this block
-    @oldPosition = _.clone(@position) if checkPosition
+    # call all update methods
+    method.apply(@) for method in @updateMethods
 
 
+  # TODO: move to taskable mixin
   addTask: (task) =>
-    @tasks.push task
+    @tasks.push ->
+      task()
+      return true
 
 
+  # TODO: move input mixin
   blockInput: () =>
     @tasks.push ->
       require('mediator').blockInput = true
@@ -287,71 +178,3 @@ module.exports = class Entity extends Module
       require('mediator').blockInput = false
       return true
 
-
-  getActualMoveDistance: (distance) =>
-    return @maxDistance if distance > @maxDistance
-    return distance
-
-
-  moveOnXAxis: (ax, dx) =>
-    distance = @getActualMoveDistance(ax)
-    # if dx > 0 move right else move left
-    if dx > 0
-      @moveRight(distance)
-    else
-      @moveLeft(distance)
-
-  moveOnYAxis: (ay, dy) =>
-    distance = @getActualMoveDistance(ay)
-    # if dy > 0 move down else move up
-    if dy > 0
-      @moveDown(distance)
-    else
-      @moveUp(distance)
-
-
-  moveToPosition:(positionToMoveTo, maxDistance) =>
-    @tasks.push () ->
-      # first call
-      if not @onFollow
-        @positionToMoveTo = positionToMoveTo
-        @onFollow = true
-        # max distance the entity can move in one timeStep
-        @maxDistance = maxDistance
-        @savedTasks = _.clone(@tasks)
-        @tasks = []
-
-      threshold = @velocity / 50
-      threshold = 1 if threshold < 1
-
-      # dx = x2 - x1
-      dx = Math.floor(positionToMoveTo.x - @position.x)
-      dy = Math.floor(positionToMoveTo.y - @position.y)
-      # ax = |x2 - x1| = d(x1, x2)
-      ax = Math.abs(dx)
-      ay = Math.abs(dy)
-
-      # if positionToMoveTo reached stop
-      if (ax <= threshold and ay <= threshold) or (@position.x == positionToMoveTo.x and @position.y == positionToMoveTo.y)
-        @position.x = positionToMoveTo.x
-        @position.y = positionToMoveTo.y
-        @positionToMoveTo = null
-        @onFollow = false
-        @tasks = @savedTasks
-        return
-
-
-      # needs mor tweaking, yeti still gets stuck
-      if      ax >= ay and not @tryOtherDirection # if absolute distance x > absolute distance y
-        @moveOnXAxis(ax, dx)
-
-      else if ax >= ay and @tryOtherDirection
-        @tryOtherDirection = false
-        @moveOnYAxis(ay, dy)
-
-      else if ax <= ay and not @tryOtherDirection # if absolute distance x < absolute distance y
-        @moveOnYAxis(ay, dy)
-
-      else if ax <= ay and @tryOtherDirection
-        @tryOtherDirection = false
-        @moveOnXAxis(ax, dx)
