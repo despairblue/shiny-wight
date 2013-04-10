@@ -113,7 +113,7 @@ module.exports = class Level extends Model
     @bodyCount = list.length
     for file in list
       uri = @manifest.entities.prefix + '/' + file
-      console.log "Try to load #{uri}"
+      console.log "Try to load #{uri}" if debug
       mediator.std.xhrGet uri, (data) =>
         try
           ent = JSON.parse data.target.responseText

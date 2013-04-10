@@ -94,10 +94,10 @@ module.exports = class HomePageView extends View
       lvl.physicsManager.world.DrawDebugData() if debug
       @lastRenderUpdate += RENDER_LOOP
 
-    timeToRender = Date.now() - timeNow
-
-    if timeToRender > 40
-      console.log "Took #{timeToRender} ms to render frame."
+    if debug
+      timeToRender = Date.now() - timeNow
+      if timeToRender > 40
+        console.log "Took #{timeToRender} ms to render frame."
 
 
   handleInput: =>
