@@ -45,6 +45,7 @@ module.exports = class Entity extends Module
       ent: null
 
 
+  # TODO: refactor configuration loading and clean up the constructor
   constructor: (x, y, width, height, owningLevel, settings) ->
     super
     @loadMethods = []
@@ -86,6 +87,10 @@ module.exports = class Entity extends Module
 
     @physBody = @level.physicsManager.addBody @entityDef, @level.b2World
     @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
+
+
+  loadSettings: (settings) =>
+    @[prop] = content for prop, content of settings
 
 
   ###

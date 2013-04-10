@@ -125,6 +125,7 @@ module.exports = class Level extends Model
     @entityObjects.push obj
     return obj
 
+  # TODO: refactor configuration loading
   createEntity: (object) =>
     # get constructor and json config
     Ent = mediator.factory[object.type]
@@ -134,16 +135,12 @@ module.exports = class Level extends Model
     if Object.keys(object.properties).length isnt 0
       conf = {}
       conf[prop] = content for prop, content of object.properties
-    else
-      # try to use the new config manager
-      newConf = mediator.configurationManager[object.name]
 
-      # otherwise use a configuration file
-      conf = @entities[object.name]
+    # try to use the new config manager
+    configurator = mediator.configurationManager[object.name]
 
-    if not conf and not newConf
-      console.error "No configuration file found for #{object.name}"
-      return null
+    unless conf or configurator
+      console.error "Warning: No configurations found for #{object.name}"
 
     if not conf
       conf = {}
@@ -161,8 +158,8 @@ module.exports = class Level extends Model
     # initialize object with position, size and config
     obj = new Ent(x, y, width, height, @, conf)
 
-    if newConf
-      newConf.apply obj
+    if configurator
+      configurator.apply obj
 
     obj.load()
 
