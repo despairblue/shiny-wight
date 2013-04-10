@@ -1,14 +1,14 @@
 {
-  "tiledName": "Player",
+  "tiledName": "Mario",
   "velocity": 200,
   "spriteState": {
     "moving": false,
-    "viewDirection": 1,
+    "viewDirection": 3,
     "animationRate": 100,
     "normal": 1
   },
   "tileSet": {
-    "image": "atlases/warrior_m.png",
+    "image": "atlases/mario.png",
     "tilesX": 3,
     "tilesY": 4,
     "tileheight": 32,

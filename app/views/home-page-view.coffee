@@ -9,6 +9,7 @@ Player        = require 'models/Player'
 MapChanger    = require 'models/MapChanger'
 Event         = require 'models/Event'
 Yeti          = require 'models/Yeti'
+Mario         = require 'models/Mario'
 Vec2          = Box2D.Common.Math.b2Vec2
 
 PHYSICS_LOOP  = 1000/60

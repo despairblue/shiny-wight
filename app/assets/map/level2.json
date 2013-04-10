@@ -107,12 +107,12 @@
                 {
                  "ellipse":true,
                  "height":32,
-                 "name":"Mario2",
+                 "name":"Mario",
                  "properties":
                     {
 
                     },
-                 "type":"Mario2",
+                 "type":"Mario",
                  "visible":true,
                  "width":32,
                  "x":750,
