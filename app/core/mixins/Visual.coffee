@@ -1,10 +1,9 @@
 module.exports =
 
-
-  _initVisual: ->
+  # Call this in the construcotr before you call super
+  _visual_setUp: (pathToAtlas) ->
+    # set up sane defaults
     @visual = true
-
-    @loadMethods.push @_loadVisual
 
     @spriteState =
       moving: false
@@ -12,9 +11,8 @@ module.exports =
       animationRate: 100
       normal: 1
 
-    # Must be set in constructor
     @tileSet =
-      image: 'path to atlas'
+      image: pathToAtlas
       tilesX: 0
       tilesY: 0
       tileheight: 0
@@ -24,14 +22,14 @@ module.exports =
         y: 0
 
 
-  _loadVisual: ->
-    tileSet = @tileSet
+  # Call this in the constructor after you call super
+  _visual_init: () ->
+    @loadMethods.push @_visual_load
 
+  # Will be called when Entity.load is called
+  _visual_load: ->
     img = new Image()
-    ###
-      TODO: change tileSet.image in Yeti.json
-    ###
-    img.src = tileSet.image
+    img.src = @tileSet.image
 
     @atlas = img
 
