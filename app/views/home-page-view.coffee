@@ -111,9 +111,17 @@ module.exports = class HomePageView extends View
       moveDir.y -= 1
       player.spriteState.viewDirection = 0
 
+      # control dialog
+      if mediator.dialogManager.isDialog()
+        mediator.dialogManager.moveSelectionUp()
+
     if actions['move-down']
       moveDir.y += 1
       player.spriteState.viewDirection = 2
+
+      # control dialog
+      if mediator.dialogManager.isDialog()
+        mediator.dialogManager.moveSelectionDown()
 
     if actions['move-left']
       moveDir.x -= 1
@@ -125,6 +133,10 @@ module.exports = class HomePageView extends View
 
     if actions['interact']
       player.onAction()
+
+      # control dialog
+      if mediator.dialogManager.isDialog()
+        mediator.dialogManager.chooseCurrentSelection()
 
     if actions['cancel']
       placeholder = true
