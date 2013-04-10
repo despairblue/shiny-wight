@@ -20,4 +20,4 @@ module.exports = class MapChanger extends Entity
           sounds: true
           backgroundSounds: true
       mediator.activeLevel = @levelToChangeTo
-      @publishEvent 'changeLvl'
+      mediator.publish 'changeLvl'
