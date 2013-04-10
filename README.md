@@ -119,21 +119,21 @@ Shiny-Wight uses two kinds of background physics:
 
 ## Used Sounds
 
-* [jtTheme][2]          = MTA
-* [Menu][2]             = Wah Game Loop
-* [snowsome_theme][2]   = Ice Flow
-* [underground][2]      = Gagool
-* [chasingMushrooms][2] = Stormfront
-* [forestDump][2]       = Eternal Hope
-* [wayToSouthPark][2]   = Majestic Hills
-* [garysTheme][2]       = Blockman
-* [woods][2]            = Senbazuru
-* [wood][1]             = birds-in-spring
-* [water][3]            = riviere-river + lake-waves-2
-* [fire][5]             = chimney-fire + fire
-* [level1theme][2]      = Somewhere Sunny (ver 2)
-* [level2theme][2]      = Ambler
-* [weichei]
+* jtTheme          = [MTA][2]
+* Menu             = [Wah Game Loop][2]
+* snowsome_theme   = [Ice Flow][2]
+* underground      = [Gagool][2]
+* chasingMushrooms = [Stormfront][2]
+* forestDump       = [Eternal Hope][2]
+* wayToSouthPark   = [Majestic Hills][2]
+* garysTheme       = [Blockman][2]
+* woods            = [Senbazuru][2]
+* wood             = [birds-in-spring][1]
+* water            = [riviere-river][3] + [lake-waves-2][4]
+* fire             = [chimney-fire][5] + [fire][6]
+* level1theme      = [Somewhere Sunny (ver 2)][2]
+* level2theme      = [Ambler][2]
+* weichei
 
 [1]: http://www.freesound.org/people/sverga/sounds/16726/
 [2]: http://incompetech.com/
