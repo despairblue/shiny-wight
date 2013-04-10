@@ -10,7 +10,7 @@
   },
   "entities": {
     "prefix": "entities",
-    "files": ["Yeti.json"]
+    "files": []
   },
   "map": {
     "prefix": "map",
