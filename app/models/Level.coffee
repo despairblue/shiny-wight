@@ -127,6 +127,9 @@ module.exports = class Level extends Model
           @bodiesLoaded = true
           @checkIfDone()
 
+    if list.length is 0
+      @bodiesLoaded = true
+
     return list
 
 
