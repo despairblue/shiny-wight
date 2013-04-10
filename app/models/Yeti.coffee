@@ -12,13 +12,20 @@ module.exports = class Yeti extends Entity
     settings.ellipse = true
 
     super x, y, width/2, height/2, owningLevel, settings
-
     @_initVisual()
+
+    @tileSet.image = 'atlases/yetis.png'
+    @tileSet.tilesX = 3
+    @tileSet.tilesY = 4
+    @tileSet.tileheight = 32
+    @tileSet.tilewidth = 32
+    @tileSet.offset =
+      x: 0
+      y: 0
 
     @size.x = width
     @size.y = height
 
-    @spriteState.creationTime = Date.now()
     ###
       TODO: uncomment properties if needed
     ###

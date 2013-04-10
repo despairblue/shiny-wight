@@ -17,6 +17,15 @@ module.exports = class Player extends Entity
     super x, y, width/2, height/2, owningLevel, settings
     @_initVisual()
 
+    @tileSet.image = 'atlases/warrior_m.png'
+    @tileSet.tilesX = 3
+    @tileSet.tilesY = 4
+    @tileSet.tileheight = 32
+    @tileSet.tilewidth = 32
+    @tileSet.offset =
+      x: 16
+      y: 24
+
     @size.x = width
     @size.y = height
 

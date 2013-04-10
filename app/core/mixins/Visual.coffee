@@ -2,11 +2,11 @@ module.exports =
 
 
   _initVisual: ->
-    visual: true
+    @visual = true
 
     @loadMethods.push @_loadVisual
 
-    spriteState:
+    @spriteState =
       moving: false
       viewDirection: 0
       creationTime: Date.now()
@@ -14,9 +14,15 @@ module.exports =
       normal: 1
 
     # Must be set in constructor
-    tileSet:
+    @tileSet =
       image: 'path to atlas'
       tilesX: 0
+      tilesY: 0
+      tileheight: 0
+      tilewidth: 0
+      offset:
+        x: 0
+        y: 0
 
 
   _loadVisual: ->
