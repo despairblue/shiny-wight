@@ -60,7 +60,7 @@
                  "visible":true,
                  "width":25,
                  "x":259,
-                 "y":561
+                 "y":553
                 }, 
                 {
                  "height":5,
@@ -73,8 +73,8 @@
                  "type":"MapChanger",
                  "visible":true,
                  "width":23,
-                 "x":452,
-                 "y":562
+                 "x":451,
+                 "y":550
                 }, 
                 {
                  "ellipse":true,
@@ -87,8 +87,36 @@
                  "type":"Player",
                  "visible":true,
                  "width":32,
-                 "x":192,
-                 "y":992
+                 "x":176,
+                 "y":979
+                }, 
+                {
+                 "ellipse":true,
+                 "height":32,
+                 "name":"Mario",
+                 "properties":
+                    {
+
+                    },
+                 "type":"Mario",
+                 "visible":true,
+                 "width":32,
+                 "x":496,
+                 "y":754
+                }, 
+                {
+                 "ellipse":true,
+                 "height":32,
+                 "name":"Mario2",
+                 "properties":
+                    {
+
+                    },
+                 "type":"Mario2",
+                 "visible":true,
+                 "width":32,
+                 "x":750,
+                 "y":233
                 }],
          "opacity":1,
          "type":"objectgroup",
