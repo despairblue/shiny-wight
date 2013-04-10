@@ -48,7 +48,8 @@ module.exports = class Event extends Entity
 
               dm.showDialog data, (result) ->
                 if result is 1
-                  player.atlas.src = 'atlases/nick.png'
+                  # player.atlas.src = 'atlases/nick.png'
+                  mediator.configurationManager.configure player, 'PlayerSkeleton'
                   data =
                     "text": "Very good choice!"
                     "options": [
