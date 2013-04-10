@@ -279,11 +279,13 @@ module.exports = class Entity extends Module
   blockInput: () =>
     @tasks.push ->
       require('mediator').blockInput = true
+      return true
 
 
   unblockInput: () =>
     @tasks.push ->
       require('mediator').blockInput = false
+      return true
 
 
   getActualMoveDistance: (distance) =>
