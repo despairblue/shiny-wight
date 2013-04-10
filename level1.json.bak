@@ -1,6 +1,6 @@
 {
   "sounds": {
-    "prefix": "sounds/",
+    "prefix": "wrongprefix/",
     "sounds": ["jtTheme.mp3"],
     "theme": "level1theme.mp3",
     "backgroundSounds": [
@@ -10,7 +10,7 @@
   },
   "entities": {
     "prefix": "entities",
-    "files": ["Yeti.json"]
+    "files": []
   },
   "map": {
     "prefix": "map",

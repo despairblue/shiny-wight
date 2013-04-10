@@ -872,8 +872,8 @@
                  "type":"MapChanger",
                  "visible":true,
                  "width":37,
-                 "x":621,
-                 "y":952
+                 "x":126,
+                 "y":66
                 }, 
                 {
                  "ellipse":true,
@@ -886,8 +886,8 @@
                  "type":"Player",
                  "visible":true,
                  "width":32,
-                 "x":129,
-                 "y":85
+                 "x":624,
+                 "y":920
                 }],
          "opacity":1,
          "type":"objectgroup",

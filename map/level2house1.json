@@ -49,7 +49,7 @@
          "name":"spawnpoints",
          "objects":[
                 {
-                 "height":3,
+                 "height":0,
                  "name":"MapChangerToLevel2",
                  "properties":
                     {
@@ -58,9 +58,9 @@
                     },
                  "type":"MapChanger",
                  "visible":true,
-                 "width":43,
+                 "width":47,
                  "x":122,
-                 "y":284
+                 "y":287
                 }, 
                 {
                  "ellipse":true,

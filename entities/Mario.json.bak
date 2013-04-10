@@ -1,0 +1,21 @@
+{
+  "tiledName": "Mario",
+  "velocity": 200,
+  "spriteState": {
+    "moving": false,
+    "viewDirection": 3,
+    "animationRate": 100,
+    "normal": 1
+  },
+  "tileSet": {
+    "image": "atlases/mario.png",
+    "tilesX": 3,
+    "tilesY": 4,
+    "tileheight": 32,
+    "tilewidth": 32,
+    "offset": {
+      "x": 16,
+      "y": 24
+    }
+  }
+}

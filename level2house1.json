@@ -8,7 +8,7 @@
   },
   "entities": {
     "prefix": "entities",
-    "files": ["Player.json"]
+    "files": []
   },
   "map": {
     "prefix": "map",

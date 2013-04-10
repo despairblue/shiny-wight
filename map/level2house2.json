@@ -63,7 +63,7 @@
                  "y":71
                 }, 
                 {
-                 "height":3,
+                 "height":0,
                  "name":"MapChangerToLevel2",
                  "properties":
                     {
@@ -73,8 +73,8 @@
                  "type":"MapChanger",
                  "visible":true,
                  "width":43,
-                 "x":122,
-                 "y":284
+                 "x":121,
+                 "y":288
                 }, 
                 {
                  "ellipse":true,

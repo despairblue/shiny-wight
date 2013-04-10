@@ -379,6 +379,9 @@ table {
   box-sizing: border-box;
   background: #000;
 }
+game-canvas {
+  display: none;
+}
 .page-container {
   float: left;
 }
@@ -411,9 +414,6 @@ table {
   -o-transition: all 0.5s ease;
   -ms-transition: all 0.5s ease;
   transition: all 0.5s ease;
-}
-.dialog-option:hover {
-  background-color: #808080;
 }
 .dialog-option-hovered {
   color: #fff;

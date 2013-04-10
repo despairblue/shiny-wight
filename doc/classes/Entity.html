@@ -111,12 +111,12 @@
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>app&#47;models&#47;Entity.coffee</td>
+          <td>app&#47;core&#47;Entity.coffee</td>
         </tr>
         <tr>
           <td>Inherits:</td>
           <td>
-            <a href='../classes/Model.html'>Model</a>
+            <a href='../classes/Module.html'>Module</a>
           </td>
         </tr>
       </table>
@@ -139,6 +139,7 @@
       <p class='children'>
                 <a href='../classes/Event.html'>Event</a>,
                 <a href='../classes/MapChanger.html'>MapChanger</a>,
+                <a href='../classes/Mario.html'>Mario</a>,
                 <a href='../classes/Player.html'>Player</a>,
         <a href='../classes/Yeti.html'>Yeti</a>
       </p>
@@ -160,14 +161,6 @@
         <dd class='desc'>
           <p>The entity&#39;s size</p>
         </dd>
-        <dt id='animationStep-property'>
-          <span class='signature'>
-            (Integer) <strong>animationStep</strong>
-          </span>
-        </dt>
-        <dd class='desc'>
-          <p>What sprite to draw</p>
-        </dd>
         <dt id='velocity-property'>
           <span class='signature'>
             (Integer) <strong>velocity</strong>
@@ -176,18 +169,6 @@
         <dd class='desc'>
           <p>Entity&#39; velocity
 Standart velocity = 10</p>
-        </dd>
-        <dt id='viewDirection-property'>
-          <span class='signature'>
-            (Integer) <strong>viewDirection</strong>
-          </span>
-        </dt>
-        <dd class='desc'>
-          <p>In what direction the entity looks</p><pre><code>0:up
-1:right
-2:down
-3:left</code></pre>
-
         </dd>
       </dl>
       <h2>Instance Method Summary</h2>
@@ -200,18 +181,18 @@ Standart velocity = 10</p>
     </span>
     <span class='constructor note title'>Constructor</span>
     <span class='desc'>
-      
+      TODO: refactor configuration loading and clean up the constructor
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#initialize-instance'>
-        - (void) <strong>initialize</strong>()
+      <a href='#loadSettings-instance'>
+        - (void) <strong>loadSettings</strong>(settings)
       </a>
     </span>
-    <span class='note private title'>Private</span>
+    <span class='bound note title'>Bound</span>
     <span class='desc'>
-      Initializes the new Entity.
+      
     </span>
   </li>
   <li>
@@ -227,17 +208,6 @@ Standart velocity = 10</p>
   </li>
   <li>
     <span class='signature'>
-      <a href='#onPositionChange-instance'>
-        - (void) <strong>onPositionChange</strong>()
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      Is called when the Entity moved
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
       <a href='#load-instance'>
         - (void) <strong>load</strong>()
       </a>
@@ -249,13 +219,13 @@ Standart velocity = 10</p>
   </li>
   <li>
     <span class='signature'>
-      <a href='#render-instance'>
-        - (void) <strong>render</strong>()
+      <a href='#onPositionChange-instance'>
+        - (void) <strong>onPositionChange</strong>()
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      Is called when the Entity moved
     </span>
   </li>
   <li>
@@ -266,7 +236,7 @@ Standart velocity = 10</p>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      TODO: move to physics mixin
     </span>
   </li>
   <li>
@@ -315,61 +285,6 @@ Standart velocity = 10</p>
   </li>
   <li>
     <span class='signature'>
-      <a href='#moveDown-instance'>
-        - (void) <strong>moveDown</strong>(pixel)
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#moveUp-instance'>
-        - (void) <strong>moveUp</strong>(pixel)
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#moveRight-instance'>
-        - (void) <strong>moveRight</strong>(pixel)
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#moveLeft-instance'>
-        - (void) <strong>moveLeft</strong>(pixel)
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#stopMovement-instance'>
-        - (void) <strong>stopMovement</strong>(pixel)
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
       <a href='#update-instance'>
         - (void) <strong>update</strong>()
       </a>
@@ -387,7 +302,7 @@ Standart velocity = 10</p>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      TODO: move to taskable mixin
     </span>
   </li>
   <li>
@@ -398,7 +313,7 @@ Standart velocity = 10</p>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      TODO: move input mixin
     </span>
   </li>
   <li>
@@ -412,77 +327,39 @@ Standart velocity = 10</p>
       
     </span>
   </li>
-  <li>
-    <span class='signature'>
-      <a href='#getActualMoveDistance-instance'>
-        - (void) <strong>getActualMoveDistance</strong>(distance)
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#moveOnXAxis-instance'>
-        - (void) <strong>moveOnXAxis</strong>(ax, dx)
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#moveOnYAxis-instance'>
-        - (void) <strong>moveOnYAxis</strong>(ay, dy)
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#moveToPosition-instance'>
-        - (void) <strong>moveToPosition</strong>(positionToMoveTo, maxDistance)
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      
-    </span>
-  </li>
 </ul>
+      <h2>
+        <small>Inherited Method Summary</small>
+      </h2>
+      <h3 class='inherited'>
+        Methods inherited from
+        <a href='../classes/Module.html'>Module</a>
+      </h3>
+      <p class='inherited'>
+                <a href='../classes/Module.html#extend-class'>.extend</a>,
+        <a href='../classes/Module.html#include-class'>.include</a>
+      </p>
       <h2>Constructor Details</h2>
       <div class='methods'>
   <div class='method_details'>
     <p class='signature' id='constructor-instance'>
       - (void) <strong>constructor</strong>(x, y, width, height, owningLevel, settings)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>TODO: refactor configuration loading and clean up the constructor</p>
+</div>
+<div class='tags'>
 </div>
   </div>
 </div>
       <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='initialize-instance'>
-      - (void) <strong>initialize</strong>()
-      (private)
+    <p class='signature' id='loadSettings-instance'>
+      - (void) <strong>loadSettings</strong>(settings)
+      (bound)
     </p>
-    <div class='docstring'>
-  <div class='note'>
-    <strong>Note:</strong>
-    Make sure to call <code>TILEDMap.load(path)</code> before instantiating any Entities.
-  </div>
-  <p>Initializes the new Entity.
-Will try to get the map from the mediator.</p>
-</div>
-<div class='tags'>
+    <div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -508,6 +385,14 @@ Will try to get the map from the mediator.</p>
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='load-instance'>
+      - (void) <strong>load</strong>()
+      (bound)
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='onPositionChange-instance'>
       - (void) <strong>onPositionChange</strong>()
       (bound)
@@ -523,27 +408,14 @@ Will try to get the map from the mediator.</p>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='load-instance'>
-      - (void) <strong>load</strong>()
-      (bound)
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='render-instance'>
-      - (void) <strong>render</strong>()
-      (bound)
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
     <p class='signature' id='onTouch-instance'>
       - (void) <strong>onTouch</strong>(body, point, impulse)
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>TODO: move to physics mixin</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -579,46 +451,6 @@ Will try to get the map from the mediator.</p>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='moveDown-instance'>
-      - (void) <strong>moveDown</strong>(pixel)
-      (bound)
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='moveUp-instance'>
-      - (void) <strong>moveUp</strong>(pixel)
-      (bound)
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='moveRight-instance'>
-      - (void) <strong>moveRight</strong>(pixel)
-      (bound)
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='moveLeft-instance'>
-      - (void) <strong>moveLeft</strong>(pixel)
-      (bound)
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='stopMovement-instance'>
-      - (void) <strong>stopMovement</strong>(pixel)
-      (bound)
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
     <p class='signature' id='update-instance'>
       - (void) <strong>update</strong>()
       (bound)
@@ -634,7 +466,10 @@ Will try to get the map from the mediator.</p>
       - (void) <strong>addTask</strong>(task)
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>TODO: move to taskable mixin</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -642,7 +477,10 @@ Will try to get the map from the mediator.</p>
       - (void) <strong>blockInput</strong>()
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>TODO: move input mixin</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -653,43 +491,11 @@ Will try to get the map from the mediator.</p>
     <div class='tags'>
 </div>
   </div>
-  <div class='method_details'>
-    <p class='signature' id='getActualMoveDistance-instance'>
-      - (void) <strong>getActualMoveDistance</strong>(distance)
-      (bound)
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='moveOnXAxis-instance'>
-      - (void) <strong>moveOnXAxis</strong>(ax, dx)
-      (bound)
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='moveOnYAxis-instance'>
-      - (void) <strong>moveOnYAxis</strong>(ay, dy)
-      (bound)
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='moveToPosition-instance'>
-      - (void) <strong>moveToPosition</strong>(positionToMoveTo, maxDistance)
-      (bound)
-    </p>
-    <div class='tags'>
-</div>
-  </div>
 </div>
     </div>
     <div id='footer'>
   Generated on
-  Mon Apr 08 2013 22:44:05 GMT+0200 (CEST)
+  Wed Apr 10 2013 23:41:43 GMT+0200 (CEST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.6.0
