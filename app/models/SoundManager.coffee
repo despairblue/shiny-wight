@@ -4,8 +4,6 @@ mediator  = require 'mediator'
 
 module.exports = class SoundManager extends Model
 
-  FADE_BACKGROUND_INTERVAL: 1
-
   ###
   Initialize Soundmanager.
   Create a new audio context and bind soundManager to mediator
@@ -20,8 +18,7 @@ module.exports = class SoundManager extends Model
 
 
   ###
-  @param [String]
-  @param [map]
+  @param [Object]
   Initializes soundMap for backgroundSounds
   ###
   getSoundMap: (map) =>
@@ -44,6 +41,11 @@ module.exports = class SoundManager extends Model
     return soundMap
 
 
+  ###
+  @param [Array]
+  @param [function]
+  Load sounds
+  ###
   loadSounds: (mapSounds, callback) =>
     @soundCount = mapSounds.sounds.length + mapSounds.backgroundSounds.length + 1
 
@@ -75,10 +77,7 @@ module.exports = class SoundManager extends Model
     sound = request.additionalAttributes[0]
     callback = request.additionalAttributes[1]
 
-    # TODO: use webworkers, some day (http://www.html5rocks.com/en/tutorials/workers/basics/)
-    console.time "bufferSounds #{sound}"
     buffer = @audioContext.decodeAudioData request.response, (buffer) =>
-      console.timeEnd "bufferSounds #{sound}"
 
       @globalSoundList[sound].buffer = buffer
 
@@ -89,18 +88,17 @@ module.exports = class SoundManager extends Model
 
   ###
   @param [String]
-  @param [Object]
   @param [Double]
   @param [Bool]
   Play sound of list with volume and loop
   ###
   playSound: (sound, volume, loops) =>
     if @globalSoundList[sound].isPlaying != true
-      sourceNode = @audioContext.createBufferSource()
-      sourceNode.buffer = @globalSoundList[sound].buffer
-      sourceNode.loop = loops
-
+      sourceNode            = @audioContext.createBufferSource()
+      sourceNode.buffer     = @globalSoundList[sound].buffer
+      sourceNode.loop       = loops
       sourceNode.gain.value = volume
+
       sourceNode.connect(@audioContext.destination)
 
       @globalSoundList[sound].sourceNode = sourceNode
@@ -109,10 +107,10 @@ module.exports = class SoundManager extends Model
       @globalSoundList[sound].isPlaying = true
     else @fade sound, volume, 0
 
+
   ###
   @param [String]
-  @param [Object]
-  Stop sound in list
+  Stop sound
   ###
   stop: (sound) =>
     if @globalSoundList[sound].isPlaying
@@ -120,45 +118,54 @@ module.exports = class SoundManager extends Model
       @globalSoundList[sound].isPlaying = false
       console.log sound+'.mp3 stopped' if debug
 
+
   ###
-  Stop all sounds in active level
+  @param [Object]
+  Stop all with config specified sounds in active level
   ###
   stopAll: (config) =>
-    theme = mediator.getActiveLevel().themeSound
     soundsToStop = []
+
     if config?.themeSound
       soundsToStop.push mediator.getActiveLevel().themeSound
     else
       @lastLevelTheme = mediator.getActiveLevel().themeSound
+
     if config?.backgroundSounds
       for sound in mediator.getActiveLevel().backgroundSoundList
         soundsToStop.push sound
+
     if config?.sounds
       for sound in mediator.getActiveLevel().mapSoundList
         soundsToStop.push sound
-    try
-      for name, sound of @globalSoundList
-        if (soundsToStop.indexOf name) isnt -1
-          @stop name
-    catch e
-      console.log e.toString() if debug
+
+    for name, sound of @globalSoundList
+      if (soundsToStop.indexOf name) isnt -1
+        @stop name
 
 
   ###
-  Start all background sounds in backgroundSound list of active level with gain = 0, i.e. muted
+  Start all background sounds in backgroundSoundList of active level with gain = 0, i.e. muted
   ###
   startBackgroundSounds: () =>
     for sound in mediator.getActiveLevel().backgroundSoundList
       @playSound sound, 0, true
 
+
+  ###
+  Start theme of level
+  Fade the if it stays the same on level change
+  ###
   startThemeSound: () =>
     theme = mediator.getActiveLevel().themeSound
     intensity = mediator.getActiveLevel().themeIntensity
+
     if @lastLevelTheme == theme
-      @fade theme, intensity, 0.2
+      @fade theme, intensity, 0
     else
       @stop @lastLevelTheme if @globalSoundList[@lastLevelTheme]?
       @playSound theme, intensity, true
+
 
   ###
   @param [Object]
@@ -171,18 +178,19 @@ module.exports = class SoundManager extends Model
     lvl = mediator.getActiveLevel()
     for sound in lvl.soundMap[Math.floor(PlayerPosition.x/32)][Math.floor(PlayerPosition.y/32)]
       # sound.type is the name of the sound here
-      @fade sound.type+'.mp3', sound.intensity/100, @FADE_BACKGROUND_INTERVAL
+      @fade sound.type+'.mp3', sound.intensity/100, 1
       @backgroundSoundsToPlay.push(sound.type+'.mp3')
 
     for sound in lvl.backgroundSoundList
       if @backgroundSoundsToPlay.indexOf(sound) == -1
-        @fade sound, 0, @FADE_BACKGROUND_INTERVAL
+        @fade sound, 0, 1
+
 
   ###
   @param [String]
-  @param [Object]
   @param [Double]
-  Fade sound in list to gain
+  @param [Double]
+  Fade sound to volume
   ###
   fade: (sound, volume, interval) =>
     # exponentially approaching the target value <volume> at the given time with a rate <interval>
@@ -193,4 +201,3 @@ module.exports = class SoundManager extends Model
     @startThemeSound()
     @startBackgroundSounds()
     @updateBackgroundSounds(mediator.getActiveLevel().player.position)
-
