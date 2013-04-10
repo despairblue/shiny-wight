@@ -22,9 +22,6 @@ module.exports = class Player extends Entity
 
 
   kill: =>
-    mediator.physicsManager.removeBody @physBody
-    @physBody = null
-    @killed = true
 
 
   onTouch: (otherBody, point, impulse) =>
