@@ -11,10 +11,8 @@ Event         = require 'models/Event'
 Yeti          = require 'models/Yeti'
 Vec2          = Box2D.Common.Math.b2Vec2
 
-GAME_LOOP     = 1000/60
 PHYSICS_LOOP  = 1000/60
 RENDER_LOOP   = 1000/25
-
 
 
 module.exports = class HomePageView extends View
@@ -81,7 +79,7 @@ module.exports = class HomePageView extends View
 
   doTheWork: =>
     window.requestAnimationFrame @doTheWork
-    # setTimeout =>
+
     timeNow = Date.now()
     lvl = mediator.getActiveLevel()
 
@@ -95,7 +93,11 @@ module.exports = class HomePageView extends View
       @draw()
       lvl.physicsManager.world.DrawDebugData() if debug
       @lastRenderUpdate += RENDER_LOOP
-    # , 1000/10
+
+    timeToRender = Date.now() - timeNow
+
+    if timeToRender > 40
+      console.log "Took #{timeToRender} ms to render frame."
 
 
   handleInput: =>
