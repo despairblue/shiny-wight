@@ -1,4 +1,4 @@
-Entity = require 'models/Entity'
+Entity = require 'core/Entity'
 mediator = require 'mediator'
 
 module.exports = class MapChanger extends Entity

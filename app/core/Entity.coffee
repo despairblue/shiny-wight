@@ -1,4 +1,4 @@
-Model = require 'models/base/model'
+Module = require 'core/Module'
 mediator = require 'mediator'
 
 ###
@@ -9,7 +9,7 @@ Base class for all entities
     onAction: (object): ->
       # do something
 ###
-module.exports = class Entity extends Model
+module.exports = class Entity extends Module
 
   ###
   @property [Object] The entity's position in pixels
@@ -26,11 +26,6 @@ module.exports = class Entity extends Model
     x: 0
     y: 0
 
-  ###
-  @property [Integer]
-  What sprite to draw
-  ###
-  animationStep: 0
 
   ###
   @property [Integer]
@@ -49,19 +44,10 @@ module.exports = class Entity extends Model
     userData:
       ent: null
 
-  ###
-  @property [Integer]
-  In what direction the entity looks
-
-      0:up
-      1:right
-      2:down
-      3:left
-  ###
-  viewDirection: 0
 
   constructor: (x, y, width, height, owningLevel, settings) ->
     super
+    @loadMethods = []
 
     @[prop] = content for prop, content of settings
 
@@ -129,24 +115,6 @@ module.exports = class Entity extends Model
   initialize: ->
     @map = mediator.levels[mediator.activeLevel].gMap
 
-  # TODO: reimplement...
-  # ###
-  # @private
-  # @param [Integer] vd
-  #   the view direction. Can be one of 0, 1, 2 or 3.
-  # @see [Entity#viewDirection]
-  # Updates the animationStep counter and viewDirection.
-  # If the entity goes into the same direction, only update animationStep
-  # If not it will reset the animationStep counter and update the viewDirection
-  # ###
-  # updateViewAndAnimation: (vd) =>
-  #   if @viewDirection != vd
-  #     @animationStep = 1
-  #     @viewDirection = vd
-  #   else
-  #     @animationStep++
-  #     if mediator.PlayWithSounds
-  #       @onPositionChange()
 
   ###
   Is called if the Player stands in front of this Entity and want's to interact with it.
@@ -157,20 +125,18 @@ module.exports = class Entity extends Model
     # perform an <Object> specific action
 
 
+  load: =>
+    # call all load methods
+    method.apply(@) for method in @loadMethods
+
+
+
   ###
   Is called when the Entity moved
   @note removed publish event 'anyEntityhere:moved' for much(!) better performance
   ###
   onPositionChange: =>
     # method to be overloaded
-
-
-  load: =>
-    # ..
-
-
-  render: =>
-    # ..
 
 
   onTouch: (body, point, impulse) =>

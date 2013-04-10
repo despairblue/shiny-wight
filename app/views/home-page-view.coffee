@@ -178,7 +178,7 @@ module.exports = class HomePageView extends View
     # @ctx.drawImageTiled (@gMap.get 'canvas'), sx, sy, sw, sh, dx, dy, dw, dh, tileSize.x, tileSize.y
     @ctx.drawImage (lvl.mapCanvas), sx, sy, sw, sh, dx, dy, dw, dh
 
-    for entity in lvl.entityObjects
+    for entity in lvl.entityObjects when entity.visual?
       entity.render(@ctx, sx, sy)
 
     # always draw the player on top of everything again

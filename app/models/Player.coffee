@@ -1,37 +1,31 @@
-Entity = require 'models/Entity'
+Entity = require 'core/Entity'
+Visual = require 'core/mixins/Visual'
 mediator = require 'mediator'
 
 ###
 The Player
 ###
 module.exports = class Player extends Entity
+  @include Visual
   # register entity
   mediator.factory['Player'] = this
 
-  animationState: [0, 1, 2, 1]
 
   constructor: (x, y, width, height, owningLevel, settings) ->
     settings.ellipse = true
 
     super x, y, width/2, height/2, owningLevel, settings
+    @_initVisual()
 
     @size.x = width
     @size.y = height
 
-    @spriteState.creationTime = Date.now()
 
   kill: =>
     mediator.physicsManager.removeBody @physBody
     @physBody = null
     @killed = true
 
-  load: =>
-    tileSet = @tileSet
-
-    img = new Image()
-    img.src = tileSet.image
-
-    @atlas = img
 
   onTouch: (otherBody, point, impulse) =>
     return false if not @physBody?
@@ -55,44 +49,6 @@ module.exports = class Player extends Entity
 
   update: =>
     super
-
-  getSpritePacket: =>
-    x = Math.floor((Date.now() - @spriteState.creationTime)/@spriteState.animationRate) % @tileSet.tilesX
-    y = @spriteState.viewDirection
-
-    x = @spriteState.normal unless @spriteState.moving
-
-    pkt =
-      x: x * @tileSet.tilewidth
-      y: y * @tileSet.tileheight
-
-  # overwrite render method
-  render: (ctx, cx, cy) =>
-    tileSet = @tileSet
-
-    spritePkt = @getSpritePacket()
-
-    # position of first pixel at [sx, sy] in atlas
-    # determine what tile to use (by viewDirection)
-    # iterate through the three animationStates
-
-    sx = spritePkt.x
-    sy = spritePkt.y
-    # with and height of tile in atlas
-    sw = @tileSet.tilewidth
-    sh = @tileSet.tileheight
-
-    # position of first pixel at [dx, dy] on canvas
-    dx = (@position.x) - cx
-    dy = (@position.y) - cy
-    dw = @size.x
-    dh = @size.y
-
-    # translate to drawing center
-    dx = dx - @tileSet.offset.x
-    dy = dy - @tileSet.offset.y
-
-    ctx.drawImage @atlas, sx, sy, sw, sh, dx, dy, dw, dh
 
 
   # override from Entity class
