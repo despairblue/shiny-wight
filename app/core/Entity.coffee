@@ -105,17 +105,6 @@ module.exports = class Entity extends Module
     @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
 
 
-
-  ###
-  @private
-  Initializes the new Entity.
-  Will try to get the map from the mediator.
-  @note Make sure to call `TILEDMap.load(path)` before instantiating any Entities.
-  ###
-  initialize: ->
-    @map = mediator.levels[mediator.activeLevel].gMap
-
-
   ###
   Is called if the Player stands in front of this Entity and want's to interact with it.
   @param [Object] player
