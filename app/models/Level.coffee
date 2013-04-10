@@ -36,7 +36,7 @@ module.exports = class Level extends Model
     @loadCompleted       = false
     @setupped            = false
 
-    @manifest = mediator.ConfigurationManager.configure {}, manifestId
+    @manifest = mediator.configurationManager.configure {}, manifestId
 
     # load map
     mediator.std.xhrGet @manifest.map.prefix + '/' + @manifest.map.file, (data) =>
@@ -136,7 +136,7 @@ module.exports = class Level extends Model
       conf[prop] = content for prop, content of object.properties
     else
       # try to use the new config manager
-      newConf = mediator.ConfigurationManager[object.name]
+      newConf = mediator.configurationManager[object.name]
 
       # otherwise use a configuration file
       conf = @entities[object.name]

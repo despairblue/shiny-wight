@@ -1,12 +1,16 @@
 soundPrefix = 'sounds/'
 mapPrefix = 'map'
 
-# Use like `ConfigurationManager.player.apply(your_player_object)`
+###
+@example
+  mediator.configurationManager.configure player 'Player'
+###
 module.exports =
 
   configure: (object, configuration) ->
     if @[configuration]?
       @[configuration].apply(object)
+
     else
       console.error "Configuration #{configuration} not found!"
 
@@ -120,6 +124,18 @@ module.exports =
   Player: ->
     @velocity = 200
 
+    @tileSet.tilesX = 3
+    @tileSet.tilesY = 4
+    @tileSet.tileheight = 32
+    @tileSet.tilewidth = 32
+    @tileSet.offset =
+      x: 16
+      y: 24
+
+  PlayerSkeleton: ->
+    @velocity = 250
+
+    @atlas.src = 'atlases/nick.png'
     @tileSet.tilesX = 3
     @tileSet.tilesY = 4
     @tileSet.tileheight = 32
