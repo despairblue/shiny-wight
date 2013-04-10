@@ -65,7 +65,8 @@ module.exports = class Application extends Chaplin.Application
     mediator.playWithSounds       = false
     mediator.factory              = {}
     mediator.levels               = {}
-    mediator.activeLevel          = ""
+    mediator.activeLevel          = ''
+    mediator.nextLevel            = ''
     mediator.std                  = null
     mediator.blockInput           = false
     mediator.getActiveLevel       = =>

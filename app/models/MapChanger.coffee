@@ -19,5 +19,5 @@ module.exports = class MapChanger extends Entity
         mediator.soundManager.stopAll config =
           sounds: true
           backgroundSounds: true
-      mediator.activeLevel = @levelToChangeTo
+      mediator.nextLevel = @levelToChangeTo
       mediator.publish 'changeLvl'

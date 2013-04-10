@@ -42,8 +42,8 @@ module.exports = class HomePageView extends View
     @lastRenderUpdate  = now
 
     @subscribeEvent 'changeLvl', =>
-      console.log 'change to '+mediator.activeLevel if debug
-      @setup(mediator.activeLevel)
+      console.log 'change to '+mediator.nextLevel if debug
+      @setup(mediator.nextLevel)
 
     # the first level
     level = 'level1'
@@ -70,12 +70,19 @@ module.exports = class HomePageView extends View
   setup: (level) =>
     lvl = mediator.levels[level]
 
-    mediator.activeLevel = level
-    lvl.setup() unless lvl.setupped
-    @soundManager.startAll() if mediator.playWithSounds
+    if lvl.loadCompleted
+      mediator.dialogManager.hideDialog()
 
-    # window.requestAnimationFrame @doTheWork
-    @loadNextLevels()
+      mediator.activeLevel = level
+      lvl.setup() unless lvl.setupped
+      @soundManager.startAll() if mediator.playWithSounds
+
+      @loadNextLevels()
+    else
+      mediator.dialogManager.showDialog {text: "Sorry, I still need to load some damn cool sound, so please hang in there!"} unless mediator.dialogManager.isDialog()
+      setTimeout =>
+        @setup level
+      , 500
 
 
   doTheWork: =>
@@ -85,10 +92,14 @@ module.exports = class HomePageView extends View
     lvl = mediator.getActiveLevel()
 
     while @lastPhysicsUpdate < timeNow
-      @handleInput()
-      lvl.updatePhysics()
-      lvl.update()
-      @lastPhysicsUpdate += PHYSICS_LOOP
+      # just skip huge time intervals
+      if timeNow - @lastPhysicsUpdate > 1000
+        @lastPhysicsUpdate = timeNow
+      else
+        @handleInput()
+        lvl.updatePhysics()
+        lvl.update()
+        @lastPhysicsUpdate += PHYSICS_LOOP
 
     while @lastRenderUpdate < timeNow
       @draw()
