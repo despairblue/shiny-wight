@@ -52,6 +52,7 @@ module.exports = class Entity extends Module
     @[prop] = content for prop, content of settings
 
     @level = owningLevel
+    @creationTime = Date.now()
 
     @position =
       x: x

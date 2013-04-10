@@ -4,7 +4,6 @@
   "spriteState": {
     "moving": false,
     "viewDirection": 0,
-    "creationTime": "Will be overidden by `Date.Now()`",
     "animationRate": 100,
     "normal": 1
   },

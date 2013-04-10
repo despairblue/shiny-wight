@@ -9,7 +9,6 @@ module.exports =
     @spriteState =
       moving: false
       viewDirection: 0
-      creationTime: Date.now()
       animationRate: 100
       normal: 1
 
@@ -38,7 +37,7 @@ module.exports =
 
 
   getSpritePacket: ->
-    x = Math.floor((Date.now() - @spriteState.creationTime)/@spriteState.animationRate) % @tileSet.tilesX
+    x = Math.floor((Date.now() - @creationTime)/@spriteState.animationRate) % @tileSet.tilesX
     y = @spriteState.viewDirection
 
     x = @spriteState.normal unless @spriteState.moving
