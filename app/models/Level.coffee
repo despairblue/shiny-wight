@@ -107,7 +107,7 @@ module.exports = class Level extends Model
       for object in layer.objects
         continue if object.type is ''
 
-        if Object.keys(object.properties).length is 0
+        if Object.keys(object.properties).length is 0 and not mediator.ConfigurationManager[object.name]
           list.push object.name + '.json'
 
     @bodyCount = list.length
@@ -179,12 +179,18 @@ module.exports = class Level extends Model
       conf = {}
       conf[prop] = content for prop, content of object.properties
     else
+      # try to use the new config manager
+      newConf = mediator.ConfigurationManager[object.name]
+
       # otherwise use a configuration file
       conf = @entities[object.name]
 
-    if not conf
+    if not conf and not newConf
       console.error "No configuration file found for #{object.name}"
       return null
+
+    if not conf
+      conf = {}
 
     conf.name = object.name
 
@@ -198,6 +204,9 @@ module.exports = class Level extends Model
 
     # initialize object with position, size and config
     obj = new Ent(x, y, width, height, @, conf)
+
+    if newConf
+      newConf.apply obj
 
     obj.load()
 
