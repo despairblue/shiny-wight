@@ -2,6 +2,7 @@ Chaplin = require 'chaplin'
 Layout = require 'views/layout'
 mediator = require 'mediator'
 mapManager = require 'models/TILEDMap'
+ConfigurationManager = require 'core/ConfigurationManager'
 routes = require 'routes'
 
 # The application object
@@ -55,18 +56,19 @@ module.exports = class Application extends Chaplin.Application
   # -------------------------------------
   initMediator: ->
     # Add additional application-specific properties and methods
-    # e.g. mediator.prop = null
-    mediator.map            = null
-    mediator.soundManager   = null
-    mediator.mapManager     = mapManager
+    # e.g. mediator.prop          = null
+    mediator.map                  = null
+    mediator.soundManager         = null
+    mediator.mapManager           = mapManager
+    mediator.ConfigurationManager = ConfigurationManager
     # used while developing, so wie don't have to load sounds if we don't need to
-    mediator.playWithSounds = false
-    mediator.factory        = {}
-    mediator.levels         = {}
-    mediator.activeLevel    = ""
-    mediator.std            = null
-    mediator.blockInput     = false
-    mediator.getActiveLevel = =>
+    mediator.playWithSounds       = false
+    mediator.factory              = {}
+    mediator.levels               = {}
+    mediator.activeLevel          = ""
+    mediator.std                  = null
+    mediator.blockInput           = false
+    mediator.getActiveLevel       = =>
       mediator.levels[mediator.activeLevel]
 
     # Seal the mediator
