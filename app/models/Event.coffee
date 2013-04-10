@@ -34,10 +34,11 @@ module.exports = class Event extends Entity
             "Next"]
         dm.showDialog data, (result) =>
           if result is 1
-            @y.moveToPosition({
-              x: player.position.x + 30
-              y: player.position.y
-            }, 42)
+            # @y.moveToPosition({
+            #   x: player.position.x + 30
+            #   y: player.position.y
+            # }, 42)
+            @y.moveLeft 50
             @y.addTask ->
               data =
                 "text": "Nice skin! Give it to me!"
@@ -54,7 +55,7 @@ module.exports = class Event extends Entity
                       "F... You"
                     ]
                   dm.showDialog data, ->
-                    that.unblockInput()
+                    that.y.unblockInput()
                 else if result is 2
                   data =
                     "text": "Well, ok, what now?"
@@ -62,8 +63,13 @@ module.exports = class Event extends Entity
                       "Follow me and everything will be alright!"
                     ]
                   dm.showDialog data, ->
-                    that.y.moveToPosition(player.position, 30)
-                    that.unblockInput()
+                    # that.y.moveToPosition(player.position, 30)
+                    data =
+                      text: "No following is broken! Fix it first!"
+                      options: ["I'll do this right now!"]
+
+                    dm.showDialog data, ->
+                      that.y.unblockInput()
 
 
   onTouchBegin: (body, point, impulse) =>
