@@ -50,7 +50,7 @@ module.exports = class PhysicsManager
 
     # initialize debug drawing
     dCanvas.width = window.innerWidth/2 - 100
-    dCanvas.height = window.innerHeight
+    dCanvas.height = window.innerHeight - 100
     debugDraw.SetSprite dCtx
     debugDraw.SetDrawScale 0.5
     debugDraw.SetFillAlpha 0.3
