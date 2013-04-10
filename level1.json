@@ -1,6 +1,6 @@
 {
   "sounds": {
-    "prefix": "wrongprefix/",
+    "prefix": "sounds/",
     "sounds": ["jtTheme.mp3"],
     "theme": "level1theme.mp3",
     "backgroundSounds": [
