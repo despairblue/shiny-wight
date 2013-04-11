@@ -167,7 +167,7 @@ module.exports = class Entity extends Module
   # TODO: move to taskable mixin
   addTask: (task) =>
     @tasks.push ->
-      task()
+      task.apply @
       return true
 
 
