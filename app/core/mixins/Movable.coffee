@@ -175,7 +175,7 @@ module.exports =
         @spriteState.viewDirection = 3
         return false
 
-
+  # TODO: (pixel)??
   stopMovement: (pixel) ->
     @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
     @moving.down        = false
@@ -192,7 +192,7 @@ module.exports =
 
   moveOnXAxis: (ax, dx) ->
     distance = @getActualMoveDistance(ax)
-    # if dx > 0 move right else move left
+    # if dx > 0 move in positive direction of x-axis, i.e. right else left
     if dx > 0
       @moveRight(distance)
     else
@@ -200,7 +200,7 @@ module.exports =
 
   moveOnYAxis: (ay, dy) ->
     distance = @getActualMoveDistance(ay)
-    # if dy > 0 move down else move up
+    # if dy > 0 move in positive direction of y-axis, i.e. down else move up
     if dy > 0
       @moveDown(distance)
     else
@@ -208,31 +208,30 @@ module.exports =
 
 
   # TODO: broken, fix it
-  moveToPosition:(positionToMoveTo, maxDistance) ->
+  moveToPosition:(@positionToMoveTo, @maxDistance) ->
     @tasks.push () ->
       # first call
       if not @onFollow
-        @positionToMoveTo = positionToMoveTo
         @onFollow = true
-        # max distance the entity can move in one timeStep
-        @maxDistance = maxDistance
+        @tasks.shift()
         @savedTasks = _.clone(@tasks)
         @tasks = []
 
       threshold = @velocity / 50
-      threshold = 1 if threshold < 1
+      threshold = 3 if threshold < 3
 
       # dx = x2 - x1
-      dx = Math.floor(positionToMoveTo.x - @position.x)
-      dy = Math.floor(positionToMoveTo.y - @position.y)
+      dx = Math.floor(@positionToMoveTo.x - @position.x)
+      dy = Math.floor(@positionToMoveTo.y - @position.y)
       # ax = |x2 - x1| = d(x1, x2)
       ax = Math.abs(dx)
       ay = Math.abs(dy)
 
-      # if positionToMoveTo reached stop
-      if (ax <= threshold and ay <= threshold) or (@position.x == positionToMoveTo.x and @position.y == positionToMoveTo.y)
-        @position.x = positionToMoveTo.x
-        @position.y = positionToMoveTo.y
+      # if @positionToMoveTo reached stop
+      # if (ax <= threshold and ay <= threshold) or (@position.x == positionToMoveTo.x and @position.y == positionToMoveTo.y)
+      if (@positionToMoveTo.x - threshold < @position.x < @positionToMoveTo.x + threshold) and (@positionToMoveTo.y - threshold < @position.y < @positionToMoveTo.y + threshold)
+        @position.x = @positionToMoveTo.x
+        @position.y = @positionToMoveTo.y
         @positionToMoveTo = null
         @onFollow = false
         @tasks = @savedTasks
