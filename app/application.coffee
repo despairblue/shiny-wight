@@ -57,6 +57,7 @@ module.exports = class Application extends Chaplin.Application
   initMediator: ->
     # Add additional application-specific properties and methods
     # e.g. mediator.prop          = null
+    mediator.homepageview         = null
     mediator.map                  = null
     mediator.soundManager         = null
     mediator.mapManager           = mapManager

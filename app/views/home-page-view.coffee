@@ -25,6 +25,8 @@ module.exports = class HomePageView extends View
     super
     new Std()
 
+    mediator.homepageview = @
+
     @handleAction = _.debounce @_handleAction, 50, true
 
     @canvas = document.getElementById 'game-canvas'

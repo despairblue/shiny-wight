@@ -1,3 +1,5 @@
+mediator = require 'mediator'
+
 soundPrefix = 'sounds/'
 mapPrefix = 'map'
 
@@ -133,6 +135,11 @@ module.exports =
     @map =
       prefix: mapPrefix
       file: 'level2.json'
+
+
+  level2preloadLevel3: ->
+    @onTouchEnd = (body, point, impulse) ->
+      mediator.homepageview.loadLevel 'level3'
 
 
   level2house1: ->
