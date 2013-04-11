@@ -51,7 +51,7 @@
                 {
                  "ellipse":true,
                  "height":32,
-                 "name":"Player",
+                 "name":"PlayerSkeleton",
                  "properties":
                     {
 
@@ -92,7 +92,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/atlases\/marioficke.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/marioficke.png",
          "imageheight":1258,
          "imagewidth":852,
          "margin":2,
@@ -107,7 +107,7 @@
         }, 
         {
          "firstgid":926,
-         "image":"..\/atlases\/physics.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/physics.png",
          "imageheight":32,
          "imagewidth":160,
          "margin":0,

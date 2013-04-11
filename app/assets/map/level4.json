@@ -878,7 +878,7 @@
                 {
                  "ellipse":true,
                  "height":32,
-                 "name":"Player",
+                 "name":"PlayerSkeleton",
                  "properties":
                     {
 
@@ -905,7 +905,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/atlases\/cavefuck.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/cavefuck.png",
          "imageheight":672,
          "imagewidth":512,
          "margin":0,
@@ -920,7 +920,7 @@
         }, 
         {
          "firstgid":337,
-         "image":"..\/atlases\/dungeon.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/dungeon.png",
          "imageheight":256,
          "imagewidth":416,
          "margin":0,
@@ -935,7 +935,7 @@
         }, 
         {
          "firstgid":441,
-         "image":"..\/atlases\/PathAndObjects_0.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/PathAndObjects_0.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -950,7 +950,7 @@
         }, 
         {
          "firstgid":697,
-         "image":"..\/atlases\/victoria.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/victoria.png",
          "imageheight":160,
          "imagewidth":352,
          "margin":0,
@@ -965,7 +965,7 @@
         }, 
         {
          "firstgid":752,
-         "image":"..\/atlases\/signs.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/signs.png",
          "imageheight":64,
          "imagewidth":96,
          "margin":0,
@@ -980,7 +980,7 @@
         }, 
         {
          "firstgid":758,
-         "image":"..\/atlases\/physics.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/physics.png",
          "imageheight":32,
          "imagewidth":160,
          "margin":0,
