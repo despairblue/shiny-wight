@@ -12,7 +12,7 @@ module.exports =
       normal: 1
 
     @atlas = new Image()
-    @atlas.src = pathToAtlas
+    @atlas.src = pathToAtlas if pathToAtlas
 
     @tileSet =
       tilesX: 0
