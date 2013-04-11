@@ -87,7 +87,7 @@ module.exports = class SoundManager extends Model
 
       console.log sound+' loaded' if debug
 
-      callback()
+      callback?()
 
 
   ###
