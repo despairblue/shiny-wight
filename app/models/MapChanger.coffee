@@ -14,7 +14,7 @@ module.exports = class MapChanger extends Entity
 
 
   onTouchBegin: (body, point, impulse) =>
-    if body.GetUserData().ent.name == 'Player'
+    if body.GetUserData().ent.name in ['Player', 'PlayerSkeleton']
       if mediator.playWithSounds
         mediator.soundManager.stopAll config =
           sounds: true
