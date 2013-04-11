@@ -16,8 +16,7 @@ module.exports = class Level extends Model
     @soundCount          = 0
 
     # Physics
-    @b2World             = null
-    @physicsLoopHZ       = 1/25
+    @physicsManager
 
     # Entities
     @entities            = {}
