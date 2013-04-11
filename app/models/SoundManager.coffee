@@ -12,7 +12,11 @@ module.exports = class SoundManager extends Model
     super
     mediator.soundManager = @
 
-    @audioContext = new webkitAudioContext()
+    # deactivate sound if not on chrome
+    if webkitAudioContext?
+      @audioContext = new webkitAudioContext()
+    else
+      mediator.playWithSounds = false
     @globalSoundList = {}
     @lastLevelTheme = ""
 
