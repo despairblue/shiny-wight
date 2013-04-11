@@ -120,10 +120,17 @@ module.exports = class Level extends Model
         if object.type == "Player"
           @player = obj
 
+
   addEntity: (object) =>
     obj = @createEntity object
     @entityObjects.push obj
     return obj
+
+
+  removeEntity: (entity) =>
+    index = @entityObjects.indexOf entity
+    @entityObjects.splice index, 1
+
 
   # TODO: refactor configuration loading
   createEntity: (object) =>

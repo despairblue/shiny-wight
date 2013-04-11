@@ -50,6 +50,7 @@ module.exports = class Entity extends Module
     super
     @loadMethods = []
     @updateMethods = []
+    @unloadMethods = []
 
     @[prop] = content for prop, content of settings
 
@@ -105,6 +106,15 @@ module.exports = class Entity extends Module
   load: =>
     # call all load methods
     method.apply(@) for method in @loadMethods
+
+
+  kill: =>
+    method.apply @ for method in @unloadMethods
+
+    # TODO: go to physics mixin
+    @level.physicsManager.world.DestroyBody(@physBody)
+
+    @level.removeEntity @
 
 
   ###
