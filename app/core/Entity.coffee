@@ -153,19 +153,6 @@ module.exports = class Entity extends Module
   Is called each tick/frame.
   ###
   update: =>
-
-    checkPosition = false
-
-    # TODO not all entities need the following block.. actually the fewest entities need this
-    # so move it into a subclass to increase performance
-    @counter +=1
-    if @counter % 10 == 0
-      @counter = 1
-      if Date.now() - @positionCheckTimer > 2000
-        checkPosition = true
-        @positionCheckTimer == Date.now()
-
-
     # TODO: move to physics mixin
     @position.x = @physBody.GetPosition().x if @physBody.GetPosition().x?
     @position.y = @physBody.GetPosition().y if @physBody.GetPosition().y?
