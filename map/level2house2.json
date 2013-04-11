@@ -79,7 +79,7 @@
                 {
                  "ellipse":true,
                  "height":32,
-                 "name":"Player",
+                 "name":"PlayerSkeleton",
                  "properties":
                     {
 
@@ -106,7 +106,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/atlases\/dungeon.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/dungeon.png",
          "imageheight":256,
          "imagewidth":416,
          "margin":0,
@@ -121,7 +121,7 @@
         }, 
         {
          "firstgid":105,
-         "image":"..\/atlases\/Castle2.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/Castle2.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -136,7 +136,7 @@
         }, 
         {
          "firstgid":361,
-         "image":"..\/atlases\/castlefloors.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/castlefloors.png",
          "imageheight":320,
          "imagewidth":320,
          "margin":0,
@@ -151,7 +151,7 @@
         }, 
         {
          "firstgid":461,
-         "image":"..\/atlases\/sound_map.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/sound_map.png",
          "imageheight":64,
          "imagewidth":320,
          "margin":0,
@@ -166,7 +166,7 @@
         }, 
         {
          "firstgid":481,
-         "image":"..\/atlases\/physics.png",
+         "image":"..\/..\/..\/..\/..\/..\/Dropbox\/shares\/pape\/pape\/Nick Skeleton\/assets\/atlases\/physics.png",
          "imageheight":32,
          "imagewidth":160,
          "margin":0,
