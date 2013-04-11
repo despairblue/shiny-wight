@@ -22,9 +22,6 @@ module.exports = class Player extends Entity
     @size.y = height
 
 
-  kill: =>
-
-
   onTouch: (otherBody, point, impulse) =>
     return false if not @physBody?
     return false if not otherBody.GetUserData()?
