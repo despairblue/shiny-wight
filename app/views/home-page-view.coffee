@@ -103,10 +103,11 @@ module.exports = class HomePageView extends View
         lvl.update()
         @lastPhysicsUpdate += PHYSICS_LOOP
 
-    while @lastRenderUpdate < timeNow
-      @draw()
-      lvl.physicsManager.world.DrawDebugData() if debug
-      @lastRenderUpdate += RENDER_LOOP
+    renderDelte = timeNow - @lastRenderUpdate - RENDER_LOOP
+    if renderDelte > 0
+        @draw()
+        lvl.physicsManager.world.DrawDebugData() if debug
+        @lastRenderUpdate = timeNow
 
     if debug
       timeToRender = Date.now() - timeNow
