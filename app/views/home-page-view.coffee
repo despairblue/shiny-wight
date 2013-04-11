@@ -60,7 +60,7 @@ module.exports = class HomePageView extends View
     return if mediator.levels[level]?
 
     mediator.levels[level] = new Level (level), =>
-      rest[0]() if rest[0]
+      rest[0]?()
 
 
   # loads next levels
