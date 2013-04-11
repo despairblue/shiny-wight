@@ -25,6 +25,8 @@ module.exports = class HomePageView extends View
     super
     new Std()
 
+    @handleAction = _.debounce @_handleAction, 50, true
+
     @canvas = document.getElementById 'game-canvas'
     @ctx = @canvas.getContext '2d'
 
@@ -143,11 +145,7 @@ module.exports = class HomePageView extends View
       player.spriteState.viewDirection = 1
 
     if actions['interact']
-      player.onAction()
-
-      # control dialog
-      if mediator.dialogManager.isDialog()
-        mediator.dialogManager.chooseCurrentSelection()
+      @handleAction()
 
     if actions['cancel']
       placeholder = true
@@ -162,6 +160,15 @@ module.exports = class HomePageView extends View
     else
       player.physBody.SetLinearVelocity new Vec2 0, 0
       player.spriteState.moving = false
+
+
+  _handleAction: =>
+    # only do smth if there is no dialog
+    if mediator.dialogManager.isDialog()
+      mediator.dialogManager.chooseCurrentSelection()
+    else
+      player = mediator.getActiveLevel().player
+      player.onAction()
 
 
   draw: =>
