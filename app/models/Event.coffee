@@ -38,7 +38,7 @@ module.exports = class Event extends Entity
             #   x: player.position.x + 30
             #   y: player.position.y
             # }, 42)
-            @y.moveLeft 50
+            @y.moveDown 30
             @y.addTask ->
               data =
                 "text": "Nice skin! Give it to me!"
@@ -56,7 +56,17 @@ module.exports = class Event extends Entity
                       "F... You"
                     ]
                   dm.showDialog data, ->
+                    that.y.moveDown 200
+                    that.y.moveRight 30
+                    that.y.moveDown 50
+
                     that.y.unblockInput()
+
+                    that.y.addTask ->
+                      that.y.kill()
+
+                      true
+
                 else if result is 2
                   data =
                     "text": "Well, ok, what now?"
