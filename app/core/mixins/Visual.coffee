@@ -11,8 +11,10 @@ module.exports =
       animationRate: 100
       normal: 1
 
+    @atlas = new Image()
+    @atlas.src = pathToAtlas
+
     @tileSet =
-      image: pathToAtlas
       tilesX: 0
       tilesY: 0
       tileheight: 0
@@ -26,12 +28,9 @@ module.exports =
   _visual_init: () ->
     @loadMethods.push @_visual_load
 
+
   # Will be called when Entity.load is called
   _visual_load: ->
-    img = new Image()
-    img.src = @tileSet.image
-
-    @atlas = img
 
 
   getSpritePacket: ->
@@ -46,8 +45,6 @@ module.exports =
 
 
   render: (ctx, cx, cy) ->
-    tileSet = @tileSet
-
     spritePkt = @getSpritePacket()
 
     # position of first pixel at [sx, sy] in atlas
@@ -56,7 +53,8 @@ module.exports =
 
     sx = spritePkt.x
     sy = spritePkt.y
-    # with and height of tile in atlas
+
+    # width and height of tile in atlas
     sw = @tileSet.tilewidth
     sh = @tileSet.tileheight
 
@@ -67,7 +65,7 @@ module.exports =
     dh = @size.y
 
     # translate to drawing center
-    dx = dx - Math.floor @tileSet.tilewidth / 2
-    dy = dy - Math.floor @tileSet.tileheight / 2
+    dx = dx - @tileSet.offset.x
+    dy = dy - @tileSet.offset.y
 
     ctx.drawImage @atlas, sx, sy, sw, sh, dx, dy, dw, dh

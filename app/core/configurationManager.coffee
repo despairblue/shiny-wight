@@ -124,6 +124,7 @@ module.exports =
   Player: ->
     @velocity = 200
 
+    @atlas.src = 'atlases/warrior_m.png'
     @tileSet.tilesX = 3
     @tileSet.tilesY = 4
     @tileSet.tileheight = 32
@@ -146,7 +147,9 @@ module.exports =
 
 
   Mario: ->
-    @tileSet.image = 'atlases/mario.png'
+
+    @atlas.src = 'atlases/mario.png'
+
     @tileSet.tilesX = 3
     @tileSet.tilesY = 4
     @tileSet.tileheight = 32
@@ -159,11 +162,12 @@ module.exports =
   Yeti: ->
     @velocity = 200
 
-    @tileSet.image = 'atlases/yetis.png'
+    @atlas.src = 'atlases/yetis.png'
+
     @tileSet.tilesX = 3
     @tileSet.tilesY = 4
     @tileSet.tileheight = 32
     @tileSet.tilewidth = 32
     @tileSet.offset =
-      x: 0
-      y: 0
+      x: 16
+      y: 24

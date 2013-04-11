@@ -11,18 +11,10 @@ module.exports = class Mario extends Entity
   constructor: (x, y, width, height, owningLevel, settings) ->
     # settings.ellipse = true
     settings.physicsType = 'static'
-    @_visual_setUp('atlases/mario.png')
+    @_visual_setUp()
 
-    super x, y, width/2, height/2, owningLevel, settings
+    super x, y, width, height, owningLevel, settings
     @_visual_init()
-
-    @tileSet.tilesX = 3
-    @tileSet.tilesY = 4
-    @tileSet.tileheight = 32
-    @tileSet.tilewidth = 32
-    @tileSet.offset =
-      x: 16
-      y: 24
 
     @size.x = width
     @size.y = height

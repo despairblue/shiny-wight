@@ -13,18 +13,10 @@ module.exports = class Player extends Entity
 
   constructor: (x, y, width, height, owningLevel, settings) ->
     settings.ellipse = true
-    @_visual_setUp('atlases/warrior_m.png')
+    @_visual_setUp()
 
     super x, y, width/2, height/2, owningLevel, settings
     @_visual_init()
-
-    @tileSet.tilesX = 3
-    @tileSet.tilesY = 4
-    @tileSet.tileheight = 32
-    @tileSet.tilewidth = 32
-    @tileSet.offset =
-      x: 16
-      y: 24
 
     @size.x = width
     @size.y = height
