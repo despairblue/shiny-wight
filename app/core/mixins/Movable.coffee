@@ -102,6 +102,8 @@ module.exports =
         # task not finished
         return false
 
+    return @
+
 
   moveUp: (pixel) ->
     console.error 'argument must be an positive integer' if pixel < 0
@@ -125,6 +127,8 @@ module.exports =
         @spriteState.moving = true
         @spriteState.viewDirection = 0
         return false
+
+    return @
 
 
   moveRight: (pixel) ->
@@ -150,6 +154,8 @@ module.exports =
         @spriteState.viewDirection = 1
         return false
 
+    return @
+
 
   moveLeft: (pixel) ->
     console.error 'argument must be an positive integer' if pixel < 0
@@ -173,6 +179,9 @@ module.exports =
         @spriteState.moving = true
         @spriteState.viewDirection = 3
         return false
+
+    return @
+
 
   # TODO: (pixel)??
   stopMovement: (pixel) ->

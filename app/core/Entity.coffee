@@ -179,9 +179,12 @@ module.exports = class Entity extends Module
       require('mediator').blockInput = true
       return true
 
+    return @
+
 
   unblockInput: () =>
     @tasks.push ->
       require('mediator').blockInput = false
       return true
 
+    return @
