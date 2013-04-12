@@ -176,7 +176,7 @@ module.exports = class Level extends Model
     ent.update() for ent in @entityObjects
 
     for task, index in @tasks
-      task()
+      task.apply @
 
     @tasks = []
 
