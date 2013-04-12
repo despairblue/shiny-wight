@@ -127,8 +127,10 @@ module.exports = class Level extends Model
 
 
   removeEntity: (entity) =>
-    index = @entityObjects.indexOf entity
-    @entityObjects.splice index, 1
+    # must be delayed to make sure that this won't happen while iterating over the entityObjects array
+    @tasks.push ->
+      index = @entityObjects.indexOf entity
+      @entityObjects.splice index, 1
 
 
   # TODO: refactor configuration loading
