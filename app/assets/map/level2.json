@@ -117,19 +117,6 @@
                  "width":32,
                  "x":750,
                  "y":233
-                }, 
-                {
-                 "height":69,
-                 "name":"level2preloadLevel3",
-                 "properties":
-                    {
-
-                    },
-                 "type":"Event",
-                 "visible":true,
-                 "width":135,
-                 "x":127,
-                 "y":954
                 }],
          "opacity":1,
          "type":"objectgroup",

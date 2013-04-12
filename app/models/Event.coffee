@@ -12,5 +12,18 @@ module.exports = class Event extends Entity
 
     super x, y, width, height, owningLevel, settings
 
-    @onTouchEnd   = false
-    @onTouchBegin = false
+    @repeat = false
+
+
+  onTouch: =>
+    super
+    @onTouchMethods = [] unless @repeat
+
+
+  onTouchBegin: =>
+    super
+    @onTouchBeginMethods = [] unless @repeat
+
+  onTouchEnd: =>
+    super
+    @onTouchEndMethods = [] unless @repeat

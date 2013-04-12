@@ -52,6 +52,11 @@ module.exports = class Entity extends Module
     @updateMethods = []
     @unloadMethods = []
 
+    # TODO: move to physics mixin
+    @onTouchMethods      = []
+    @onTouchEndMethods   = []
+    @onTouchBeginMethods = []
+
     @[prop] = content for prop, content of settings
 
     @level = owningLevel
@@ -126,16 +131,16 @@ module.exports = class Entity extends Module
 
 
   # TODO: move to physics mixin
-  onTouch: (body, point, impulse) =>
-    # ...
+  onTouch: =>
+    method.apply @, arguments for method in @onTouchMethods
 
 
-  onTouchBegin: (body, point) =>
-    # ...
+  onTouchBegin: =>
+    method.apply @, arguments for method in @onTouchBeginMethods
 
 
-  onTouchEnd: (body, point) =>
-    # ...
+  onTouchEnd: =>
+    method.apply @, arguments for method in @onTouchEndMethods
 
 
   makeMeStatic: () =>

@@ -34,96 +34,118 @@ module.exports =
       file: 'level1.json'
 
 
+  level1prolog: ->
+    @onTouchEndMethods.push (body, point, impulse) ->
+      that = @
+
+      data =
+        text: 'Once upon a time, all in the golden afternoon, fully leisurely our hero took a walk. The birds they sing, the fire cracks, what a wonderful day. But slowly one by one, its quaint events were hammered out and now the tale is done. Gee. I heard that before...'
+        options: 'Ok'
+
+      mediator.dialogManager.showDialog data
+
+      # preload level 3
+      mediator.homepageview.loadLevel 'level3'
+
+
+  level1nickTalking: ->
+    @onTouchEndMethods.push (body, point, impulse) ->
+      that = @
+
+      data =
+        speaker: 'Nick Human'
+        text: 'What a wonderful day. Thus lovely noises, and hey; they get louder when I get closer to  them. God is such a genius.'
+        options: 'Yeah'
+
+      mediator.dialogManager.showDialog data
+
+
   level1event1: ->
-    @onTouchBegin = (body, point, impulse) ->
+    @onTouchBeginMethods.push (body, point, impulse) ->
       that = @
-      unless that.touchBedinHandled
-        that.touchBedinHandled = true
-        that.level.tasks.push ->
-          yeti =
-            name: 'Yeti'
-            type: 'Yeti'
-            x: 16*32
-            y: 16
-            width: 32
-            height: 32
-            properties: {
-            }
 
-          that.y = y = that.level.addEntity yeti
+      mediator.homepageview.loadLevel 'level3'
 
-          if mediator.playWithSounds
-            mediator.soundManager.stopAll config =
-              themeSound: true
-              backgroundSounds: true
+      that.level.tasks.push ->
+        yeti =
+          name: 'Yeti'
+          type: 'Yeti'
+          x: 16*32
+          y: 16
+          width: 32
+          height: 32
+          properties: {
+          }
 
-            mediator.soundManager.playSound that.level.manifest.sounds.sounds[0], 1, true
+        that.y = y = that.level.addEntity yeti
 
-    @onTouchEnd = (body, point, impulse) ->
+        if mediator.playWithSounds
+          mediator.soundManager.stopAll config =
+            themeSound: true
+            backgroundSounds: true
+
+          mediator.soundManager.playSound that.level.manifest.sounds.sounds[0], 1, true
+
+    @onTouchEndMethods.push (body, point, impulse) ->
       that = @
-      if not that.touchEndHandled
-        that.touchEndHandled = true
-        player = body.GetUserData().ent
-        dm = mediator.dialogManager
+      player = body.GetUserData().ent
+      dm = mediator.dialogManager
 
-        dm.hideDialog()
+      dm.hideDialog()
 
-        that.y.blockInput()
-        that.y.moveDown 150
-        that.y.moveLeft 60
-        that.y.addTask =>
-          data =
-            "text": "SnowSam: \"Look Jt! A fresh human over there!\""
-            "options": [
-              "Next"]
-          dm.showDialog data, (result) ->
-            if result is 1
-              that.y.moveDown 30
-              that.y.addTask ->
-                data =
-                  "text": "Nice skin! Give it to me!"
-                  "options": [
-                    "Ok!",
-                    "NO!"]
+      that.y.blockInput()
+      that.y.moveDown 150
+      that.y.moveLeft 60
+      that.y.addTask =>
+        data =
+          "text": "SnowSam: \"Look Jt! A fresh human over there!\""
+          "options": [
+            "Next"]
+        dm.showDialog data, (result) ->
+          if result is 1
+            that.y.moveDown 30
+            that.y.addTask ->
+              data =
+                "text": "Nice skin! Give it to me!"
+                "options": [
+                  "Ok!",
+                  "NO!"]
 
-                dm.showDialog data, (result) ->
-                  if result is 1
-                    # player.atlas.src = 'atlases/nick.png'
-                    mediator.configurationManager.configure player, 'PlayerSkeleton'
+              dm.showDialog data, (result) ->
+                if result is 1
+                  # player.atlas.src = 'atlases/nick.png'
+                  mediator.configurationManager.configure player, 'PlayerSkeleton'
+                  data =
+                    "text": "Very good choice!"
+                    "options": [
+                      "F... You"
+                    ]
+                  dm.showDialog data, ->
+                    that.y.moveDown 200
+                    that.y.moveRight 30
+                    that.y.moveDown 50
+
+                    that.y.unblockInput()
+
+                    that.y.addTask ->
+                      that.y.kill()
+
+                      true
+
+                else if result is 2
+                  data =
+                    "text": "Well, ok, what now?"
+                    "options": [
+                      "Follow me and everything will be alright!"
+                    ]
+                  dm.showDialog data, ->
+                    # that.y.moveToPosition(player.position, 30)
                     data =
-                      "text": "Very good choice!"
-                      "options": [
-                        "F... You"
-                      ]
-                    dm.showDialog data, ->
-                      that.y.moveDown 200
-                      that.y.moveRight 30
-                      that.y.moveDown 50
+                      text: "No following is broken! Fix it first!"
+                      options: ["I'll do this right now!"]
 
+                    dm.showDialog data, ->
                       that.y.unblockInput()
-
-                      that.y.addTask ->
-                        that.y.kill()
-
-                        true
-
-                  else if result is 2
-                    data =
-                      "text": "Well, ok, what now?"
-                      "options": [
-                        "Follow me and everything will be alright!"
-                      ]
-                    dm.showDialog data, ->
-                      # that.y.moveToPosition(player.position, 30)
-                      data =
-                        text: "No following is broken! Fix it first!"
-                        options: ["I'll do this right now!"]
-
-                      dm.showDialog data, ->
-                        that.y.unblockInput()
-
-    # bind methods so that `this` makes sense
-    _.bindAll @
 
 
   level2: ->
@@ -135,11 +157,6 @@ module.exports =
     @map =
       prefix: mapPrefix
       file: 'level2.json'
-
-
-  level2preloadLevel3: ->
-    @onTouchEnd = (body, point, impulse) ->
-      mediator.homepageview.loadLevel 'level3'
 
 
   level2house1: ->
