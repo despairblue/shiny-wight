@@ -7,9 +7,10 @@ module.exports = class Event extends Entity
 
 
   constructor: (x, y, width, height, owningLevel, settings) ->
-    # settings.physicsType = 'static'
-    # settings.isSensor    = true
+    settings.physicsType = 'static'
+    settings.isSensor    = true
 
     super x, y, width, height, owningLevel, settings
 
-    @triggered = false
+    @onTouchEnd   = false
+    @onTouchBegin = false
