@@ -13,7 +13,7 @@
   <script id="dialog-template" type="text/x-handlebars-template">
     <div class='dialog-box'>
       <div class='dialog-text'>
-        {{text}}
+        {{#if speaker}}[{{speaker}}]: {{/if}}{{text}}
       </div>
       {{#options}}
         <div class='dialog-option' id={{@index}}>
