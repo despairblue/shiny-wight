@@ -66,9 +66,9 @@ module.exports = class SoundManager extends Model
       else callback()
 
     if not @globalSoundList[mapSounds.theme]?
-        @globalSoundList[mapSounds.theme] = new SoundObj
-        mediator.std.xhrGet mapSounds.prefix+mapSounds.theme, @bufferSounds, 'arraybuffer', mapSounds.theme, callback
-      else callback()
+      @globalSoundList[mapSounds.theme] = new SoundObj
+      mediator.std.xhrGet mapSounds.prefix+mapSounds.theme, @bufferSounds, 'arraybuffer', mapSounds.theme, callback
+    else callback()
 
 
   ###
