@@ -56,8 +56,9 @@ module.exports = class DialogManager
 
     result.children('.dialog-option').click (event) ->
       that.hideDialog()
-      id = parseInt( $(this).prop('id') )
-      callback(id + 1) if callback
+      id = parseInt( $(this).prop('id') ) + 1
+      id = -1 if id == NaN
+      callback?(id)
 
 
     $('#dialog').append(result).
