@@ -45,45 +45,44 @@ module.exports =
     # TODO not all entities need the following block.. actually the fewest entities need this
     # so move it into a subclass to increase performance
     # TODO: this breaks stuff, checkposition is true when the yeti won't move for 2 seconds, what if he's not supposed to move?
-    @counter +=1
-    if @counter % 10 == 0
-      @counter = 1
-      if Date.now() - @positionCheckTimer > 2000
-        checkPosition = @checkPosition = true
-        @positionCheckTimer == Date.now()
-    else
-      # TODO: move task management to own mixin
+    # TODO: move task management to own mixin
 
-      # get current task
-      task = @tasks[0]
+    # get current task
+    task = @tasks[0]
 
-      if task
+    if task
+      # remove task if finished
+      @tasks.shift() if task.apply @
 
-        # remove task if finished
-        @tasks.shift() if task.apply @
-
-      else if @onFollow
-        @moveToPosition(@positionToMoveTo, @maxDistance)
-
-    # TODO the fewest entities need this block
-    @oldPosition = _.clone(@position) if checkPosition
+    else if @onFollow
+      @counter +=1
+      if @counter % 10 == 0
+        @counter = 1
+        if Date.now() - @positionCheckTimer > 2000
+          @checkPosition = true
+          @positionCheckTimer == Date.now()
+          # TODO the fewest entities need this block
+          @oldPosition = _.clone(@position) # if checkPosition
+      @moveToPosition(@positionToMoveTo, @maxDistance)
 
 
+
+  # TODO maybe add velocity to define the speed of movement
+  # Example: Yeties moving slowly, then see the player and go fast to him..
   moveDown: (pixel) ->
     console.error 'argument must be an positive integer' if pixel < 0
     @tasks.push () ->
       if @moving.down
         if @position.y > @targetPos.y
           @stopMovement()
+          # task finished
+          return true
+        else if @checkPosition and @position.y == @oldPosition.y
+          @stopMovement()
+          @tryOtherDirection = true
 
           # task finished
           return true
-        # else if @checkPosition and @position.y == @oldPosition.y
-        #   @stopMovement()
-        #   @tryOtherDirection = true
-
-        #   # task finished
-        #   return true
         else
           @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, @velocity))
 
@@ -111,10 +110,10 @@ module.exports =
         if @position.y < @targetPos.y
           @stopMovement()
           return true
-        # else if @checkPosition and @position.y == @oldPosition.y
-        #   @stopMovement()
-        #   @tryOtherDirection = true
-        #   return true
+        else if @checkPosition and @position.y == @oldPosition.y
+          @stopMovement()
+          @tryOtherDirection = true
+          return true
         else
           @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, -@velocity))
           return false
@@ -135,10 +134,10 @@ module.exports =
         if @position.x > @targetPos.x
           @stopMovement()
           return true
-        # else if @checkPosition and @position.x == @oldPosition.x
-        #   @stopMovement()
-        #   @tryOtherDirection = true
-        #   return true
+        else if @checkPosition and @position.x == @oldPosition.x
+          @stopMovement()
+          @tryOtherDirection = true
+          return true
         else
           @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(@velocity, 0))
           return false
@@ -159,10 +158,10 @@ module.exports =
         if @position.x < @targetPos.x
           @stopMovement()
           return true
-        # else if @checkPosition and @position.x == @oldPosition.x
-        #   @stopMovement()
-        #   @tryOtherDirection = true
-        #   return true
+        else if @checkPosition and @position.x == @oldPosition.x
+          @stopMovement()
+          @tryOtherDirection = true
+          return true
         else
           @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(-@velocity, 0))
           return false
@@ -213,7 +212,7 @@ module.exports =
       # first call
       if not @onFollow
         @onFollow = true
-        @tasks.shift()
+        @tasks.shift() # remove itself from tasks to prevent endless loop
         @savedTasks = _.clone(@tasks)
         @tasks = []
 
