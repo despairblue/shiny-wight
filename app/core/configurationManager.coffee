@@ -40,7 +40,6 @@ module.exports =
 
       data =
         text: 'Once upon a time, all in the golden afternoon, fully leisurely our hero took a walk. The birds they sing, the fire cracks, what a wonderful day. But slowly one by one, its quaint events were hammered out and now the tale is done. Gee. I heard that before...'
-        options: 'Ok'
 
       mediator.dialogManager.showDialog data
 
@@ -55,7 +54,6 @@ module.exports =
       data =
         speaker: 'Nick Human'
         text: 'What a wonderful day. Thus lovely noises, and hey; they get louder when I get closer to  them. God is such a genius.'
-        options: 'Yeah'
 
       mediator.dialogManager.showDialog data
 
@@ -67,17 +65,19 @@ module.exports =
       mediator.homepageview.loadLevel 'level3'
 
       that.level.tasks.push ->
-        yeti =
+        jt = ss =
           name: 'Yeti'
           type: 'Yeti'
           x: 16*32
           y: 16
           width: 32
           height: 32
-          properties: {
-          }
+          properties: {}
 
-        that.y = y = that.level.addEntity yeti
+        ss.x = 17*32
+
+        that.jt = that.level.addEntity jt
+        that.ss = that.level.addEntity ss
 
         if mediator.playWithSounds
           mediator.soundManager.stopAll config =
@@ -89,63 +89,62 @@ module.exports =
     @onTouchEndMethods.push (body, point, impulse) ->
       that = @
       player = body.GetUserData().ent
+      jt = that.jt
+      ss = that.ss
       dm = mediator.dialogManager
 
       dm.hideDialog()
 
-      that.y.blockInput()
-      that.y.moveDown 150
-      that.y.moveLeft 60
-      that.y.addTask =>
+      jt.blockInput().moveDown(150).moveLeft(60)
+      jt.addTask =>
         data =
-          "text": "SnowSam: \"Look Jt! A fresh human over there!\""
-          "options": [
-            "Next"]
+          speaker: 'JT'
+          text: 'Yo, Snowsome, pathetic human spotted, Yo!'
         dm.showDialog data, (result) ->
-          if result is 1
-            that.y.moveDown 30
-            that.y.addTask ->
-              data =
-                "text": "Nice skin! Give it to me!"
-                "options": [
-                  "Ok!",
-                  "NO!"]
+          jt.addTask ->
+            data.speaker = 'Snowsome'
+            data.text    = 'Pathetic little you.'
+            data.options = 'Run!'
 
-              dm.showDialog data, (result) ->
-                if result is 1
-                  # player.atlas.src = 'atlases/nick.png'
-                  mediator.configurationManager.configure player, 'PlayerSkeleton'
-                  data =
-                    "text": "Very good choice!"
-                    "options": [
-                      "F... You"
-                    ]
-                  dm.showDialog data, ->
-                    that.y.moveDown 200
-                    that.y.moveRight 30
-                    that.y.moveDown 50
+            dm.showDialog data, ->
+              ss.moveDown(150).moveLeft(90)
+              jt.moveDown(90).moveLeft(30).addTask ->
 
-                    that.y.unblockInput()
+                data.speaker = 'JT'
+                data.text = 'Nice bro, you got Him'
+                data.options = 'What the...'
 
-                    that.y.addTask ->
-                      that.y.kill()
-
-                      true
-
-                else if result is 2
-                  data =
-                    "text": "Well, ok, what now?"
-                    "options": [
-                      "Follow me and everything will be alright!"
-                    ]
-                  dm.showDialog data, ->
-                    # that.y.moveToPosition(player.position, 30)
-                    data =
-                      text: "No following is broken! Fix it first!"
-                      options: ["I'll do this right now!"]
+                dm.showDialog data, ->
+                  jt.addTask ->
+                    data.text = 'Nice skin, yo.'
+                    data.options = 'Uhm... Yeah. Thanks? I guess...'
 
                     dm.showDialog data, ->
-                      that.y.unblockInput()
+                      jt.addTask ->
+                        data.text = 'Give it to us'
+                        data.options = null
+
+                        dm.showDialog data, ->
+                          jt.addTask ->
+                            data.speaker = 'Snowsome'
+                            data.text = 'Yeah, give it to us.'
+                            data.options = 'Well... I would prefer not to...'
+
+                            dm.showDialog data, ->
+                              # [Black, Smashing Noises, Wilhelms Scream]
+                              mediator.configurationManager.configure player, 'PlayerSkeleton'
+
+                              jt.moveRight(80).moveUp(250)
+                              ss.moveRight(40).moveUp(250)
+
+                              jt.addTask ->
+                                data =
+                                  speaker: 'Nick Skeleton'
+                                  text: 'Seriously? Skin-Robbery? Yetis? I hate those days...'
+
+                                dm.showDialog data, ->
+                                  jt.unblockInput().addTask -> jt.kill()
+                                  ss.kill()
 
 
   level2: ->
@@ -241,6 +240,9 @@ module.exports =
   Player: ->
     @velocity = 200
 
+    # player should look at you
+    @spriteState.viewDirection = 2
+
     @atlas.src = 'atlases/warrior_m.png'
     @tileSet.tilesX = 3
     @tileSet.tilesY = 4
@@ -249,6 +251,7 @@ module.exports =
     @tileSet.offset =
       x: 16
       y: 24
+
 
   PlayerSkeleton: ->
     @velocity = 250
@@ -264,7 +267,6 @@ module.exports =
 
 
   Mario: ->
-
     @atlas.src = 'atlases/mario.png'
 
     @tileSet.tilesX = 3
