@@ -34,6 +34,7 @@ module.exports = class Level extends Model
     @mapLoaded           = false
     @loadCompleted       = false
     @setupped            = false
+    @soundsLoaded        = false
 
     @manifest = mediator.configurationManager.configure {}, manifestId
 
