@@ -57,11 +57,13 @@ module.exports = class HomePageView extends View
       window.requestAnimationFrame @doTheWork
 
 
-  loadLevel: (level, rest...) =>
-    return if mediator.levels[level]?
+  loadLevel: (level, callback) =>
+    if mediator.levels[level]?
+      callback?()
+      return
 
     mediator.levels[level] = new Level (level), =>
-      rest[0]?()
+      callback?()
 
 
   # loads next levels
