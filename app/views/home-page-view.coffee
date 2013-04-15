@@ -126,7 +126,9 @@ module.exports = class HomePageView extends View
     # get attributes
     actions = @inputManager.get 'actions'
     moveDir = new Vec2 0, 0
-    player = mediator.getActiveLevel().player
+    player = mediator.getActiveLevel()?.player
+
+    return unless player?
 
     if actions['move-up']
       moveDir.y -= 1
