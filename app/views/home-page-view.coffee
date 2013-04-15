@@ -98,6 +98,8 @@ module.exports = class HomePageView extends View
     timeNow = Date.now()
     lvl = mediator.getActiveLevel()
 
+    return unless lvl?
+
     while @lastPhysicsUpdate < timeNow
       # just skip huge time intervals
       if timeNow - @lastPhysicsUpdate > 1000
