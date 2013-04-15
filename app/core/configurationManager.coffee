@@ -266,16 +266,31 @@ module.exports =
       y: 24
 
 
-  Mario: ->
-    @atlas.src = 'atlases/mario.png'
+  Mario1: ->
 
-    @tileSet.tilesX = 3
-    @tileSet.tilesY = 4
-    @tileSet.tileheight = 32
-    @tileSet.tilewidth = 32
-    @tileSet.offset =
-      x: 14
-      y: 24
+
+  Mario2: ->
+
+
+  Mario3: ->
+    dm = mediator.dialogManager
+
+    @onAction = =>
+      data =
+        speaker: 'Mario'
+        text: 'Hey there. I love being beaten by this Mushroom-Guy. Please, stay there, stare and do nothing.'
+        options: 'Okay. Bye.'
+
+      dm.showDialog data, ->
+        data.text = 'Are you kidding me? Beat this thing to death. And do it painfully with all your strength. Please.'
+        dm.showDialog data
+
+
+  Gumba: ->
+    @hit = 5
+    @onAction = =>
+      if @hit-- < 0
+        @kill()
 
 
   Yeti: ->

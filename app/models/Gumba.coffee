@@ -2,16 +2,16 @@ Entity = require 'core/Entity'
 Visual = require 'core/mixins/Visual'
 mediator = require 'mediator'
 
-module.exports = class Mario extends Entity
+module.exports = class Gumba extends Entity
   @include Visual
   # register entity
-  mediator.factory['Mario'] = this
+  mediator.factory['Gumba'] = this
 
 
   constructor: (x, y, width, height, owningLevel, settings) ->
     # settings.ellipse = true
     settings.physicsType = 'static'
-    @_visual_setUp('atlases/mario.png')
+    @_visual_setUp('atlases/gumba.png')
 
     super x, y, width, height, owningLevel, settings
     @_visual_init()
