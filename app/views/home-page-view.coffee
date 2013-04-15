@@ -24,6 +24,9 @@ module.exports = class HomePageView extends View
 
   initialize: (options) ->
     super
+
+    @setupDatGui() if debug
+
     new Std()
 
     mediator.homepageview = @
@@ -35,8 +38,6 @@ module.exports = class HomePageView extends View
 
     window.homepageview = @ if debug
     window.mediator = mediator if debug
-    mediator.playWithSounds = true
-    mediator.playWithSounds = confirm("Load Sounds?") if debug
 
     @soundManager = new SoundManager() if mediator.playWithSounds
     @inputManager = new InputManager()
@@ -109,7 +110,7 @@ module.exports = class HomePageView extends View
     renderDelte = timeNow - @lastRenderUpdate - RENDER_LOOP
     if renderDelte > 0
       @draw()
-      lvl.physicsManager.world.DrawDebugData() if debug
+      lvl.physicsManager.world.DrawDebugData() if mediator.renderDebug
       @lastRenderUpdate = timeNow
 
     if debug
@@ -218,3 +219,32 @@ module.exports = class HomePageView extends View
 
     # always draw the player on top of everything again
     lvl.player.render(@ctx, sx, sy)
+
+
+  setupDatGui: ->
+    gui = new dat.GUI()
+
+    gui.remember(mediator)
+
+    # dat.gui synchonizes the properties, so giving it access to activeLevel
+    # directly leads to weird behaviour, see onFinishChange below
+    activeLevel = gui.add {activeLevel:''}, 'activeLevel'
+    playWithSounds = gui.add mediator, 'playWithSounds'
+    blockInput = gui.add mediator, 'blockInput'
+    renderDebug = gui.add mediator, 'renderDebug'
+
+    activeLevel.listen()
+    playWithSounds.listen()
+    blockInput.listen()
+    renderDebug.listen()
+
+    activeLevel.onFinishChange (value) ->
+      if mediator.playWithSounds
+        mediator.soundManager.stopAll config =
+          themeSound: true
+          backgroundSounds: true
+          sounds: true
+
+      mediator.homepageview.loadLevel value, ->
+
+        mediator.homepageview.setup value

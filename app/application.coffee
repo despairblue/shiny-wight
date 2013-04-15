@@ -63,13 +63,15 @@ module.exports = class Application extends Chaplin.Application
     mediator.mapManager           = mapManager
     mediator.configurationManager = configurationManager
     # used while developing, so wie don't have to load sounds if we don't need to
-    mediator.playWithSounds       = false
+    mediator.playWithSounds       = true
+    mediator.renderDebug          = false
     mediator.factory              = {}
     mediator.levels               = {}
     mediator.activeLevel          = ''
     mediator.nextLevel            = ''
     mediator.std                  = null
     mediator.blockInput           = false
+    mediator.gui                  = null
     mediator.getActiveLevel       = =>
       mediator.levels[mediator.activeLevel]
 
