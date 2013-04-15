@@ -36,7 +36,6 @@ module.exports = class HomePageView extends View
     @canvas = document.getElementById 'game-canvas'
     @ctx = @canvas.getContext '2d'
 
-    window.homepageview = @ if debug
     window.mediator = mediator if debug
 
     @soundManager = new SoundManager() if mediator.playWithSounds
