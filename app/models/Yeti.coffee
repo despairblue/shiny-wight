@@ -19,6 +19,8 @@ module.exports = class Yeti extends Entity
     @_visual_init()
     @_movable_init()
 
+    @spriteState.viewDirection = 2
+
     @size.x = width
     @size.y = height
 
