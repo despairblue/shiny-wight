@@ -89,6 +89,34 @@
                  "width":32,
                  "x":127,
                  "y":243
+                }, 
+                {
+                 "ellipse":true,
+                 "height":32,
+                 "name":"Mario3",
+                 "properties":
+                    {
+
+                    },
+                 "type":"Mario",
+                 "visible":true,
+                 "width":32,
+                 "x":160,
+                 "y":96
+                }, 
+                {
+                 "ellipse":true,
+                 "height":32,
+                 "name":"Gumba",
+                 "properties":
+                    {
+
+                    },
+                 "type":"Gumba",
+                 "visible":true,
+                 "width":32,
+                 "x":128,
+                 "y":96
                 }],
          "opacity":1,
          "type":"objectgroup",
