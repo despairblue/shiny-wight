@@ -1,6 +1,6 @@
 {
   "author": "dBuck entertainment",
-  "contributors":[
+  "contributors": [
     {
       "name": "Christopher Pape",
       "email": ""
@@ -30,19 +30,13 @@
   "dependencies": {
     "javascript-brunch": ">= 1.0 < 1.7",
     "coffee-script-brunch": ">= 1.0 < 1.7",
-
     "css-brunch": ">= 1.0 < 1.7",
     "stylus-brunch": ">= 1.0 < 1.7",
-
     "handlebars-brunch": ">= 1.0 < 1.7",
-
     "uglify-js-brunch": ">= 1.0 < 1.7",
     "clean-css-brunch": ">= 1.0 < 1.7",
-
     "coffeelint-brunch": "1.4.x",
-    "auto-reload-brunch": "git+ssh://git@github.com:brunch/auto-reload-brunch.git",
-    "docco-brunch": "git+ssh://git@github.com:jcruz2us/docco-brunch.git"
+    "auto-reload-brunch": "git+ssh://git@github.com:brunch/auto-reload-brunch.git"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
