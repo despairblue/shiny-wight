@@ -233,15 +233,17 @@ module.exports = class HomePageView extends View
 
     # dat.gui synchonizes the properties, so giving it access to activeLevel
     # directly leads to weird behaviour, see onFinishChange below
-    activeLevel = gui.add {activeLevel:''}, 'activeLevel'
+    activeLevel    = gui.add {activeLevel:''}, 'activeLevel'
     playWithSounds = gui.add mediator, 'playWithSounds'
-    blockInput = gui.add mediator, 'blockInput'
-    renderDebug = gui.add mediator, 'renderDebug'
+    blockInput     = gui.add mediator, 'blockInput'
+    renderDebug    = gui.add mediator, 'renderDebug'
+    disableDialogs = gui.add mediator, 'disableDialogs'
 
     activeLevel.listen()
     playWithSounds.listen()
     blockInput.listen()
     renderDebug.listen()
+    disableDialogs.listen()
 
     activeLevel.onFinishChange (value) ->
       if mediator.playWithSounds

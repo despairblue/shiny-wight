@@ -65,6 +65,7 @@ module.exports = class Application extends Chaplin.Application
     # used while developing, so wie don't have to load sounds if we don't need to
     mediator.playWithSounds       = true
     mediator.renderDebug          = false
+    mediator.disableDialogs       = false
     mediator.factory              = {}
     mediator.levels               = {}
     mediator.activeLevel          = ''

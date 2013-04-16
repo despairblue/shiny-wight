@@ -45,9 +45,9 @@ module.exports = class DialogManager
 
 
   showDialog: (data, callback) =>
-    # if debug
-    #   callback?()
-    #   return
+    if mediator.disableDialogs
+      callback?()
+      return
 
     if @isDialog()
       console.error "I'm already showing a dialog, so you must be doing something wrong!"
