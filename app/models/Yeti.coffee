@@ -10,36 +10,27 @@ module.exports = class Yeti extends Entity
   mediator.factory['Yeti'] = this
 
 
-  constructor: (x, y, width, height, owningLevel, settings) ->
-    settings.ellipse = true
+  constructor: (owningLevel, object) ->
+    object.ellipse = true
+
     @_visual_setUp()
     @_movable_setUp()
 
-    super x, y, width/2, height/2, owningLevel, settings
+    oldWidth = object.width
+    oldHeight = object.height
+
+    object.width = oldWidth/2
+    object.height = oldHeight/2
+
+    super owningLevel, object
+
     @_visual_init()
     @_movable_init()
 
     @spriteState.viewDirection = 2
 
-    @size.x = width
-    @size.y = height
-
-    ###
-      TODO: uncomment properties if needed
-    ###
-    ###
-      Is the object Static or Dynamic?
-    ###
-    # settings.physicsType = 'static'
-    settings.physicsType = 'dynamic'
-
-
-    ###
-      If the entity is a Sensor it means that the player can walk through it
-    ###
-    #settings.isSensor    = true
-
-    @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
+    @size.x = oldWidth
+    @size.y = oldHeight
 
 
   onTouchBegin: (body, point) =>

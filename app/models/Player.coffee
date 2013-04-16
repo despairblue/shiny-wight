@@ -11,15 +11,23 @@ module.exports = class Player extends Entity
   mediator.factory['Player'] = this
 
 
-  constructor: (x, y, width, height, owningLevel, settings) ->
-    settings.ellipse = true
+  constructor: (owningLevel, object) ->
+    object.properties.ellipse = true
+
     @_visual_setUp()
 
-    super x, y, width/2, height/2, owningLevel, settings
+    oldWidth = object.width
+    oldHeight = object.height
+
+    object.width = oldWidth/2
+    object.height = oldHeight/2
+
+    super owningLevel, object
+
     @_visual_init()
 
-    @size.x = width
-    @size.y = height
+    @size.x = oldWidth
+    @size.y = oldHeight
 
 
   onTouch: (otherBody, point, impulse) =>

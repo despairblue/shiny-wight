@@ -6,11 +6,11 @@ module.exports = class MapChanger extends Entity
   mediator.factory['MapChanger'] = this
 
 
-  constructor: (x, y, width, height, owningLevel, settings) ->
-    settings.physicsType = 'static'
-    settings.isSensor    = true
+  constructor: (owningLevel, object) ->
+    object.properties.physicsType = 'static'
+    object.properties.isSensor    = true
 
-    super x, y, width, height, owningLevel, settings
+    super owningLevel, object
 
 
   onTouchBegin: (body, point, impulse) =>

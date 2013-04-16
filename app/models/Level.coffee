@@ -134,41 +134,21 @@ module.exports = class Level extends Model
       @entityObjects.splice index, 1
 
 
-  # TODO: refactor configuration loading
   createEntity: (object) =>
-    # get constructor and json config
-    Ent = mediator.factory[object.type]
-
-
-    # use the properties defined in tiled
-    if Object.keys(object.properties).length isnt 0
-      conf = {}
-      conf[prop] = content for prop, content of object.properties
+    # get constructor
+    Ent  = mediator.factory[object.type]
 
     # try to use the new config manager
     configurator = mediator.configurationManager[object.name]
 
-    unless conf or configurator
+    unless configurator?
       console.error "Warning: No configurations found for #{object.name}"
 
-    if not conf
-      conf = {}
+    # initialize object passing in the owning lvl and a copy of the tiled object
+    obj = new Ent @, _.clone object
 
-    conf.name = object.name
-
-    conf.ellipse = true if object.ellipse
-
-    # sanitize constructor attributes
-    x = Math.floor object.x
-    y = Math.floor object.y
-    width = Math.floor object.width
-    height = Math.floor object.height
-
-    # initialize object with position, size and config
-    obj = new Ent(x, y, width, height, @, conf)
-
-    if configurator
-      configurator.apply obj
+    # apply custom configuration if there is any
+    configurator.apply obj if configurator
 
     obj.load()
 

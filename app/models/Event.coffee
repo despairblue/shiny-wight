@@ -6,13 +6,13 @@ module.exports = class Event extends Entity
   mediator.factory['Event'] = this
 
 
-  constructor: (x, y, width, height, owningLevel, settings) ->
-    settings.physicsType = 'static'
-    settings.isSensor    = true
-
-    super x, y, width, height, owningLevel, settings
+  constructor: (owningLevel, object) ->
+    object.properties.physicsType = 'static'
+    object.properties.isSensor    = true
 
     @repeat = false
+
+    super owningLevel, object
 
 
   onTouch: =>
@@ -23,6 +23,7 @@ module.exports = class Event extends Entity
   onTouchBegin: =>
     super
     @onTouchBeginMethods = [] unless @repeat
+
 
   onTouchEnd: =>
     super

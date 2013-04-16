@@ -8,12 +8,14 @@ module.exports = class Mario extends Entity
   mediator.factory['Mario'] = this
 
 
-  constructor: (x, y, width, height, owningLevel, settings) ->
+  constructor: (owningLevel, object) ->
     # settings.ellipse = true
-    settings.physicsType = 'static'
+    object.properties.physicsType = 'static'
+
     @_visual_setUp('atlases/mario.png')
 
-    super x, y, width, height, owningLevel, settings
+    super owningLevel, object
+
     @_visual_init()
 
     @spriteState.viewDirection = 2
@@ -25,9 +27,6 @@ module.exports = class Mario extends Entity
     @tileSet.offset =
       x: 14
       y: 24
-
-    @size.x = width
-    @size.y = height
 
 
   update: =>

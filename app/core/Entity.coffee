@@ -10,43 +10,7 @@ Base class for all entities
       # do something
 ###
 module.exports = class Entity extends Module
-
-  ###
-  @property [Object] The entity's position in pixels
-  @option position [Integer] x y coordinate
-  ###
-  position:
-    x: 0
-    y: 0
-
-  ###
-  @property [Object] The entity's size
-  ###
-  size:
-    x: 0
-    y: 0
-
-
-  ###
-  @property [Integer]
-  Entity' velocity
-  Standart velocity = 10
-  ###
-  velocity: 400
-
-  entityDef:
-    ellipse: false
-    type: "dynamic"
-    x: 0
-    y: 0
-    width: 0
-    height: 0
-    userData:
-      ent: null
-
-
-  # TODO: refactor configuration loading and clean up the constructor
-  constructor: (x, y, width, height, owningLevel, settings) ->
+  constructor: (owningLevel, object) ->
     super
     @loadMethods = []
     @updateMethods = []
@@ -57,46 +21,51 @@ module.exports = class Entity extends Module
     @onTouchEndMethods   = []
     @onTouchBeginMethods = []
 
-    @[prop] = content for prop, content of settings
+    @[prop] = content for prop, content of object.properties
 
     @level = owningLevel
     @creationTime = Date.now()
+    @name = object.name
 
+    ###
+    @property [Integer]
+    Entity' velocity
+    Standart velocity = 10
+    ###
+    @velocity = 400
+
+    ###
+    @property [Object] The entity's position in pixels
+    @option position [Integer] x y coordinate
+    ###
     @position =
-      x: x
-      y: y
+      x: Math.floor object.x
+      y: Math.floor object.y
 
-    @size.x = width
-
+    ###
+    @property [Object] The entity's size
+    ###
     @size =
-      x: width
-      y: height
+      x: Math.floor object.width
+      y: Math.floor object.height
 
     @entityDef =
+      type: 'dynamic'
+      x: @position.x
+      y: @position.y
+      width: @size.x
+      height: @size.y
       ellipse: false
-      type: "dynamic"
-      x: 0
-      y: 0
-      width: 0
-      height: 0
+      isSensor: false
       userData:
-        ent: null
+        ent: @
 
-    @entityDef.x = @position.x
-    @entityDef.y = @position.y
-    @entityDef.width = width
-    @entityDef.height = height
-    @entityDef.userData.ent = @
-    @entityDef.ellipse = true if settings.ellipse
-    @entityDef.type = settings.physicsType if settings.physicsType
-    @entityDef.isSensor = true if settings.isSensor
+    @entityDef.ellipse = object.ellipse ? false
+    @entityDef.isSensor = object.properties.isSensor ? false
+    @entityDef.type = object.properties.physicsType ? 'dynamic'
 
     @physBody = @level.physicsManager.addBody @entityDef, @level.b2World
     @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
-
-
-  loadSettings: (settings) =>
-    @[prop] = content for prop, content of settings
 
 
   ###
