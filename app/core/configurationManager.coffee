@@ -65,7 +65,7 @@ module.exports =
       mediator.homepageview.loadLevel 'level3'
 
       that.level.tasks.push ->
-        jt = ss =
+        jt = _.clone ss =
           name: 'Yeti'
           type: 'Yeti'
           x: 16*32
@@ -135,7 +135,7 @@ module.exports =
                               mediator.configurationManager.configure player, 'PlayerSkeleton'
 
                               jt.moveRight(80).moveUp(250)
-                              ss.moveRight(40).moveUp(250)
+                              ss.moveRight(60).moveUp(250)
 
                               jt.addTask ->
                                 data =
