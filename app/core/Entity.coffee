@@ -23,14 +23,14 @@ module.exports = class Entity extends Module
 
     @[prop] = content for prop, content of object.properties
 
-    @level = owningLevel
+    @level        = owningLevel
     @creationTime = Date.now()
-    @name = object.name
+    @name         = object.name
 
     ###
     @property [Integer]
     Entity' velocity
-    Standart velocity = 10
+    Standard velocity = 10
     ###
     @velocity = 400
 
