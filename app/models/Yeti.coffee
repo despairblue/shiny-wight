@@ -13,9 +13,6 @@ module.exports = class Yeti extends Entity
   constructor: (owningLevel, object) ->
     object.ellipse = true
 
-    @_visual_setUp()
-    @_movable_setUp()
-
     oldWidth = object.width
     oldHeight = object.height
 
@@ -23,9 +20,6 @@ module.exports = class Yeti extends Entity
     object.height = oldHeight/2
 
     super owningLevel, object
-
-    @_visual_init()
-    @_movable_init()
 
     @spriteState.viewDirection = 2
 

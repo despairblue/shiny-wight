@@ -1,7 +1,8 @@
-module.exports =
-
-  # Call this in the construcotr before you call super
-  _movable_setUp: (pathToAtlas) ->
+###
+@mixin
+###
+Movable =
+  setUpMethod: ->
     # set up sane defaults
     @movable = true
 
@@ -15,7 +16,6 @@ module.exports =
       right: false
       left: false
 
-
     # TODO the fewest entities need this block (only player and NPCs/Monsters, in my humble opinion)
     @maxDistance = 0
     @positionToMoveTo = null
@@ -26,13 +26,10 @@ module.exports =
     # TODO: move to own mixin
     @tasks = []
 
-
-  # Call this in the constructor after you call super
-  _movable_init: () ->
-    @loadMethods.push @_visual_load
-    @updateMethods.push @_movable_update
-
     @positionCheckTimer = Date.now()
+
+    @loadMethods.push @_movable_load
+    @updateMethods.push @_movable_update
 
 
   # Will be called when Entity.load is called
@@ -260,3 +257,7 @@ module.exports =
       else if ax <= ay and @tryOtherDirection
         @tryOtherDirection = false
         @moveOnXAxis(ax, dx)
+
+
+# necessary hack for codo support
+module.exports = Movable

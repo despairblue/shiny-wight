@@ -4,6 +4,7 @@ mediator = require 'mediator'
 
 module.exports = class Gumba extends Entity
   @include Visual
+
   # register entity
   mediator.factory['Gumba'] = this
 
@@ -12,11 +13,9 @@ module.exports = class Gumba extends Entity
     # settings.ellipse = true
     object.properties.physicsType = 'static'
 
-    @_visual_setUp('atlases/gumba.png')
-
     super owningLevel, object
 
-    @_visual_init()
+    @atlas.src = 'atlases/gumba.png'
 
     @spriteState.viewDirection = 2
 

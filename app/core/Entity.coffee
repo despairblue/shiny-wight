@@ -12,7 +12,8 @@ Base class for all entities
 module.exports = class Entity extends Module
   constructor: (owningLevel, object) ->
     super
-    @loadMethods = []
+    @setUpMethods  ?= []
+    @loadMethods   = []
     @updateMethods = []
     @unloadMethods = []
 
@@ -21,6 +22,11 @@ module.exports = class Entity extends Module
     @onTouchEndMethods   = []
     @onTouchBeginMethods = []
 
+    # Call all mixin setUpMethods before applying
+    # the TILED properties
+    method.apply @ for method in @setUpMethods
+
+    # Copy all properties from the TILED object
     @[prop] = content for prop, content of object.properties
 
     @level        = owningLevel
@@ -66,6 +72,32 @@ module.exports = class Entity extends Module
 
     @physBody = @level.physicsManager.addBody @entityDef, @level.b2World
     @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
+
+
+  ###
+  More entity specific include method that takes care of
+  setting setUpMethods and (later) checking for conflicts and
+  dependencies and maybe other boilerplate methods like
+  load and update methods.
+  @param [Object] obj
+    The Mixin: an object containing properties
+  @TODO: add support for loadMethods and updateMethods
+  @TODO: add support for dependency and conflict management
+  ###
+  @include: (obj) ->
+    # only initialize the first time as include might be called
+    # multiple times (including multiple mixins)
+    @::setUpMethods ?= []
+
+    for key, value of obj
+      # Assign properties to the prototype
+      switch key
+        when 'setUpMethod'
+          @::setUpMethods.push value
+        else
+          @::[key] = value
+
+    this
 
 
   ###

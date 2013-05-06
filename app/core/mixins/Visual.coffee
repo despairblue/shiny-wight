@@ -1,7 +1,8 @@
-module.exports =
-
-  # Call this in the construcotr before you call super
-  _visual_setUp: (pathToAtlas) ->
+###
+@mixin
+###
+Visual =
+  setUpMethod: ->
     # set up sane defaults
     @visual = true
 
@@ -12,7 +13,6 @@ module.exports =
       normal: 1
 
     @atlas = new Image()
-    @atlas.src = pathToAtlas if pathToAtlas
 
     @tileSet =
       tilesX: 0
@@ -23,11 +23,7 @@ module.exports =
         x: 0
         y: 0
 
-
-  # Call this in the constructor after you call super
-  _visual_init: () ->
     @loadMethods.push @_visual_load
-
 
   # Will be called when Entity.load is called
   _visual_load: ->
@@ -69,3 +65,7 @@ module.exports =
     dy = dy - @tileSet.offset.y
 
     ctx.drawImage @atlas, sx, sy, sw, sh, dx, dy, dw, dh
+
+
+# necessary hack for codo support
+module.exports = Visual

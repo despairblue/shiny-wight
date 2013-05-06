@@ -4,6 +4,7 @@ mediator = require 'mediator'
 
 module.exports = class Mario extends Entity
   @include Visual
+
   # register entity
   mediator.factory['Mario'] = this
 
@@ -12,11 +13,9 @@ module.exports = class Mario extends Entity
     # settings.ellipse = true
     object.properties.physicsType = 'static'
 
-    @_visual_setUp('atlases/mario.png')
-
     super owningLevel, object
 
-    @_visual_init()
+    @atlas.src = 'atlases/mario.png'
 
     @spriteState.viewDirection = 2
 

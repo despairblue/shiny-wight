@@ -7,14 +7,13 @@ The Player
 ###
 module.exports = class Player extends Entity
   @include Visual
+
   # register entity
   mediator.factory['Player'] = this
 
 
   constructor: (owningLevel, object) ->
     object.properties.ellipse = true
-
-    @_visual_setUp()
 
     oldWidth = object.width
     oldHeight = object.height
@@ -23,8 +22,6 @@ module.exports = class Player extends Entity
     object.height = oldHeight/2
 
     super owningLevel, object
-
-    @_visual_init()
 
     @size.x = oldWidth
     @size.y = oldHeight
@@ -41,16 +38,20 @@ module.exports = class Player extends Entity
     else
       # do smth
 
+
   onTouchBegin: (otherBody, point) =>
     @touchingEntity = otherBody.GetUserData()?.ent
     console.log @touchingEntity
+
 
   onTouchEnd: (otherBody, point) =>
     @touchingEntity = null
     console.log 'touch end'
 
+
   onAction: () =>
     @touchingEntity?.onAction @
+
 
   update: =>
     super
