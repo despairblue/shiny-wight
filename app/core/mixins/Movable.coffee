@@ -182,8 +182,7 @@ Movable =
     return @
 
 
-  # TODO: (pixel)??
-  stopMovement: (pixel) ->
+  stopMovement: () ->
     @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
     @moving.down        = false
     @moving.up          = false
