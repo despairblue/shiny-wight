@@ -73,8 +73,8 @@ Movable =
     @tasks.push () ->
       if @moving.down
         if @position.y > @targetPos.y
-          @stopMovement()
           # task finished
+          @stopMovement()
           return true
         else if @checkPosition and @position.y == @oldPosition.y
           @stopMovement()
