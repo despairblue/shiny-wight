@@ -39,31 +39,6 @@ Movable =
 
 
   _movable_update: ->
-    checkPosition = false
-
-    # TODO not all entities need the following block.. actually the fewest entities need this
-    # so move it into a subclass to increase performance
-    # TODO: this breaks stuff, checkposition is true when the yeti won't move for 2 seconds, what if he's not supposed to move?
-    # TODO: move task management to own mixin
-
-    # get current task
-    task = @tasks[0]
-
-    if task
-      # remove task if finished
-      @tasks.shift() if task.apply @
-
-    else if @onFollow
-      @counter +=1
-      if @counter % 10 == 0
-        @counter = 1
-        if Date.now() - @positionCheckTimer > 2000
-          @checkPosition = true
-          @positionCheckTimer == Date.now()
-          # TODO the fewest entities need this block
-          @oldPosition = _.clone(@position) # if checkPosition
-      @moveToPosition(@positionToMoveTo, @maxDistance)
-
 
 
   # TODO maybe add velocity to define the speed of movement
