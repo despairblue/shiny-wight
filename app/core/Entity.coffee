@@ -144,12 +144,16 @@ module.exports = class Entity extends Module
     method.apply @, arguments for method in @onTouchEndMethods
 
 
+  # I won't move no matter what! Don't even try it.
   makeMeStatic: () =>
+    # TODO: move to physics mixin
     @oldVelocity = _.clone @physBody.GetLinearVelocity()
     @physBody.SetType Box2D.Dynamics.b2Body.b2_staticBody
 
 
+  # Light as a feather...
   makeMeDynamic: () =>
+    # TODO: move to physics mixin
     @physBody.SetType Box2D.Dynamics.b2Body.b2_dynamicBody
     @physBody.SetAwake true
     @physBody.SetLinearVelocity @oldVelocity
