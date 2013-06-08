@@ -1,10 +1,15 @@
 ###
+Depends on Scriptable
 @mixin
 ###
 Movable =
   setUpMethod: ->
     # set up sane defaults
     @movable = true
+
+    # check dependencies
+    unless @scriptable
+      console.error "Dependency missing"
 
     @oldPosition =
       x: 0
@@ -22,9 +27,6 @@ Movable =
     @onFollow = false
     @counter = 0
     @tryOtherDirection = false
-
-    # TODO: move to own mixin
-    @tasks = []
 
     @positionCheckTimer = Date.now()
 

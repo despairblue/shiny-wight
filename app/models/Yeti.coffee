@@ -1,9 +1,11 @@
 Entity = require 'core/Entity'
 Visual = require 'core/mixins/Visual'
 Movable = require 'core/mixins/Movable'
+Scriptable = require 'core/mixins/Scriptable'
 mediator = require 'mediator'
 
 module.exports = class Yeti extends Entity
+  @include Scriptable
   @include Visual
   @include Movable
 

@@ -167,13 +167,6 @@ module.exports = class Entity extends Module
     method.apply(@) for method in @updateMethods
 
 
-  # TODO: move to taskable mixin
-  addTask: (task) =>
-    @tasks.push ->
-      task.apply @
-      return true
-
-
   # TODO: move input mixin
   blockInput: () =>
     @tasks.push ->
