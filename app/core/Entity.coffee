@@ -24,7 +24,7 @@ module.exports = class Entity extends Module
 
     # Call all mixin setUpMethods before applying
     # the TILED properties
-    method.apply @ for method in @setUpMethods
+    method.apply @ for method in @setUpMethods when method?
 
     # Copy all properties from the TILED object
     @[prop] = content for prop, content of object.properties
@@ -111,11 +111,11 @@ module.exports = class Entity extends Module
 
   load: =>
     # call all load methods
-    method.apply(@) for method in @loadMethods
+    method.apply @ for method in @loadMethods when method?
 
 
   kill: =>
-    method.apply @ for method in @unloadMethods
+    method.apply @ for method in @unloadMethods when method?
 
     # TODO: go to physics mixin
     @level.physicsManager.world.DestroyBody(@physBody)
@@ -133,15 +133,15 @@ module.exports = class Entity extends Module
 
   # TODO: move to physics mixin
   onTouch: =>
-    method.apply @, arguments for method in @onTouchMethods
+    method.apply @, arguments for method in @onTouchMethods when method?
 
 
   onTouchBegin: =>
-    method.apply @, arguments for method in @onTouchBeginMethods
+    method.apply @, arguments for method in @onTouchBeginMethods when method?
 
 
   onTouchEnd: =>
-    method.apply @, arguments for method in @onTouchEndMethods
+    method.apply @, arguments for method in @onTouchEndMethods when method?
 
 
   # I won't move no matter what! Don't even try it.
@@ -168,7 +168,7 @@ module.exports = class Entity extends Module
     @position.y = @physBody.GetPosition().y if @physBody.GetPosition().y?
 
     # call all update methods
-    method.apply(@) for method in @updateMethods
+    method.apply @ for method in @updateMethods when method?
 
 
   # TODO: move input mixin
