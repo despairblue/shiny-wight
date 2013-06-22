@@ -3,7 +3,9 @@ Component = require 'core/components/Component'
 ###
 ###
 module.exports = class Visual extends Component
-  constructor: (@owner) ->
+  constructor: (owner) ->
+    super
+
     @spriteState =
       moving: false
       viewDirection: 0

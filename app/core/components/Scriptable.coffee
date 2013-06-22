@@ -3,7 +3,9 @@ Component = require 'core/components/Component'
 ###
 ###
 module.exports = class Scriptable extends Component
-  constructor: (@owner) ->
+  constructor: (owner) ->
+    super
+
     @_tasks = []
 
     @owner.addListener 'update', @_scriptable_update

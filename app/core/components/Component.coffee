@@ -1,4 +1,2 @@
 module.exports = class Component
-  constructor: ->
-
-  destructor: ->
+  constructor: (@owner) ->

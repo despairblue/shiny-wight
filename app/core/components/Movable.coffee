@@ -4,7 +4,9 @@ Component = require 'core/components/Component'
 Depends on Scriptable
 ###
 module.exports = class Movable extends Component
-  constructor: (@owner) ->
+  constructor: (owner) ->
+    super
+
     # check dependencies
     unless @owner.scriptable
       console.error "Movable depends on the Scripable component. #{@owner} does not have one"
