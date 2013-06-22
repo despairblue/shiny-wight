@@ -1,8 +1,9 @@
+Component = require 'core/components/Component'
+
 ###
-@mixin
 ###
-Visual =
-  setUpMethod: ->
+module.exports = class Visual extends Component
+  constructor: (@owner) ->
     # set up sane defaults
     @visual = true
 
@@ -23,14 +24,9 @@ Visual =
         x: 0
         y: 0
 
-    @loadMethods.push @_visual_load
 
-  # Will be called when Entity.load is called
-  _visual_load: ->
-
-
-  getSpritePacket: ->
-    x = Math.floor((Date.now() - @creationTime)/@spriteState.animationRate) % @tileSet.tilesX
+  getSpritePacket: =>
+    x = Math.floor((Date.now() - @owner.creationTime)/@spriteState.animationRate) % @tileSet.tilesX
     y = @spriteState.viewDirection
 
     x = @spriteState.normal unless @spriteState.moving
@@ -40,7 +36,7 @@ Visual =
       y: y * @tileSet.tileheight
 
 
-  render: (ctx, cx, cy) ->
+  render: (ctx, cx, cy) =>
     spritePkt = @getSpritePacket()
 
     # position of first pixel at [sx, sy] in atlas
@@ -55,17 +51,13 @@ Visual =
     sh = @tileSet.tileheight
 
     # position of first pixel at [dx, dy] on canvas
-    dx = (@position.x) - cx
-    dy = (@position.y) - cy
-    dw = @size.x
-    dh = @size.y
+    dx = (@owner.position.x) - cx
+    dy = (@owner.position.y) - cy
+    dw = @owner.size.x
+    dh = @owner.size.y
 
     # translate to drawing center
     dx = dx - @tileSet.offset.x
     dy = dy - @tileSet.offset.y
 
     ctx.drawImage @atlas, sx, sy, sw, sh, dx, dy, dw, dh
-
-
-# necessary hack for codo support
-module.exports = Visual

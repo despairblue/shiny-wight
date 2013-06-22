@@ -95,37 +95,37 @@ module.exports =
 
       dm.hideDialog()
 
-      jt.blockInput().moveDown(150).moveLeft(60)
-      jt.addTask =>
+      jt.blockInput().movable.moveDown(150).moveLeft(60)
+      jt.scriptable.addTask =>
         data =
           speaker: 'JT'
           text: 'Yo, Snowsome, pathetic human spotted, Yo!'
         dm.showDialog data, (result) ->
-          jt.addTask ->
+          jt.scriptable.addTask ->
             data.speaker = 'Snowsome'
             data.text    = 'Pathetic little you.'
             data.options = 'Run!'
 
             dm.showDialog data, ->
-              ss.moveDown(150).moveLeft(90)
-              jt.moveDown(90).moveLeft(30).addTask ->
+              ss.movable.moveDown(150).moveLeft(90)
+              jt.movable.moveDown(90).moveLeft(30).owner.scriptable.addTask ->
 
                 data.speaker = 'JT'
                 data.text = 'Nice bro, you got Him'
                 data.options = 'What the...'
 
                 dm.showDialog data, ->
-                  jt.addTask ->
+                  jt.scriptable.addTask ->
                     data.text = 'Nice skin, yo.'
                     data.options = 'Uhm... Yeah. Thanks? I guess...'
 
                     dm.showDialog data, ->
-                      jt.addTask ->
+                      jt.scriptable.addTask ->
                         data.text = 'Give it to us'
                         data.options = null
 
                         dm.showDialog data, ->
-                          jt.addTask ->
+                          jt.scriptable.addTask ->
                             data.speaker = 'Snowsome'
                             data.text = 'Yeah, give it to us.'
                             data.options = 'Well... I would prefer not to...'
@@ -134,16 +134,16 @@ module.exports =
                               # [Black, Smashing Noises, Wilhelms Scream]
                               mediator.configurationManager.configure player, 'PlayerSkeleton'
 
-                              jt.moveRight(80).moveUp(250)
-                              ss.moveRight(60).moveUp(250)
+                              jt.movable.moveRight(80).moveUp(250)
+                              ss.movable.moveRight(60).moveUp(250)
 
-                              jt.addTask ->
+                              jt.scriptable.addTask ->
                                 data =
                                   speaker: 'Nick Skeleton'
                                   text: 'Seriously? Skin-Robbery? Yetis? I hate those days...'
 
                                 dm.showDialog data, ->
-                                  jt.unblockInput().addTask -> jt.kill()
+                                  jt.unblockInput().scriptable.addTask -> jt.kill()
                                   ss.kill()
 
 
@@ -241,14 +241,14 @@ module.exports =
     @velocity = 200
 
     # player should look at you
-    @spriteState.viewDirection = 2
+    @visual.spriteState.viewDirection = 2
 
-    @atlas.src = 'atlases/warrior_m.png'
-    @tileSet.tilesX = 3
-    @tileSet.tilesY = 4
-    @tileSet.tileheight = 32
-    @tileSet.tilewidth = 32
-    @tileSet.offset =
+    @visual.atlas.src = 'atlases/warrior_m.png'
+    @visual.tileSet.tilesX = 3
+    @visual.tileSet.tilesY = 4
+    @visual.tileSet.tileheight = 32
+    @visual.tileSet.tilewidth = 32
+    @visual.tileSet.offset =
       x: 16
       y: 24
 
@@ -256,12 +256,12 @@ module.exports =
   PlayerSkeleton: ->
     @velocity = 250
 
-    @atlas.src = 'atlases/nick.png'
-    @tileSet.tilesX = 3
-    @tileSet.tilesY = 4
-    @tileSet.tileheight = 32
-    @tileSet.tilewidth = 32
-    @tileSet.offset =
+    @visual.atlas.src = 'atlases/nick.png'
+    @visual.tileSet.tilesX = 3
+    @visual.tileSet.tilesY = 4
+    @visual.tileSet.tileheight = 32
+    @visual.tileSet.tilewidth = 32
+    @visual.tileSet.offset =
       x: 16
       y: 24
 
@@ -296,12 +296,12 @@ module.exports =
   Yeti: ->
     @velocity = 200
 
-    @atlas.src = 'atlases/yetis.png'
+    @visual.atlas.src = 'atlases/yetis.png'
 
-    @tileSet.tilesX = 3
-    @tileSet.tilesY = 4
-    @tileSet.tileheight = 32
-    @tileSet.tilewidth = 32
-    @tileSet.offset =
+    @visual.tileSet.tilesX = 3
+    @visual.tileSet.tilesY = 4
+    @visual.tileSet.tileheight = 32
+    @visual.tileSet.tilewidth = 32
+    @visual.tileSet.offset =
       x: 16
       y: 24

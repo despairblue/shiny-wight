@@ -1,13 +1,11 @@
 Entity = require 'core/Entity'
-Visual = require 'core/mixins/Visual'
+Visual = require 'core/components/Visual'
 mediator = require 'mediator'
 
 ###
 The Player
 ###
 module.exports = class Player extends Entity
-  @include Visual
-
   # register entity
   mediator.factory['Player'] = this
 
@@ -22,6 +20,7 @@ module.exports = class Player extends Entity
     object.height = oldHeight/2
 
     super owningLevel, object
+    @visual = new Visual @
 
     @size.x = oldWidth
     @size.y = oldHeight
