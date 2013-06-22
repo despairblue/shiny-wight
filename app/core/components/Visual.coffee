@@ -4,9 +4,6 @@ Component = require 'core/components/Component'
 ###
 module.exports = class Visual extends Component
   constructor: (@owner) ->
-    # set up sane defaults
-    @visual = true
-
     @spriteState =
       moving: false
       viewDirection: 0

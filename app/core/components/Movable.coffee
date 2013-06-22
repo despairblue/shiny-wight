@@ -5,9 +5,6 @@ Depends on Scriptable
 ###
 module.exports = class Movable extends Component
   constructor: (@owner) ->
-    # set up sane defaults
-    @movable = true
-
     # check dependencies
     unless @owner.scriptable
       console.error "Dependency missing"
@@ -30,9 +27,6 @@ module.exports = class Movable extends Component
     @tryOtherDirection = false
 
     @positionCheckTimer = Date.now()
-
-    @owner.loadMethods.push @_movable_load
-    @owner.updateMethods.push @_movable_update
 
 
   # TODO maybe add velocity to define the speed of movement

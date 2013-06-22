@@ -74,30 +74,8 @@ module.exports = class Entity extends Module
     @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
 
 
-  ###
-  More entity specific include method that takes care of
-  setting setUpMethods and (later) checking for conflicts and
-  dependencies and maybe other boilerplate methods like
-  load and update methods.
-  @param [Object] obj
-    The Mixin: an object containing properties
-  @TODO: add support for loadMethods and updateMethods
-  @TODO: add support for dependency and conflict management
-  ###
-  @include: (obj) ->
-    # only initialize the first time as include might be called
-    # multiple times (including multiple mixins)
-    @::setUpMethods ?= []
 
-    for key, value of obj
-      # Assign properties to the prototype
-      switch key
-        when 'setUpMethod'
-          @::setUpMethods.push value
-        else
-          @::[key] = value
 
-    this
 
 
   ###

@@ -4,8 +4,6 @@ Component = require 'core/components/Component'
 ###
 module.exports = class Scriptable extends Component
   constructor: (@owner) ->
-    # set up sane defaults
-    @scriptable = true
     @_tasks = []
 
 
