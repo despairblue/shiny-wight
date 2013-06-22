@@ -6,8 +6,8 @@ module.exports = class Scriptable extends Component
   constructor: (@owner) ->
     # set up sane defaults
     @scriptable = true
+    @_tasks = []
 
-    @tasks = []
 
     scriptable_update = =>
       # get current task
@@ -19,7 +19,11 @@ module.exports = class Scriptable extends Component
     @owner.updateMethods.push scriptable_update
 
 
-  addTask: (task) =>
-    @tasks.push ->
+  addSimpleTask: (task) =>
+    @_tasks.push ->
       task.apply @
       return true
+
+  addTask: (task) =>
+    @_tasks.push ->
+      task.apply @

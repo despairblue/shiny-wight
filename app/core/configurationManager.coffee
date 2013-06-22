@@ -64,7 +64,7 @@ module.exports =
 
       mediator.homepageview.loadLevel 'level3'
 
-      that.level.tasks.push ->
+      that.level.addTask ->
         jt = _.clone ss =
           name: 'Yeti'
           type: 'Yeti'

@@ -7,7 +7,7 @@ module.exports = class Level extends Model
   constructor: (manifestId, @_callback) ->
     # Object Properties
     @manifest            = null
-    @tasks = []
+    @_tasks = []
 
     # Sounds
     @mapSoundList     = {}
@@ -129,7 +129,7 @@ module.exports = class Level extends Model
 
   removeEntity: (entity) =>
     # must be delayed to make sure that this won't happen while iterating over the entityObjects array
-    @tasks.push ->
+    @_tasks.push ->
       index = @entityObjects.indexOf entity
       @entityObjects.splice index, 1
 
@@ -158,12 +158,17 @@ module.exports = class Level extends Model
   update: =>
     ent.update() for ent in @entityObjects
 
-    for task, index in @tasks
+    for task, index in @_tasks
       task.apply @
 
-    @tasks = []
+    @_tasks = []
 
 
   updatePhysics: =>
     @physicsManager.update()
 
+
+  # TODO: merge with scriptable
+  addTask: (task) =>
+    @_tasks.push ->
+      task.apply @

@@ -39,7 +39,7 @@ module.exports = class Movable extends Component
   # Example: Yeties moving slowly, then see the player and go fast to him..
   moveDown: (pixel) =>
     console.error 'argument must be an positive integer' if pixel < 0
-    @owner.scriptable.tasks.push () =>
+    @owner.scriptable.addTask =>
       if @moving.down
         if @owner.position.y > @targetPos.y
           # task finished
@@ -75,7 +75,7 @@ module.exports = class Movable extends Component
 
   moveUp: (pixel) =>
     console.error 'argument must be an positive integer' if pixel < 0
-    @owner.scriptable.tasks.push () =>
+    @owner.scriptable.addTask =>
       if @moving.up
         if @owner.position.y < @targetPos.y
           @stopMovement()
@@ -101,7 +101,7 @@ module.exports = class Movable extends Component
 
   moveRight: (pixel) =>
     console.error 'argument must be an positive integer' if pixel < 0
-    @owner.scriptable.tasks.push () =>
+    @owner.scriptable.addTask =>
       if @moving.right
         if @owner.position.x > @targetPos.x
           @stopMovement()
@@ -127,7 +127,7 @@ module.exports = class Movable extends Component
 
   moveLeft: (pixel) =>
     console.error 'argument must be an positive integer' if pixel < 0
-    @owner.scriptable.tasks.push () =>
+    @owner.scriptable.addTask =>
       if @moving.left
         if @owner.position.x < @targetPos.x
           @stopMovement()
@@ -184,7 +184,7 @@ module.exports = class Movable extends Component
 
   # TODO: broken, fix it
   moveToPosition:(@positionToMoveTo, @maxDistance) =>
-    @owner.scriptable.tasks.push () =>
+    @owner.scriptable.addTask =>
       # first call
       if not @onFollow
         @onFollow = true

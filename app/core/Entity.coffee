@@ -173,7 +173,7 @@ module.exports = class Entity extends Module
 
   # TODO: move input mixin
   blockInput: () =>
-    @scriptable.tasks.push ->
+    @scriptable.addTask ->
       require('mediator').blockInput = true
       return true
 
@@ -181,7 +181,7 @@ module.exports = class Entity extends Module
 
 
   unblockInput: () =>
-    @scriptable.tasks.push ->
+    @scriptable.addTask ->
       require('mediator').blockInput = false
       return true
 
