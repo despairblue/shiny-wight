@@ -12,19 +12,7 @@ Base class for all entities
 module.exports = class Entity extends Module
   constructor: (owningLevel, object) ->
     super
-    @setUpMethods  ?= []
-    @loadMethods   = []
-    @updateMethods = []
-    @unloadMethods = []
-
-    # TODO: move to physics mixin
-    @onTouchMethods      = []
-    @onTouchEndMethods   = []
-    @onTouchBeginMethods = []
-
-    # Call all mixin setUpMethods before applying
-    # the TILED properties
-    method.apply @ for method in @setUpMethods when method?
+    @_listeners     = []
 
     # Copy all properties from the TILED object
     @[prop] = content for prop, content of object.properties
@@ -74,8 +62,36 @@ module.exports = class Entity extends Module
     @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
 
 
+  addListener: (type, listener) =>
+    @_listeners[type] = [] unless @_listeners[type]?
+    @_listeners[type].push listener
 
 
+  fire: (event) =>
+    event = type:event if typeof event is "string"
+    event.target = this unless event.target?
+
+    throw new Error("Event object missing 'type' property.") unless event.type
+
+    if @_listeners[event.type] instanceof Array
+      listeners = @_listeners[event.type]
+
+      # call all listeners in the context of this object
+      # and remove them if they return true
+      for listener in listeners
+        event.listener = listener
+        listener.call @, event
+        delete event.listener
+
+
+  removeListener: (type, listener) =>
+    if @_listeners[type] instanceof Array
+      listeners = @_listeners[type]
+
+      for l, i in listeners
+        if l is listener
+          listeners.splice i, 1
+          break
 
 
   ###
@@ -88,17 +104,19 @@ module.exports = class Entity extends Module
 
 
   load: =>
-    # call all load methods
-    method.apply @ for method in @loadMethods when method?
+    @fire 'load'
 
 
   kill: =>
-    method.apply @ for method in @unloadMethods when method?
+    @fire 'kill'
 
     # TODO: go to physics mixin
     @level.physicsManager.world.DestroyBody(@physBody)
 
     @level.removeEntity @
+
+    # TODO: implement
+    # @destructor()
 
 
   ###
@@ -111,15 +129,21 @@ module.exports = class Entity extends Module
 
   # TODO: move to physics mixin
   onTouch: =>
-    method.apply @, arguments for method in @onTouchMethods when method?
+    event =
+      type: 'touch'
+      arguments: arguments
+    @fire event
 
 
   onTouchBegin: =>
-    method.apply @, arguments for method in @onTouchBeginMethods when method?
+    @fire 'touchBegin'
 
 
   onTouchEnd: =>
-    method.apply @, arguments for method in @onTouchEndMethods when method?
+    event =
+      type: 'touchEnd'
+      arguments: arguments
+    @fire event
 
 
   # I won't move no matter what! Don't even try it.
@@ -145,8 +169,7 @@ module.exports = class Entity extends Module
     @position.x = @physBody.GetPosition().x if @physBody.GetPosition().x?
     @position.y = @physBody.GetPosition().y if @physBody.GetPosition().y?
 
-    # call all update methods
-    method.apply @ for method in @updateMethods when method?
+    @fire 'update'
 
 
   # TODO: move input mixin

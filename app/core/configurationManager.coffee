@@ -35,7 +35,10 @@ module.exports =
 
 
   level1prolog: ->
-    @onTouchEndMethods.push (body, point, impulse) ->
+    @addListener 'touchEnd', (event) ->
+      # execute only once
+      @removeListener 'touchEnd', event.listener
+
       that = @
 
       data =
@@ -48,7 +51,10 @@ module.exports =
 
 
   level1nickTalking: ->
-    @onTouchEndMethods.push (body, point, impulse) ->
+    @addListener 'touchEnd', (event) ->
+      # execute only once
+      @removeListener 'touchEnd', event.listener
+
       that = @
 
       data =
@@ -59,7 +65,9 @@ module.exports =
 
 
   level1event1: ->
-    @onTouchBeginMethods.push (body, point, impulse) ->
+    @addListener 'touchBegin', (event) ->
+      # execute only once
+      @removeListener 'touchBegin', event.listener
       that = @
 
       mediator.homepageview.loadLevel 'level3'
@@ -86,8 +94,13 @@ module.exports =
 
           mediator.soundManager.playSound that.level.manifest.sounds.sounds[0], 1, true
 
-    @onTouchEndMethods.push (body, point, impulse) ->
+
+    @addListener 'touchEnd', (event) ->
+      # execute only once
+      @removeListener 'touchEnd', event.listener
+
       that = @
+      body = event.arguments[0]
       player = body.GetUserData().ent
       jt = that.jt
       ss = that.ss

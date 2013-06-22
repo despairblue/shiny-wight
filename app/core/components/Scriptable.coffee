@@ -6,15 +6,15 @@ module.exports = class Scriptable extends Component
   constructor: (@owner) ->
     @_tasks = []
 
+    @owner.addListener 'update', @_scriptable_update
 
-    scriptable_update = =>
-      # get current task
-      task = @tasks[0]
-      if task
-        # remove task if finished
-        @tasks.shift() if task.apply @
 
-    @owner.updateMethods.push scriptable_update
+  _scriptable_update: =>
+    # get current task
+    task = @_tasks[0]
+    if task
+      # remove task if finished
+      @_tasks.shift() if task.apply @
 
 
   addSimpleTask: (task) =>
