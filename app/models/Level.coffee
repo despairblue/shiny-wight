@@ -142,7 +142,7 @@ module.exports = class Level extends Model
     configurator = mediator.configurationManager[object.name]
 
     unless configurator?
-      console.error "Warning: No configurations found for #{object.name}"
+      console.warn "No configurations found for #{object.name}"
 
     # initialize object passing in the owning lvl and a copy of the tiled object
     obj = new Ent @, _.clone object
