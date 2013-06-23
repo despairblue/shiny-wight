@@ -1,0 +1,14 @@
+{
+  "files": [
+    {
+      "from": "event.coffee.hbs",
+      "to": "app/entities/{{name}}.coffee"
+    },
+    {
+      "from": "entities.coffee.hbs",
+      "to": "app/entities/entities.coffee",
+      "method": "append"
+    }
+  ],
+  "dependencies": []
+}

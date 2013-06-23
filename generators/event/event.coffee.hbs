@@ -1,0 +1,32 @@
+Event = require 'entities/Event'
+
+module.exports = class {{#camelize}}{{name}}{{/camelize}} extends Event
+  constructor: (owningLevel, object) ->
+    super owningLevel, object
+
+    # @addOneTimeListener 'update', @_dontRepeat
+
+    # @addListener 'touch'     , @_repeat
+    # @addListener 'touchBegin', @_repeat
+    # @addListener 'touchEnd'  , @_repeat
+
+
+  ###
+  This event handler is going to be called every time another
+  entity starts or ends touching it, as well as continuously if
+  an entity keeps touching it.
+  @param [event] Event object.
+  @see #constructor
+  ###
+  _repeat: (event) =>
+    console.log "#{event.type} occurred"
+
+
+  ###
+  This event handler is going to be called only once, on the first
+  update.
+  @param [event] Event object
+  @see #constructor
+  ###
+  _dontRepeat: (event) =>
+    console.log "#{event.type} occurred"
