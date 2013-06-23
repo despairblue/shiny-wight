@@ -41,10 +41,10 @@ module.exports = class PhysicsManager
   Initializes an instance
   ###
   constructor: (@map) ->
-    @world = new World(new Vec2(0, 0), false)
+    @world    = new World(new Vec2(0, 0), false)
     debugDraw = new Box2D.Dynamics.b2DebugDraw()
-    dCanvas = document.getElementById('debug-canvas')
-    dCtx = dCanvas.getContext '2d'
+    dCanvas   = document.getElementById('debug-canvas')
+    dCtx      = dCanvas.getContext '2d'
 
     @createLevelBorder(@map)
 
