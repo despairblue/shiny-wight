@@ -62,11 +62,20 @@ module.exports = class Entity extends Module
     @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
 
 
+  ###
+  Adds an event listener.
+  @param [string] type The event type to listen to.
+  @param [function] listener The Callback to be invoked.
+  ###
   addListener: (type, listener) =>
     @_listeners[type] = [] unless @_listeners[type]?
     @_listeners[type].push listener
 
 
+  ###
+  Fires an event, invoking all it's listeners.
+  @param [string] event The event type.
+  ###
   fire: (event) =>
     event = type:event if typeof event is "string"
     event.target = this unless event.target?
@@ -88,6 +97,11 @@ module.exports = class Entity extends Module
         delete event.callback
 
 
+  ###
+  Removes an event listener.
+  @param [string] type The event type.
+  @param [function] listner The Callback to be removed.
+  ###
   removeListener: (type, listener) =>
     if @_listeners[type] instanceof Array
       listeners = @_listeners[type]
