@@ -1,16 +1,10 @@
 View          = require 'views/base/view'
-InputManager  = require 'models/InputManager'
-SoundManager  = require 'models/SoundManager'
-DialogManager = require 'models/DialogManager'
+InputManager  = require 'core/InputManager'
+SoundManager  = require 'core/SoundManager'
+DialogManager = require 'core/DialogManager'
 mediator      = require 'mediator'
-Std           = require 'models/Std'
-Level         = require 'models/Level'
-Player        = require 'models/Player'
-MapChanger    = require 'models/MapChanger'
-Event         = require 'models/Event'
-Yeti          = require 'models/Yeti'
-Mario         = require 'models/Mario'
-Gumba         = require 'models/Gumba'
+Std           = require 'core/std'
+Level         = require 'core/Level'
 Vec2          = Box2D.Common.Math.b2Vec2
 
 PHYSICS_LOOP  = 1000/60
@@ -132,7 +126,7 @@ module.exports = class HomePageView extends View
 
     if actions['move-up']
       moveDir.y -= 1
-      player.spriteState.viewDirection = 0
+      player.visual.spriteState.viewDirection = 0
 
       # control dialog
       if mediator.dialogManager.isDialog()
@@ -140,7 +134,7 @@ module.exports = class HomePageView extends View
 
     if actions['move-down']
       moveDir.y += 1
-      player.spriteState.viewDirection = 2
+      player.visual.spriteState.viewDirection = 2
 
       # control dialog
       if mediator.dialogManager.isDialog()
@@ -148,11 +142,11 @@ module.exports = class HomePageView extends View
 
     if actions['move-left']
       moveDir.x -= 1
-      player.spriteState.viewDirection = 3
+      player.visual.spriteState.viewDirection = 3
 
     if actions['move-right']
       moveDir.x += 1
-      player.spriteState.viewDirection = 1
+      player.visual.spriteState.viewDirection = 1
 
     if actions['interact']
       @handleAction()
@@ -166,10 +160,10 @@ module.exports = class HomePageView extends View
 
       player.physBody.SetLinearVelocity moveDir
       player.onPositionChange() if mediator.playWithSounds
-      player.spriteState.moving = true
+      player.visual.spriteState.moving = true
     else
       player.physBody.SetLinearVelocity new Vec2 0, 0
-      player.spriteState.moving = false
+      player.visual.spriteState.moving = false
 
 
   _handleAction: =>
@@ -220,10 +214,10 @@ module.exports = class HomePageView extends View
     @ctx.drawImage (lvl.mapCanvas), sx, sy, sw, sh, dx, dy, dw, dh
 
     for entity in lvl.entityObjects when entity.visual?
-      entity.render(@ctx, sx, sy)
+      entity.visual.render(@ctx, sx, sy)
 
     # always draw the player on top of everything again
-    lvl.player.render(@ctx, sx, sy)
+    lvl.player.visual.render(@ctx, sx, sy)
 
 
   setupDatGui: ->

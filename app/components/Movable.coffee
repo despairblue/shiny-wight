@@ -1,15 +1,15 @@
+Component = require 'core/Component'
+
 ###
 Depends on Scriptable
-@mixin
 ###
-Movable =
-  setUpMethod: ->
-    # set up sane defaults
-    @movable = true
+module.exports = class Movable extends Component
+  constructor: (owner) ->
+    super
 
     # check dependencies
-    unless @scriptable
-      console.error "Dependency missing"
+    unless @owner.scriptable
+      console.error "Movable depends on the Scripable component. #{@owner} does not have one"
 
     @oldPosition =
       x: 0
@@ -30,35 +30,25 @@ Movable =
 
     @positionCheckTimer = Date.now()
 
-    @loadMethods.push @_movable_load
-    @updateMethods.push @_movable_update
-
-
-  # Will be called when Entity.load is called
-  _movable_load: ->
-
-
-  _movable_update: ->
-
 
   # TODO maybe add velocity to define the speed of movement
   # Example: Yeties moving slowly, then see the player and go fast to him..
-  moveDown: (pixel) ->
+  moveDown: (pixel) =>
     console.error 'argument must be an positive integer' if pixel < 0
-    @tasks.push () ->
+    @owner.scriptable.addTask =>
       if @moving.down
-        if @position.y > @targetPos.y
+        if @owner.position.y > @targetPos.y
           # task finished
           @stopMovement()
           return true
-        else if @checkPosition and @position.y == @oldPosition.y
+        else if @checkPosition and @owner.position.y == @oldPosition.y
           @stopMovement()
           @tryOtherDirection = true
 
           # task finished
           return true
         else
-          @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, @velocity))
+          @owner.physBody.SetLinearVelocity(new @owner.level.physicsManager.Vec2(0, @owner.velocity))
 
           # task not yet finished
           return false
@@ -67,11 +57,11 @@ Movable =
 
         # bootstrap
         @targetPos =
-          x: @position.x
-          y: @position.y + pixel
+          x: @owner.position.x
+          y: @owner.position.y + pixel
         @moving.down = true
-        @spriteState.moving = true
-        @spriteState.viewDirection = 2
+        @owner.visual.spriteState.moving = true
+        @owner.visual.spriteState.viewDirection = 2
 
         # task not finished
         return false
@@ -79,99 +69,99 @@ Movable =
     return @
 
 
-  moveUp: (pixel) ->
+  moveUp: (pixel) =>
     console.error 'argument must be an positive integer' if pixel < 0
-    @tasks.push () ->
+    @owner.scriptable.addTask =>
       if @moving.up
-        if @position.y < @targetPos.y
+        if @owner.position.y < @targetPos.y
           @stopMovement()
           return true
-        else if @checkPosition and @position.y == @oldPosition.y
+        else if @checkPosition and @owner.position.y == @oldPosition.y
           @stopMovement()
           @tryOtherDirection = true
           return true
         else
-          @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, -@velocity))
+          @owner.physBody.SetLinearVelocity(new @owner.level.physicsManager.Vec2(0, -@owner.velocity))
           return false
       else
         @targetPos =
-          x: @position.x
-          y: @position.y - pixel
+          x: @owner.position.x
+          y: @owner.position.y - pixel
         @moving.up = true
-        @spriteState.moving = true
-        @spriteState.viewDirection = 0
+        @owner.visual.spriteState.moving = true
+        @owner.visual.spriteState.viewDirection = 0
         return false
 
     return @
 
 
-  moveRight: (pixel) ->
+  moveRight: (pixel) =>
     console.error 'argument must be an positive integer' if pixel < 0
-    @tasks.push () ->
+    @owner.scriptable.addTask =>
       if @moving.right
-        if @position.x > @targetPos.x
+        if @owner.position.x > @targetPos.x
           @stopMovement()
           return true
-        else if @checkPosition and @position.x == @oldPosition.x
+        else if @checkPosition and @owner.position.x == @oldPosition.x
           @stopMovement()
           @tryOtherDirection = true
           return true
         else
-          @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(@velocity, 0))
+          @owner.physBody.SetLinearVelocity(new @owner.level.physicsManager.Vec2(@owner.velocity, 0))
           return false
       else
         @targetPos =
-          x: @position.x + pixel
-          y: @position.y
+          x: @owner.position.x + pixel
+          y: @owner.position.y
         @moving.right = true
-        @spriteState.moving = true
-        @spriteState.viewDirection = 1
+        @owner.visual.spriteState.moving = true
+        @owner.visual.spriteState.viewDirection = 1
         return false
 
     return @
 
 
-  moveLeft: (pixel) ->
+  moveLeft: (pixel) =>
     console.error 'argument must be an positive integer' if pixel < 0
-    @tasks.push () ->
+    @owner.scriptable.addTask =>
       if @moving.left
-        if @position.x < @targetPos.x
+        if @owner.position.x < @targetPos.x
           @stopMovement()
           return true
-        else if @checkPosition and @position.x == @oldPosition.x
+        else if @checkPosition and @owner.position.x == @oldPosition.x
           @stopMovement()
           @tryOtherDirection = true
           return true
         else
-          @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(-@velocity, 0))
+          @owner.physBody.SetLinearVelocity(new @owner.level.physicsManager.Vec2(-@owner.velocity, 0))
           return false
       else
         @targetPos =
-          x: @position.x - pixel
-          y: @position.y
+          x: @owner.position.x - pixel
+          y: @owner.position.y
         @moving.left = true
-        @spriteState.moving = true
-        @spriteState.viewDirection = 3
+        @owner.visual.spriteState.moving = true
+        @owner.visual.spriteState.viewDirection = 3
         return false
 
     return @
 
 
-  stopMovement: () ->
-    @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
+  stopMovement: () =>
+    @owner.physBody.SetLinearVelocity(new @owner.level.physicsManager.Vec2(0, 0))
     @moving.down        = false
     @moving.up          = false
     @moving.left        = false
     @moving.right       = false
-    @spriteState.moving = false
+    @owner.visual.spriteState.moving = false
 
 
-  getActualMoveDistance: (distance) ->
+  getActualMoveDistance: (distance) =>
     return @maxDistance if distance > @maxDistance
     return distance
 
 
-  moveOnXAxis: (ax, dx) ->
+  moveOnXAxis: (ax, dx) =>
     distance = @getActualMoveDistance(ax)
     # if dx > 0 move in positive direction of x-axis, i.e. right else left
     if dx > 0
@@ -179,7 +169,7 @@ Movable =
     else
       @moveLeft(distance)
 
-  moveOnYAxis: (ay, dy) ->
+  moveOnYAxis: (ay, dy) =>
     distance = @getActualMoveDistance(ay)
     # if dy > 0 move in positive direction of y-axis, i.e. down else move up
     if dy > 0
@@ -189,33 +179,33 @@ Movable =
 
 
   # TODO: broken, fix it
-  moveToPosition:(@positionToMoveTo, @maxDistance) ->
-    @tasks.push () ->
+  moveToPosition:(@positionToMoveTo, @maxDistance) =>
+    @owner.scriptable.addTask =>
       # first call
       if not @onFollow
         @onFollow = true
-        @tasks.shift() # remove itself from tasks to prevent endless loop
-        @savedTasks = _.clone(@tasks)
-        @tasks = []
+        @owner.scriptable.tasks.shift() # remove itself from tasks to prevent endless loop
+        @savedTasks = _.clone(@owner.scriptable.tasks)
+        @owner.scriptable.tasks = []
 
-      threshold = @velocity / 50
+      threshold = @owner.velocity / 50
       threshold = 3 if threshold < 3
 
       # dx = x2 - x1
-      dx = Math.floor(@positionToMoveTo.x - @position.x)
-      dy = Math.floor(@positionToMoveTo.y - @position.y)
+      dx = Math.floor(@positionToMoveTo.x - @owner.position.x)
+      dy = Math.floor(@positionToMoveTo.y - @owner.position.y)
       # ax = |x2 - x1| = d(x1, x2)
       ax = Math.abs(dx)
       ay = Math.abs(dy)
 
       # if @positionToMoveTo reached stop
-      # if (ax <= threshold and ay <= threshold) or (@position.x == positionToMoveTo.x and @position.y == positionToMoveTo.y)
-      if (@positionToMoveTo.x - threshold < @position.x < @positionToMoveTo.x + threshold) and (@positionToMoveTo.y - threshold < @position.y < @positionToMoveTo.y + threshold)
-        @position.x = @positionToMoveTo.x
-        @position.y = @positionToMoveTo.y
+      # if (ax <= threshold and ay <= threshold) or (@owner.position.x == positionToMoveTo.x and @owner.position.y == positionToMoveTo.y)
+      if (@positionToMoveTo.x - threshold < @owner.position.x < @positionToMoveTo.x + threshold) and (@positionToMoveTo.y - threshold < @owner.position.y < @positionToMoveTo.y + threshold)
+        @owner.position.x = @positionToMoveTo.x
+        @owner.position.y = @positionToMoveTo.y
         @positionToMoveTo = null
         @onFollow = false
-        @tasks = @savedTasks
+        @owner.scriptable.tasks = @savedTasks
         return
 
 
@@ -233,7 +223,3 @@ Movable =
       else if ax <= ay and @tryOtherDirection
         @tryOtherDirection = false
         @moveOnXAxis(ax, dx)
-
-
-# necessary hack for codo support
-module.exports = Movable

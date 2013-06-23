@@ -1,7 +1,7 @@
 Chaplin = require 'chaplin'
 Layout = require 'views/layout'
 mediator = require 'mediator'
-mapManager = require 'models/TILEDMap'
+mapManager = require 'core/TILEDMap'
 configurationManager = require 'core/configurationManager'
 routes = require 'routes'
 
@@ -66,7 +66,7 @@ module.exports = class Application extends Chaplin.Application
     mediator.playWithSounds       = true
     mediator.renderDebug          = false
     mediator.disableDialogs       = false
-    mediator.factory              = {}
+    mediator.factory              = require 'entities/entities'
     mediator.levels               = {}
     mediator.activeLevel          = ''
     mediator.nextLevel            = ''

@@ -12,19 +12,7 @@ Base class for all entities
 module.exports = class Entity extends Module
   constructor: (owningLevel, object) ->
     super
-    @setUpMethods  ?= []
-    @loadMethods   = []
-    @updateMethods = []
-    @unloadMethods = []
-
-    # TODO: move to physics mixin
-    @onTouchMethods      = []
-    @onTouchEndMethods   = []
-    @onTouchBeginMethods = []
-
-    # Call all mixin setUpMethods before applying
-    # the TILED properties
-    method.apply @ for method in @setUpMethods
+    @_listeners     = []
 
     # Copy all properties from the TILED object
     @[prop] = content for prop, content of object.properties
@@ -74,30 +62,36 @@ module.exports = class Entity extends Module
     @physBody.SetLinearVelocity(new @level.physicsManager.Vec2(0, 0))
 
 
-  ###
-  More entity specific include method that takes care of
-  setting setUpMethods and (later) checking for conflicts and
-  dependencies and maybe other boilerplate methods like
-  load and update methods.
-  @param [Object] obj
-    The Mixin: an object containing properties
-  @TODO: add support for loadMethods and updateMethods
-  @TODO: add support for dependency and conflict management
-  ###
-  @include: (obj) ->
-    # only initialize the first time as include might be called
-    # multiple times (including multiple mixins)
-    @::setUpMethods ?= []
+  addListener: (type, listener) =>
+    @_listeners[type] = [] unless @_listeners[type]?
+    @_listeners[type].push listener
 
-    for key, value of obj
-      # Assign properties to the prototype
-      switch key
-        when 'setUpMethod'
-          @::setUpMethods.push value
-        else
-          @::[key] = value
 
-    this
+  fire: (event) =>
+    event = type:event if typeof event is "string"
+    event.target = this unless event.target?
+
+    throw new Error("Event object missing 'type' property.") unless event.type
+
+    if @_listeners[event.type] instanceof Array
+      listeners = @_listeners[event.type]
+
+      # call all listeners in the context of this object
+      # and remove them if they return true
+      for listener in listeners
+        event.listener = listener
+        listener.call @, event
+        delete event.listener
+
+
+  removeListener: (type, listener) =>
+    if @_listeners[type] instanceof Array
+      listeners = @_listeners[type]
+
+      for l, i in listeners
+        if l is listener
+          listeners.splice i, 1
+          break
 
 
   ###
@@ -110,17 +104,19 @@ module.exports = class Entity extends Module
 
 
   load: =>
-    # call all load methods
-    method.apply(@) for method in @loadMethods
+    @fire 'load'
 
 
   kill: =>
-    method.apply @ for method in @unloadMethods
+    @fire 'kill'
 
     # TODO: go to physics mixin
     @level.physicsManager.world.DestroyBody(@physBody)
 
     @level.removeEntity @
+
+    # TODO: implement
+    # @destructor()
 
 
   ###
@@ -133,15 +129,21 @@ module.exports = class Entity extends Module
 
   # TODO: move to physics mixin
   onTouch: =>
-    method.apply @, arguments for method in @onTouchMethods
+    event =
+      type: 'touch'
+      arguments: arguments
+    @fire event
 
 
   onTouchBegin: =>
-    method.apply @, arguments for method in @onTouchBeginMethods
+    @fire 'touchBegin'
 
 
   onTouchEnd: =>
-    method.apply @, arguments for method in @onTouchEndMethods
+    event =
+      type: 'touchEnd'
+      arguments: arguments
+    @fire event
 
 
   # I won't move no matter what! Don't even try it.
@@ -167,13 +169,12 @@ module.exports = class Entity extends Module
     @position.x = @physBody.GetPosition().x if @physBody.GetPosition().x?
     @position.y = @physBody.GetPosition().y if @physBody.GetPosition().y?
 
-    # call all update methods
-    method.apply(@) for method in @updateMethods
+    @fire 'update'
 
 
   # TODO: move input mixin
   blockInput: () =>
-    @tasks.push ->
+    @scriptable.addTask ->
       require('mediator').blockInput = true
       return true
 
@@ -181,7 +182,7 @@ module.exports = class Entity extends Module
 
 
   unblockInput: () =>
-    @tasks.push ->
+    @scriptable.addTask ->
       require('mediator').blockInput = false
       return true
 

@@ -1,5 +1,5 @@
 Model     = require 'models/base/model'
-SoundObj  = require 'models/SoundObj'
+SoundObj  = require 'core/SoundObj'
 mediator  = require 'mediator'
 
 module.exports = class SoundManager extends Model
