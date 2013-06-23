@@ -1,11 +1,8 @@
-Entity = require 'core/Entity'
+Event = require 'entities/Event'
 mediator = require 'mediator'
 
-module.exports = class MapChanger extends Entity
+module.exports = class MapChanger extends Event
   constructor: (owningLevel, object) ->
-    object.properties.physicsType = 'static'
-    object.properties.isSensor    = true
-
     super owningLevel, object
 
 

@@ -171,8 +171,7 @@
                  "name":"MapChangerToLevel2",
                  "properties":
                     {
-                     "levelToChangeTo":"level2",
-                     "physicsType":"static"
+                     "levelToChangeTo":"level2"
                     },
                  "type":"MapChanger",
                  "visible":true,
