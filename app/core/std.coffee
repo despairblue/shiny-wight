@@ -2,8 +2,6 @@ Model = require 'models/base/model'
 mediator = require 'mediator'
 
 module.exports = class Std extends Model
-
-
   initialize: ->
     mediator.std = @
 
@@ -12,11 +10,13 @@ module.exports = class Std extends Model
   Starts a XMLHttpRequest and calls the given callback when finished loading.
   @param [String] reqUri URI to the file to be loaded
   @param [Function] callback Callback function
+  @param [String] responseType
+  @param [Objects] additionalAttributes Will be added as an array to XMLHttpRequest.additionalAttributes
   ###
-  xhrGet: (reqUri, callback, rest...) ->
+  xhrGet: (reqUri, callback, responseType, additionalAttributes...) ->
     xhr = new XMLHttpRequest()
-    xhr.responseType = rest[0] if rest.length isnt 0
-    xhr.additionalAttributes = rest.splice 1
+    xhr.responseType = responseType if responseType?
+    xhr.additionalAttributes = additionalAttributes
     xhr.open 'GET', reqUri, true
     xhr.onload = callback
     xhr.send()
