@@ -154,25 +154,6 @@ module.exports = class Entity extends Module
     # method to be overloaded
 
 
-  # TODO: move to physics mixin
-  onTouch: =>
-    event =
-      type: 'touch'
-      arguments: arguments
-    @fire event
-
-
-  onTouchBegin: =>
-    @fire 'touchBegin'
-
-
-  onTouchEnd: =>
-    event =
-      type: 'touchEnd'
-      arguments: arguments
-    @fire event
-
-
   # I won't move no matter what! Don't even try it.
   makeMeStatic: () =>
     # TODO: move to physics mixin

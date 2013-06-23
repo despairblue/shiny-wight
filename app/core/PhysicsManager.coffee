@@ -59,6 +59,7 @@ module.exports = class PhysicsManager
     @world.SetDebugDraw debugDraw
 
     @addBackgroundRigidBodies(@map)
+    @addContactListener()
 
 
   addBackgroundRigidBodies: () =>
@@ -175,18 +176,60 @@ module.exports = class PhysicsManager
     @world.Step PHYSICS_LOOP, 10, 10
     # @world.ClearForces() # not really sure what it's for and if we need it
 
-  addContactListener: (callbacks) =>
+  addContactListener: =>
     listener = new Box2D.Dynamics.b2ContactListener()
 
-    if callbacks.BeginContact
-      listener.BeginContact = (contact) ->
-        callbacks.BeginContact contact.GetFixtureA().GetBody(), contact.GetFixtureB().GetBody()
-    if callbacks.EndContact
-      listener.EndContact = (contact) ->
-        callbacks.EndContact contact.GetFixtureA().GetBody(), contact.GetFixtureB().GetBody()
-    if callbacks.PostSolve
-      listener.PostSolve = (contact, impulse) ->
-        callbacks.PostSolve contact.GetFixtureA().GetBody(), contact.GetFixtureB().GetBody(), impulse.normalImpulses[0]
+    listener.BeginContact = (contact) ->
+      bodyA = contact.GetFixtureA().GetBody()
+      bodyB = contact.GetFixtureB().GetBody()
+      dataA = bodyA.GetUserData()
+      dataB = bodyB.GetUserData()
+
+      eventA =
+        type: 'touchBegin'
+        arguments: [bodyB]
+
+      eventB =
+        type: 'touchBegin'
+        arguments: [bodyA]
+
+      dataA?.ent.fire eventA
+      dataB?.ent.fire eventB
+
+    listener.EndContact = (contact) ->
+      bodyA = contact.GetFixtureA().GetBody()
+      bodyB = contact.GetFixtureB().GetBody()
+      dataA = bodyA.GetUserData()
+      dataB = bodyB.GetUserData()
+
+      eventA =
+        type: 'touchEnd'
+        arguments: [bodyB]
+
+      eventB =
+        type: 'touchEnd'
+        arguments: [bodyA]
+
+      dataA?.ent.fire eventA
+      dataB?.ent.fire eventB
+
+    listener.PostSolve = (contact, impulse) ->
+      bodyA = contact.GetFixtureA().GetBody()
+      bodyB = contact.GetFixtureB().GetBody()
+      dataA = bodyA.GetUserData()
+      dataB = bodyB.GetUserData()
+      impulse = impulse.normalImpulses[0]
+
+      eventA =
+        type: 'touch'
+        arguments: [bodyB, impulse]
+
+      eventB =
+        type: 'touch'
+        arguments: [bodyA, impulse]
+
+      dataA?.ent.fire eventA
+      dataB?.ent.fire eventB
 
     @world.SetContactListener listener
 

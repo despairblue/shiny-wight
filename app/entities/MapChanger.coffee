@@ -5,8 +5,12 @@ module.exports = class MapChanger extends Event
   constructor: (owningLevel, object) ->
     super owningLevel, object
 
+    @addListener 'touchBegin', @_changeMap
 
-  onTouchBegin: (body, point, impulse) =>
+
+  _changeMap: (event) =>
+    body = event.arguments[0]
+
     if body.GetUserData().ent.name in ['Player', 'PlayerSkeleton']
       if mediator.playWithSounds
         mediator.soundManager.stopAll config =
