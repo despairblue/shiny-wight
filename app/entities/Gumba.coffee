@@ -1,10 +1,10 @@
 Entity = require 'core/Entity'
-Visual = require 'core/components/Visual'
+Visual = require 'components/Visual'
 mediator = require 'mediator'
 
-module.exports = class Mario extends Entity
+module.exports = class Gumba extends Entity
   # register entity
-  mediator.factory['Mario'] = this
+  mediator.factory['Gumba'] = this
 
 
   constructor: (owningLevel, object) ->
@@ -15,7 +15,7 @@ module.exports = class Mario extends Entity
     @visual = v = new Visual @
 
     do (v) ->
-      v.atlas.src = 'atlases/mario.png'
+      v.atlas.src = 'atlases/gumba.png'
 
       v.spriteState.viewDirection = 2
 

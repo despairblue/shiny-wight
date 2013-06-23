@@ -1,5 +1,5 @@
 Entity = require 'core/Entity'
-Visual = require 'core/components/Visual'
+Visual = require 'components/Visual'
 mediator = require 'mediator'
 
 ###

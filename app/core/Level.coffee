@@ -1,5 +1,5 @@
 Model           = require 'models/base/model'
-PhysicsManager  = require 'models/PhysicsManager'
+PhysicsManager  = require 'core/PhysicsManager'
 mediator        = require 'mediator'
 
 module.exports = class Level extends Model

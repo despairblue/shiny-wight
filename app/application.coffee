@@ -1,7 +1,7 @@
 Chaplin = require 'chaplin'
 Layout = require 'views/layout'
 mediator = require 'mediator'
-mapManager = require 'models/TILEDMap'
+mapManager = require 'core/TILEDMap'
 configurationManager = require 'core/configurationManager'
 routes = require 'routes'
 

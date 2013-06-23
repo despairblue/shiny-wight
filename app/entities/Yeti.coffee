@@ -1,7 +1,7 @@
 Entity = require 'core/Entity'
-Visual = require 'core/components/Visual'
-Movable = require 'core/components/Movable'
-Scriptable = require 'core/components/Scriptable'
+Visual = require 'components/Visual'
+Movable = require 'components/Movable'
+Scriptable = require 'components/Scriptable'
 mediator = require 'mediator'
 
 module.exports = class Yeti extends Entity

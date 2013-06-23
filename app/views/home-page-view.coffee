@@ -1,17 +1,13 @@
 View          = require 'views/base/view'
-InputManager  = require 'models/InputManager'
-SoundManager  = require 'models/SoundManager'
-DialogManager = require 'models/DialogManager'
+InputManager  = require 'core/InputManager'
+SoundManager  = require 'core/SoundManager'
+DialogManager = require 'core/DialogManager'
 mediator      = require 'mediator'
-Std           = require 'models/Std'
-Level         = require 'models/Level'
-Player        = require 'models/Player'
-MapChanger    = require 'models/MapChanger'
-Event         = require 'models/Event'
-Yeti          = require 'models/Yeti'
-Mario         = require 'models/Mario'
-Gumba         = require 'models/Gumba'
+Std           = require 'core/std'
+Level         = require 'core/Level'
 Vec2          = Box2D.Common.Math.b2Vec2
+
+require 'entities/entities'
 
 PHYSICS_LOOP  = 1000/60
 RENDER_LOOP   = 1000/25

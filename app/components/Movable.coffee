@@ -1,4 +1,4 @@
-Component = require 'core/components/Component'
+Component = require 'core/Component'
 
 ###
 Depends on Scriptable
