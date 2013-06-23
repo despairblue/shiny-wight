@@ -71,6 +71,15 @@ module.exports = class Entity extends Module
     @_listeners[type] = [] unless @_listeners[type]?
     @_listeners[type].push listener
 
+  ###
+  Adds an event listener that will only be invoked once
+  @see Entity#addListener
+  ###
+  addOneTimeListener: (type, listener) =>
+    @addListener type, (event) =>
+      # call listener only once
+      @removeListener event.type, event.listener
+      listener.call @, event
 
   ###
   Fires an event, invoking all it's listeners.
