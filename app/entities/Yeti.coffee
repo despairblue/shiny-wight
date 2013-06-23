@@ -5,9 +5,6 @@ Scriptable = require 'components/Scriptable'
 mediator = require 'mediator'
 
 module.exports = class Yeti extends Entity
-  mediator.factory['Yeti'] = this
-
-
   constructor: (owningLevel, object) ->
     object.ellipse = true
 

@@ -3,10 +3,6 @@ Visual = require 'components/Visual'
 mediator = require 'mediator'
 
 module.exports = class Gumba extends Entity
-  # register entity
-  mediator.factory['Gumba'] = this
-
-
   constructor: (owningLevel, object) ->
     # settings.ellipse = true
     object.properties.physicsType = 'static'

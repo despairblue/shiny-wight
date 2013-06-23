@@ -6,10 +6,6 @@ mediator = require 'mediator'
 The Player
 ###
 module.exports = class Player extends Entity
-  # register entity
-  mediator.factory['Player'] = this
-
-
   constructor: (owningLevel, object) ->
     object.properties.ellipse = true
 

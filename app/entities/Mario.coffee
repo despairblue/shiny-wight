@@ -3,10 +3,6 @@ Visual = require 'components/Visual'
 mediator = require 'mediator'
 
 module.exports = class Mario extends Entity
-  # register entity
-  mediator.factory['Mario'] = this
-
-
   constructor: (owningLevel, object) ->
     # settings.ellipse = true
     object.properties.physicsType = 'static'

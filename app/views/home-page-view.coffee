@@ -7,8 +7,6 @@ Std           = require 'core/std'
 Level         = require 'core/Level'
 Vec2          = Box2D.Common.Math.b2Vec2
 
-require 'entities/entities'
-
 PHYSICS_LOOP  = 1000/60
 RENDER_LOOP   = 1000/25
 
