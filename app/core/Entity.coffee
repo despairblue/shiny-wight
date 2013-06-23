@@ -75,13 +75,17 @@ module.exports = class Entity extends Module
 
     if @_listeners[event.type] instanceof Array
       listeners = @_listeners[event.type]
+      callbacks = []
 
       # call all listeners in the context of this object
       # and remove them if they return true
       for listener in listeners
-        event.listener = listener
-        listener.call @, event
-        delete event.listener
+        callbacks.push listener
+
+      for callback in callbacks
+        event.listener = callback
+        callback.call @, event
+        delete event.callback
 
 
   removeListener: (type, listener) =>
