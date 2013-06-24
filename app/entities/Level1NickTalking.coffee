@@ -1,4 +1,5 @@
 Event = require 'entities/Event'
+mediator = require 'mediator'
 
 module.exports = class Level1NickTalking extends Event
   constructor: (owningLevel, object) ->
