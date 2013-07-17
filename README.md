@@ -155,6 +155,6 @@ box2d ([Erin Catto](http://www.gphysics.com))
 ## License
 For the code only. For the assets see `Used Assets`
 
-![license](http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png)
-
-This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License](http://creativecommons.org/licenses/by-nc-sa/3.0/).
+Apache License
+Version 2.0, January 2004
+http://www.apache.org/licenses/
