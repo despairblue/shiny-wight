@@ -1,0 +1,3 @@
+[submodule "app/story"]
+	path = app/story
+	url = ssh://git@bitbucket.org/despairblue/nick-skelleton.git
