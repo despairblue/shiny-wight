@@ -1,3 +1,6 @@
 [submodule "app/story"]
 	path = app/story
 	url = ssh://git@bitbucket.org/despairblue/nick-skelleton.git
+[submodule "app/assets/gameassets"]
+	path = app/assets/gameassets
+	url = git@bitbucket.org:despairblue/nick-assets.git
