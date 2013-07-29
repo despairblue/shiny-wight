@@ -1,5 +1,6 @@
 Event = require 'entities/Event'
 mediator = require 'mediator'
+story = require 'story/level1'
 
 module.exports = class Level1Event1 extends Event
   constructor: (owningLevel, object) ->
@@ -60,40 +61,23 @@ module.exports = class Level1Event1 extends Event
 
     jt.blockInput().movable.moveDown(150).moveLeft(60)
     jt.scriptable.addTask =>
-      data =
-        speaker: 'JT'
-        text: 'Yo, Snowsome, pathetic human spotted, Yo!'
-      dm.showDialog data, (result) =>
+      dm.showDialog story[1], (result) =>
         jt.scriptable.addTask =>
-          data.speaker = 'Snowsome'
-          data.text    = 'Pathetic little you.'
-          data.options = 'Run!'
-
-          dm.showDialog data, =>
+          dm.showDialog story[2], =>
             ss.movable.moveDown(150).moveLeft(90)
             jt.movable.moveDown(90).moveLeft(30).owner.scriptable.addTask =>
 
-              data.speaker = 'JT'
-              data.text = 'Nice bro, you got Him'
-              data.options = 'What the...'
 
-              dm.showDialog data, =>
+              dm.showDialog story[3], =>
                 jt.scriptable.addTask =>
-                  data.text = 'Nice skin, yo.'
-                  data.options = 'Uhm... Yeah. Thanks? I guess...'
 
-                  dm.showDialog data, =>
+                  dm.showDialog story[4], =>
                     jt.scriptable.addTask =>
-                      data.text = 'Give it to us'
-                      data.options = null
 
-                      dm.showDialog data, =>
+                      dm.showDialog story[5], =>
                         jt.scriptable.addTask =>
-                          data.speaker = 'Snowsome'
-                          data.text = 'Yeah, give it to us.'
-                          data.options = 'Well... I would prefer not to...'
 
-                          dm.showDialog data, =>
+                          dm.showDialog story[6], =>
                             # [Black, Smashing Noises, Wilhelms Scream]
                             mediator.configurationManager.configure player, 'PlayerSkeleton'
 
@@ -104,9 +88,5 @@ module.exports = class Level1Event1 extends Event
                               ss.kill()
                               jt.kill()
 
-                              data =
-                                speaker: 'Nick Skeleton'
-                                text: 'Seriously? Skin-Robbery? Yetis? I hate those days...'
-
-                              dm.showDialog data, =>
+                              dm.showDialog story[7], =>
                                 that.unblockInput()

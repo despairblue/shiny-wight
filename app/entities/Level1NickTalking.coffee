@@ -1,5 +1,6 @@
 Event = require 'entities/Event'
 mediator = require 'mediator'
+story = require 'story/level1'
 
 module.exports = class Level1NickTalking extends Event
   constructor: (owningLevel, object) ->
@@ -9,8 +10,4 @@ module.exports = class Level1NickTalking extends Event
 
 
   _nickTalks: (event) =>
-    data =
-      speaker: 'Nick Human'
-      text: 'What a wonderful day. Thus lovely noises, and hey; they get louder when I get closer to  them. God is such a genius.'
-
-    mediator.dialogManager.showDialog data
+    mediator.dialogManager.showDialog story[9]
