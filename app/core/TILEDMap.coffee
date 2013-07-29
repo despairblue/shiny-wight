@@ -45,7 +45,7 @@ module.exports = class TILEDMap
     img = new Image()
     img.onload = =>
       callback()
-    img.src = 'atlases/' + tileset.image.replace /^.*[\\\/]/, ''
+    img.src = 'gameassets/atlases/' + tileset.image.replace /^.*[\\\/]/, ''
 
     # create and return metadata object
     ts =

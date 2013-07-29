@@ -1,7 +1,7 @@
 mediator = require 'mediator'
 
-soundPrefix = 'sounds/'
-mapPrefix = 'map'
+soundPrefix = 'gameassets/sounds/'
+mapPrefix = 'gameassets/map'
 
 ###
 @example
@@ -130,7 +130,7 @@ module.exports =
     # player should look at you
     @visual.spriteState.viewDirection = 2
 
-    @visual.atlas.src = 'atlases/warrior_m.png'
+    @visual.atlas.src = 'gameassets/atlases/warrior_m.png'
     @visual.tileSet.tilesX = 3
     @visual.tileSet.tilesY = 4
     @visual.tileSet.tileheight = 32
@@ -143,7 +143,7 @@ module.exports =
   PlayerSkeleton: ->
     @velocity = 250
 
-    @visual.atlas.src = 'atlases/nick.png'
+    @visual.atlas.src = 'gameassets/atlases/nick.png'
     @visual.tileSet.tilesX = 3
     @visual.tileSet.tilesY = 4
     @visual.tileSet.tileheight = 32
@@ -183,7 +183,7 @@ module.exports =
   Yeti: ->
     @velocity = 200
 
-    @visual.atlas.src = 'atlases/yetis.png'
+    @visual.atlas.src = 'gameassets/atlases/yetis.png'
 
     @visual.tileSet.tilesX = 3
     @visual.tileSet.tilesY = 4
