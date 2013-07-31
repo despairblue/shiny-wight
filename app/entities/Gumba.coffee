@@ -11,7 +11,7 @@ module.exports = class Gumba extends Entity
     @visual = v = new Visual @
 
     do (v) ->
-      v.atlas.src = 'atlases/gumba.png'
+      v.atlas.src = 'gameassets/atlases/gumba.png'
 
       v.spriteState.viewDirection = 2
 

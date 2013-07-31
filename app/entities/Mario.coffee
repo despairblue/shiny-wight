@@ -11,7 +11,7 @@ module.exports = class Mario extends Entity
     @visual = v = new Visual @
 
     do (v) ->
-      v.atlas.src = 'atlases/mario.png'
+      v.atlas.src = 'gameassets/atlases/mario.png'
 
       v.spriteState.viewDirection = 2
 
