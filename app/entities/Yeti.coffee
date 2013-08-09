@@ -19,6 +19,8 @@ module.exports = class Yeti extends Entity
     @visual     = new Visual @
     @movable    = new Movable @
 
+    @movable.mount()
+
 
     @visual.spriteState.viewDirection = 2
 
