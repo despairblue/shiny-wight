@@ -26,11 +26,6 @@ module.exports = class Scriptable extends Component
       # @_tasks.shift() if task.apply @
 
 
-  addSimpleTask: (task) =>
-    @_tasks.push ->
-      task.apply @
-      return true
-
   ###
   @param [function] task Must return a {Result}
   ###
