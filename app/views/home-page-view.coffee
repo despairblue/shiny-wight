@@ -41,7 +41,7 @@ module.exports = class HomePageView extends View
     @lastRenderUpdate  = now
 
     @subscribeEvent 'changeLvl', =>
-      console.log 'change to '+mediator.nextLevel if debug
+      console.debug 'change to %s', mediator.nextLevel
       @setup(mediator.nextLevel)
 
     # the first level
@@ -113,7 +113,7 @@ module.exports = class HomePageView extends View
     if debug
       timeToRender = Date.now() - timeNow
       if timeToRender > 40
-        console.log "Took #{timeToRender} ms to render frame."
+        console.warn 'Took %d ms to render frame.', timeToRender
 
 
   handleInput: =>

@@ -80,14 +80,14 @@ module.exports = class Level extends Model
         @setupped = true
         @initialSpawn()
       else
-        console.error "Level already set up!"
+        console.error 'Level already set up!'
     else
       console.error "Don't call Level.setup() unless the manifest finished loading!"
 
 
   checkIfDone: =>
     if @mapLoaded and (@soundsLoaded or !mediator.playWithSounds)
-      console.log "Finished loading #{@manifest.map.file}" if debug
+      console.debug 'Finished loading Map: %O', @manifest.map
       @loadCompleted = true
       @_callback() if @_callback
 
@@ -127,7 +127,7 @@ module.exports = class Level extends Model
     configurator = mediator.configurationManager[object.name]
 
     unless configurator?
-      console.warn "No configurations found for #{object.name}"
+      console.warn 'No configurations found for %s:%O', object.name, object
 
     # initialize object passing in the owning lvl and a copy of the tiled object
     obj = new Ent @, _.clone object

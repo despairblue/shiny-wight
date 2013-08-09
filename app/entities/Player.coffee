@@ -36,12 +36,12 @@ module.exports = class Player extends Entity
 
   onTouchBegin: (otherBody, point) =>
     @touchingEntity = otherBody.GetUserData()?.ent
-    console.log @touchingEntity
+    console.debug 'Begin touching %O', @touchingEntity
 
 
   onTouchEnd: (otherBody, point) =>
+    console.debug 'End touching %O', @touchingEntity
     @touchingEntity = null
-    console.log 'touch end'
 
 
   onAction: () =>

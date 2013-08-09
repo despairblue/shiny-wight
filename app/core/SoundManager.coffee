@@ -85,7 +85,7 @@ module.exports = class SoundManager extends Model
 
       @globalSoundList[sound].buffer = buffer
 
-      console.log sound+' loaded' if debug
+      console.debug '@s loaded', sound
 
       callback?()
 
@@ -120,7 +120,7 @@ module.exports = class SoundManager extends Model
     if @globalSoundList[sound].isPlaying
       @globalSoundList[sound].sourceNode.stop(@audioContext.currentTime)
       @globalSoundList[sound].isPlaying = false
-      console.log sound+'.mp3 stopped' if debug
+      console.debug '@s.mp3 stopped', sound
 
 
   ###

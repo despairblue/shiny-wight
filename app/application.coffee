@@ -114,3 +114,7 @@ module.exports = class Application extends Chaplin.Application
     Object.getPrototypeOf(document.createElement('canvas').getContext('2d')).drawImageTiled = (img, sx, sy, sw, sh, dx, dy, dw, dh, tileSizeX, tileSizeY) ->
       @drawImage img, sx * tileSizeX, sy * tileSizeY, sw * tileSizeX, sh * tileSizeY, dx * tileSizeX, dy * tileSizeY, dw * tileSizeX, dh * tileSizeY
 
+    # only show debug messages when debug is enabled (append #debug to URL)
+    console._debug = console.debug
+    console.debug = ->
+      console._debug.apply console, arguments if debug

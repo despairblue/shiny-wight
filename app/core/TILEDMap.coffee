@@ -11,7 +11,7 @@ module.exports = class TILEDMap
   ###
   @parseMapJSON: (mapTiledObject, callback) =>
 
-    console.log 'Start loading atlasses' if debug
+    console.debug 'Start loading atlasses'
 
     imgLoadCount = mapTiledObject.tilesets.length
 
@@ -22,7 +22,7 @@ module.exports = class TILEDMap
           if imgLoadCount <= 0
             callback(tilesets)
           else
-            console.log "#{imgLoadCount} tile sets to go. Hang in there!" if debug
+            console.debug "#{imgLoadCount} tile sets to go. Hang in there!"
 
 
   ###
@@ -105,7 +105,7 @@ module.exports = class TILEDMap
     canvas.width = mapTiledObject.width * mapTiledObject.tilewidth
     canvas.height = mapTiledObject.height * mapTiledObject.tileheight
 
-    console.log 'Finish loading atlasses' if debug
+    console.debug 'Finished loading atlasses'
 
     for layer in mapTiledObject.layers
       continue if layer.type isnt 'tilelayer'
