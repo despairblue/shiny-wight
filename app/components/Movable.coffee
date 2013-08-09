@@ -10,7 +10,7 @@ module.exports = class Movable extends Component
 
     # check dependencies
     unless @owner.scriptable
-      console.error "Movable depends on the Scripable component. #{@owner} does not have one"
+      console.error 'Movable depends on the Scriptable component. %O does not have one', @owner
 
     @oldPosition =
       x: 0
