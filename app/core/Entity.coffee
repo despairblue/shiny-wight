@@ -1,5 +1,6 @@
 Module = require 'core/Module'
 mediator = require 'mediator'
+Result = require 'core/Result'
 
 ###
 Base class for all entities
@@ -135,15 +136,17 @@ module.exports = class Entity extends Module
 
 
   kill: =>
-    @fire 'kill'
+    deferred = Q.defer()
 
+    @fire 'kill'
     # TODO: go to physics mixin
     @level.physicsManager.world.DestroyBody(@physBody)
-
     @level.removeEntity @
-
     # TODO: implement
     # @destructor()
+    deferred.resolve()
+    console.debug 'Killed %O', @
+    return deferred.promise
 
 
   ###
@@ -182,16 +185,22 @@ module.exports = class Entity extends Module
 
   # TODO: move input mixin
   blockInput: () =>
-    @scriptable.addTask ->
-      require('mediator').blockInput = true
-      return true
+    deferred = Q.defer()
 
-    return @
+    @scriptable.addTask do (deferred) -> ->
+      require('mediator').blockInput = true
+      deferred.resolve()
+      return new Result true
+
+    return deferred.promise
 
 
   unblockInput: () =>
-    @scriptable.addTask ->
-      require('mediator').blockInput = false
-      return true
+    deferred = Q.defer()
 
-    return @
+    @scriptable.addTask do (deferred) -> ->
+      require('mediator').blockInput = false
+      deferred.resolve()
+      return new Result true
+
+    return deferred.promise

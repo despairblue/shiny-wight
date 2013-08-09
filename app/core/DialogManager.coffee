@@ -44,26 +44,29 @@ module.exports = class DialogManager
     @$dialog.children().length isnt 0
 
 
-  showDialog: (data, callback) =>
+  showDialog: (data) =>
+    deferred = Q.defer()
+
     if mediator.disableDialogs
-      callback?()
+      deferred.resolve()
       return
 
     if @isDialog()
       console.error "I'm already showing a dialog, so you must be doing something wrong!"
-      @hideDialog()
+      deferred.reject()
+      return
 
     @blockInput()
 
     result = $ @template(data)
-    that = this
 
-    result.children('.dialog-option').click (event) ->
-      that.hideDialog()
+    console.debug 'Show dialog: %O', data
+
+    result.children('.dialog-option').click (event) =>
+      @hideDialog()
       id = parseInt( $(this).prop('id') ) + 1
       id = -1 if id == NaN
-      callback?(id)
-
+      deferred.resolve id
 
     $('#dialog').append(result).
     css('left', 0).
@@ -72,6 +75,9 @@ module.exports = class DialogManager
     fadeIn()
 
     @selectOption 1
+
+    return deferred.promise
+
 
   hideDialog: () =>
     $('#dialog').empty()

@@ -1,4 +1,5 @@
 Component = require 'core/Component'
+Result = require 'core/Result'
 
 ###
 ###
@@ -15,8 +16,14 @@ module.exports = class Scriptable extends Component
     # get current task
     task = @_tasks[0]
     if task
+      result = task()
+      console.assert result instanceof Result, 'Task did not return Result object'
+      if result.done?
+        @_tasks.shift()
+        if result.next?
+          @_tasks.unshift -> result.next.apply null, result.arguments
       # remove task if finished
-      @_tasks.shift() if task.apply @
+      # @_tasks.shift() if task.apply @
 
 
   addSimpleTask: (task) =>
@@ -24,6 +31,9 @@ module.exports = class Scriptable extends Component
       task.apply @
       return true
 
+  ###
+  @param [function] task Must return a {Result}
+  ###
   addTask: (task) =>
-    @_tasks.push ->
-      task.apply @
+    @_tasks.push task
+      # task.apply @

@@ -1,4 +1,5 @@
 Component = require 'core/Component'
+Result = require 'core/Result'
 
 ###
 Depends on Scriptable
@@ -34,117 +35,140 @@ module.exports = class Movable extends Component
   # TODO maybe add velocity to define the speed of movement
   # Example: Yeties moving slowly, then see the player and go fast to him..
   moveDown: (pixel) =>
-    console.error 'argument must be an positive integer' if pixel < 0
-    @owner.scriptable.addTask =>
-      if @moving.down
-        if @owner.position.y > @targetPos.y
-          # task finished
-          @stopMovement()
-          return true
-        else if @checkPosition and @owner.position.y == @oldPosition.y
-          @stopMovement()
-          @tryOtherDirection = true
-
-          # task finished
-          return true
-        else
-          @owner.physBody.SetLinearVelocity(new @owner.level.physicsManager.Vec2(0, @owner.velocity))
-
-          # task not yet finished
-          return false
-      else
-        # first call to task
-
-        # bootstrap
-        @targetPos =
-          x: @owner.position.x
-          y: @owner.position.y + pixel
-        @moving.down = true
-        @owner.visual.spriteState.moving = true
-        @owner.visual.spriteState.viewDirection = 2
-
-        # task not finished
-        return false
-
-    return @
+    deferred = Q.defer()
+    console.assert pixel > 0, 'argument must be a positive integer'
+    @owner.scriptable.addTask => @_moveDown pixel, deferred
+    return deferred.promise
 
 
   moveUp: (pixel) =>
-    console.error 'argument must be an positive integer' if pixel < 0
-    @owner.scriptable.addTask =>
-      if @moving.up
-        if @owner.position.y < @targetPos.y
-          @stopMovement()
-          return true
-        else if @checkPosition and @owner.position.y == @oldPosition.y
-          @stopMovement()
-          @tryOtherDirection = true
-          return true
-        else
-          @owner.physBody.SetLinearVelocity(new @owner.level.physicsManager.Vec2(0, -@owner.velocity))
-          return false
-      else
-        @targetPos =
-          x: @owner.position.x
-          y: @owner.position.y - pixel
-        @moving.up = true
-        @owner.visual.spriteState.moving = true
-        @owner.visual.spriteState.viewDirection = 0
-        return false
-
-    return @
+    deferred = Q.defer()
+    console.assert pixel > 0, 'argument must be a positive integer'
+    @owner.scriptable.addTask => @_moveUp pixel, deferred
+    return deferred.promise
 
 
   moveRight: (pixel) =>
-    console.error 'argument must be an positive integer' if pixel < 0
-    @owner.scriptable.addTask =>
-      if @moving.right
-        if @owner.position.x > @targetPos.x
-          @stopMovement()
-          return true
-        else if @checkPosition and @owner.position.x == @oldPosition.x
-          @stopMovement()
-          @tryOtherDirection = true
-          return true
-        else
-          @owner.physBody.SetLinearVelocity(new @owner.level.physicsManager.Vec2(@owner.velocity, 0))
-          return false
-      else
-        @targetPos =
-          x: @owner.position.x + pixel
-          y: @owner.position.y
-        @moving.right = true
-        @owner.visual.spriteState.moving = true
-        @owner.visual.spriteState.viewDirection = 1
-        return false
-
-    return @
+    deferred = Q.defer()
+    console.assert pixel > 0, 'argument must be a positive integer'
+    @owner.scriptable.addTask => @_moveRight pixel, deferred
+    return deferred.promise
 
 
   moveLeft: (pixel) =>
-    console.error 'argument must be an positive integer' if pixel < 0
-    @owner.scriptable.addTask =>
-      if @moving.left
-        if @owner.position.x < @targetPos.x
-          @stopMovement()
-          return true
-        else if @checkPosition and @owner.position.x == @oldPosition.x
-          @stopMovement()
-          @tryOtherDirection = true
-          return true
-        else
-          @owner.physBody.SetLinearVelocity(new @owner.level.physicsManager.Vec2(-@owner.velocity, 0))
-          return false
-      else
-        @targetPos =
-          x: @owner.position.x - pixel
-          y: @owner.position.y
-        @moving.left = true
-        @owner.visual.spriteState.moving = true
-        @owner.visual.spriteState.viewDirection = 3
-        return false
+    deferred = Q.defer()
+    console.assert pixel > 0, 'argument must be a positive integer'
+    @owner.scriptable.addTask => @_moveLeft pixel, deferred
+    return deferred.promise
 
-    return @
+
+  _moveDown: (pixel, deferred) =>
+    if @moving.down
+      if @owner.position.y > @targetPos.y
+        @stopMovement()
+        # task finished
+        deferred.resolve(@)
+        return new Result true
+      else if @checkPosition and @owner.position.y == @oldPosition.y
+        @stopMovement()
+        @tryOtherDirection = true
+
+        # task finished
+        deferred.resolve(@)
+        return new Result true
+      else
+        @owner.physBody.SetLinearVelocity(new @owner.level.physicsManager.Vec2(0, @owner.velocity))
+
+        # task not yet finished
+        return new Result false, @_moveDown, pixel, deferred
+    else
+      # first call to task
+      console.debug 'Move %O%i down.', @owner, pixel
+      # bootstrap
+      @targetPos =
+        x: @owner.position.x
+        y: @owner.position.y + pixel
+      @moving.down = true
+      @owner.visual.spriteState.moving = true
+      @owner.visual.spriteState.viewDirection = 2
+
+      # task not finished
+      return new Result false, @_moveDown, pixel, deferred
+
+
+  _moveUp: (pixel, deferred) =>
+    if @moving.up
+      if @owner.position.y < @targetPos.y
+        @stopMovement()
+        deferred.resolve(@)
+        return new Result true
+      else if @checkPosition and @owner.position.y == @oldPosition.y
+        @stopMovement()
+        @tryOtherDirection = true
+        deferred.resolve(@)
+        return new Result true
+      else
+        @owner.physBody.SetLinearVelocity(new @owner.level.physicsManager.Vec2(0, -@owner.velocity))
+        return new Result false, @_moveUp, pixel, deferred
+    else
+      console.debug 'Move %O%i up.', @owner, pixel
+      @targetPos =
+        x: @owner.position.x
+        y: @owner.position.y - pixel
+      @moving.up = true
+      @owner.visual.spriteState.moving = true
+      @owner.visual.spriteState.viewDirection = 0
+      return new Result false, @_moveUp, pixel, deferred
+
+
+  _moveRight: (pixel, deferred) =>
+    if @moving.right
+      if @owner.position.x > @targetPos.x
+        @stopMovement()
+        deferred.resolve(@)
+        return new Result true
+      else if @checkPosition and @owner.position.x == @oldPosition.x
+        @stopMovement()
+        @tryOtherDirection = true
+        deferred.resolve(@)
+        return new Result true
+      else
+        @owner.physBody.SetLinearVelocity(new @owner.level.physicsManager.Vec2(@owner.velocity, 0))
+        return new Result false, @_moveRight, pixel, deferred
+    else
+      console.debug 'Move %O%i right.', @owner, pixel
+      @targetPos =
+        x: @owner.position.x + pixel
+        y: @owner.position.y
+      @moving.right = true
+      @owner.visual.spriteState.moving = true
+      @owner.visual.spriteState.viewDirection = 1
+      return new Result false, @_moveRight, pixel, deferred
+
+
+  _moveLeft: (pixel, deferred) =>
+    if @moving.left
+      if @owner.position.x < @targetPos.x
+        @stopMovement()
+        deferred.resolve(@)
+        return new Result true
+      else if @checkPosition and @owner.position.x == @oldPosition.x
+        @stopMovement()
+        @tryOtherDirection = true
+        deferred.resolve(@)
+        return new Result true
+      else
+        @owner.physBody.SetLinearVelocity(new @owner.level.physicsManager.Vec2(-@owner.velocity, 0))
+        return new Result false, @_moveLeft, pixel, deferred
+    else
+      console.debug 'Move %O%i left.', @owner, pixel
+      @targetPos =
+        x: @owner.position.x - pixel
+        y: @owner.position.y
+      @moving.left = true
+      @owner.visual.spriteState.moving = true
+      @owner.visual.spriteState.viewDirection = 3
+      return new Result false, @_moveLeft, pixel, deferred
 
 
   stopMovement: () =>

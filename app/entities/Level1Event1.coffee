@@ -1,13 +1,19 @@
 Event = require 'entities/Event'
 mediator = require 'mediator'
 story = require 'story/level1'
+Result = require 'core/Result'
 
 module.exports = class Level1Event1 extends Event
   constructor: (owningLevel, object) ->
     super owningLevel, object
 
-    @addOneTimeListener 'touchBegin', @_spawnYetis
+    @dm = mediator.dialogManager
+
+    # @addOneTimeListener 'touchBegin', @_spawnYetis
+    @addOneTimeListener 'touchBegin', =>
+      @level.addTask @_spawnYetis
     @addOneTimeListener 'touchEnd', @_activateYetis
+
 
   ###
   This event handler is going to be called every time another
@@ -17,30 +23,29 @@ module.exports = class Level1Event1 extends Event
   @see #constructor
   ###
   _spawnYetis: (event) =>
-    that = @
+    jt = _.clone ss =
+      name: 'Yeti'
+      type: 'Yeti'
+      x: 16*32
+      y: 16
+      width: 32
+      height: 32
+      properties: {}
 
-    that.level.addTask ->
-      jt = _.clone ss =
-        name: 'Yeti'
-        type: 'Yeti'
-        x: 16*32
-        y: 16
-        width: 32
-        height: 32
-        properties: {}
+    ss.x = 17*32
 
-      ss.x = 17*32
+    @jt = @level.addEntity jt
+    @ss = @level.addEntity ss
 
-      that.jt = that.level.addEntity jt
-      that.ss = that.level.addEntity ss
+    # TODO: the soundManager should take care of this!
+    if mediator.playWithSounds
+      mediator.soundManager.stopAll config =
+        themeSound: true
+        backgroundSounds: true
 
-      # TODO: the soundManager should take care of this!
-      if mediator.playWithSounds
-        mediator.soundManager.stopAll config =
-          themeSound: true
-          backgroundSounds: true
+      mediator.soundManager.playSound @level.manifest.sounds.sounds[0], 1, true
 
-        mediator.soundManager.playSound that.level.manifest.sounds.sounds[0], 1, true
+    return new Result true
 
 
   ###
@@ -50,43 +55,59 @@ module.exports = class Level1Event1 extends Event
   @see #constructor
   ###
   _activateYetis: (event) =>
-    that = @
     body = event.arguments[0]
-    player = body.GetUserData().ent
-    jt = that.jt
-    ss = that.ss
-    dm = mediator.dialogManager
+    @player = body.GetUserData().ent
+    @jt = @jt
+    @ss = @ss
 
-    dm.hideDialog()
+    @dm.hideDialog()
 
-    jt.blockInput().movable.moveDown(150).moveLeft(60)
-    jt.scriptable.addTask =>
-      dm.showDialog story[1], (result) =>
-        jt.scriptable.addTask =>
-          dm.showDialog story[2], =>
-            ss.movable.moveDown(150).moveLeft(90)
-            jt.movable.moveDown(90).moveLeft(30).owner.scriptable.addTask =>
-
-
-              dm.showDialog story[3], =>
-                jt.scriptable.addTask =>
-
-                  dm.showDialog story[4], =>
-                    jt.scriptable.addTask =>
-
-                      dm.showDialog story[5], =>
-                        jt.scriptable.addTask =>
-
-                          dm.showDialog story[6], =>
-                            # [Black, Smashing Noises, Wilhelms Scream]
-                            mediator.configurationManager.configure player, 'PlayerSkeleton'
-
-                            jt.movable.moveRight(80).moveUp(250)
-                            ss.movable.moveRight(60).moveUp(250)
-
-                            jt.scriptable.addTask =>
-                              ss.kill()
-                              jt.kill()
-
-                              dm.showDialog story[7], =>
-                                that.unblockInput()
+    @jt.blockInput().
+    then(=>
+      @jt.moveDown 150 ).
+    then(=>
+      @jt.moveLeft 60 ).
+    then(=>
+      @dm.showDialog story[1] ).
+    then(=>
+      @dm.showDialog(story[2]) ).
+    then(=>
+      Q.all([
+        (@ss.moveDown 150 ).
+        then(=>
+          @ss.moveLeft 90 )
+      ,
+        (@jt.moveDown 90 ).
+        then(=>
+          @jt.moveLeft 30 )
+      ]) ).
+    then(=>
+      @dm.showDialog story[3] ).
+    then(=>
+      @dm.showDialog story[4] ).
+    then(=>
+      @dm.showDialog story[5] ).
+    then(=>
+      @dm.showDialog story[6] ).
+    then(=>
+      mediator.configurationManager.configure @player, 'PlayerSkeleton'
+      Q.all([
+        (@jt.moveRight 80 ).
+        then(=>
+          @jt.moveUp 250 )
+      ,
+        (@ss.moveRight 60 ).
+        then(=>
+          @ss.moveUp 165 )
+      ]) ).
+    then(=>
+      Q.all([
+        @ss.kill()
+      ,
+        @jt.kill()
+      ]) ).
+    then(=>
+      @dm.showDialog story[7] ).
+    then(
+      @unblockInput )
+    # done()
