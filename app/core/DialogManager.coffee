@@ -1,5 +1,8 @@
 mediator = require 'mediator'
 
+###
+@TODO: needs rewrite
+###
 module.exports = class DialogManager
   constructor: ->
     @source = document.getElementById 'dialog-template'
