@@ -1,4 +1,4 @@
-mediator = require 'mediator'
+mediator = Chaplin.mediator
 
 # Application-specific view helpers
 # http://handlebarsjs.com/#helpers

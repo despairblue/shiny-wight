@@ -1,6 +1,6 @@
 Entity = require 'core/Entity'
 Visual = require 'components/Visual'
-mediator = require 'mediator'
+mediator = Chaplin.mediator
 
 module.exports = class Mario extends Entity
   constructor: (owningLevel, object) ->

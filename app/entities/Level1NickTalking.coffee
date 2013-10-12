@@ -1,5 +1,5 @@
 Event = require 'entities/Event'
-mediator = require 'mediator'
+mediator = Chaplin.mediator
 story = require 'story/level1'
 
 module.exports = class Level1NickTalking extends Event

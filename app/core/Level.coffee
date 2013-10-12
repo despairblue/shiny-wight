@@ -1,6 +1,6 @@
 Model           = require 'models/base/model'
 PhysicsManager  = require 'core/PhysicsManager'
-mediator        = require 'mediator'
+mediator        = Chaplin.mediator
 
 module.exports = class Level extends Model
 

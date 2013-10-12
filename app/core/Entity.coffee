@@ -1,5 +1,5 @@
 Module = require 'core/Module'
-mediator = require 'mediator'
+mediator = Chaplin.mediator
 Result = require 'core/Result'
 
 ###
@@ -188,7 +188,7 @@ module.exports = class Entity extends Module
     deferred = Q.defer()
 
     @scriptable.addTask do (deferred) -> ->
-      require('mediator').blockInput = true
+      mediator.blockInput = true
       deferred.resolve()
       return new Result true
 
@@ -199,7 +199,7 @@ module.exports = class Entity extends Module
     deferred = Q.defer()
 
     @scriptable.addTask do (deferred) -> ->
-      require('mediator').blockInput = false
+      mediator.blockInput = false
       deferred.resolve()
       return new Result true
 

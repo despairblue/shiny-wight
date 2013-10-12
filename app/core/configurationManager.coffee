@@ -1,4 +1,4 @@
-mediator = require 'mediator'
+mediator = Chaplin.mediator
 
 soundPrefix = 'gameassets/sounds/'
 mapPrefix = 'gameassets/map'

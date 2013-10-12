@@ -1,5 +1,5 @@
 Model = require 'models/base/model'
-mediator = require 'mediator'
+mediator = Chaplin.mediator
 
 module.exports = class Std extends Model
   initialize: ->

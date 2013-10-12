@@ -1,6 +1,6 @@
 Entity = require 'core/Entity'
 Visual = require 'components/Visual'
-mediator = require 'mediator'
+mediator = Chaplin.mediator
 
 ###
 The Player

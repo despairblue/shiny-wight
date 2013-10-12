@@ -1,5 +1,5 @@
 Event = require 'entities/Event'
-mediator = require 'mediator'
+mediator = Chaplin.mediator
 
 module.exports = class MapChanger extends Event
   constructor: (owningLevel, object) ->

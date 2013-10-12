@@ -1,6 +1,6 @@
 Model     = require 'models/base/model'
 SoundObj  = require 'core/SoundObj'
-mediator  = require 'mediator'
+mediator  = Chaplin.mediator
 
 module.exports = class SoundManager extends Model
 

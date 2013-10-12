@@ -2,7 +2,7 @@ Entity = require 'core/Entity'
 Visual = require 'components/Visual'
 Movable = require 'components/Movable'
 Scriptable = require 'components/Scriptable'
-mediator = require 'mediator'
+mediator = Chaplin.mediator
 
 module.exports = class Yeti extends Entity
   constructor: (owningLevel, object) ->
