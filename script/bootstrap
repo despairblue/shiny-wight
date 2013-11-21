@@ -1,0 +1,26 @@
+#!/bin/bash -e
+# Usage: `script/bootstrap` from git root
+
+ROOT=$(pwd)
+
+# check prerequisites
+hash git    2>/dev/null || { echo >&2 "install git (Seriously?)";  exit 1; }
+hash npm    2>/dev/null || { echo >&2 "install node (http://nodejs.org/)";  exit 1; }
+hash brunch 2>/dev/null || { echo >&2 "install brunch (http://brunch.io/)"; exit 1; }
+hash bower  2>/dev/null || { echo >&2 "install bower (http://bower.io/)";   exit 1; }
+
+if [[ -e .git ]]; then
+	echo 'install npm packages'
+    npm install
+    echo 'install bower packages'
+    bower install
+    echo 'init submodules'
+    git submodule init
+    echo 'update submodules'
+    git submodule update
+else
+	echo 'Usage: `script/bootstrap` from git root'
+	exit 1
+fi
+
+exit 0
