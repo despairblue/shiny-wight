@@ -42,9 +42,7 @@ module.exports = class Scriptable extends Component
         if script[0] instanceof Array
           debugger
           promises = ( @addScripts s for s in script )
-          window.promises = promises
           promise = Q.all(promises)
-          window.promise = promise
           promise.then =>
             debugger
             console.debug arguments
