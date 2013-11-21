@@ -1,3 +1,4 @@
+# TODO: reimplement as singleton
 mediator = Chaplin.mediator
 
 soundPrefix = 'gameassets/sounds/'
@@ -12,11 +13,17 @@ module.exports =
   configure: (object, configuration) ->
     if @[configuration]?
       @[configuration].apply(object)
-
     else
       console.error "Configuration #{configuration} not found!"
 
     object
+
+
+  promisedConfigure: (object, configuration) ->
+    deferred = Q.defer()
+    @configure object, configuration
+    deferred.resolve(object)
+    deferred.promise
 
 
   level1: ->
