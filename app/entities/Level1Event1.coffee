@@ -12,7 +12,7 @@ module.exports = class Level1Event1 extends Event
     # @addOneTimeListener 'touchBegin', @_spawnYetis
     @addOneTimeListener 'touchBegin', =>
       @level.addTask @_spawnYetis
-    @addOneTimeListener 'touchEnd', @_activateYetis
+    @addOneTimeListener 'touchEnd', @_activateYetis2
 
 
   ###
@@ -111,3 +111,56 @@ module.exports = class Level1Event1 extends Event
     then(
       @unblockInput )
     # done()
+
+
+  ###
+  This event handler is going to be called only once, on the first
+  update.
+  @param [event] Event object
+  @see #constructor
+  ###
+  _activateYetis2: (event) =>
+    body = event.arguments[0]
+    @player = body.GetUserData().ent
+
+    @jt.addScripts [
+      @dm.hideDialog
+      @jt.blockInput
+      [ @jt.moveDown, 150 ]
+      [ @jt.moveLeft, 60 ]
+      [ @dm.showDialog, story[1] ]
+      [ @dm.showDialog, story[2] ]
+      [
+        [
+          [ @ss.moveDown, 150 ]
+          [ @ss.moveLeft, 50 ]
+        ]
+        [
+          [ @ss.moveLeft, 40 ]
+        ]
+        [
+          [ @jt.moveDown, 90 ]
+          [ @jt.moveLeft, 30 ]
+        ]
+      ]
+      [ @dm.showDialog, story[3] ]
+      [ @dm.showDialog, story[4] ]
+      [ @dm.showDialog, story[5] ]
+      [ @dm.showDialog, story[6] ]
+      =>
+        mediator.configurationManager.promisedConfigure @player, 'PlayerSkeleton'
+      [
+        [
+          [ @jt.moveRight, 80 ]
+          [ @jt.moveUp, 250 ]
+        ]
+        [
+          [ @ss.moveRight, 60 ]
+          [ @ss.moveUp, 165 ]
+        ]
+      ]
+      [ @ss.kill ]
+      [ @jt.kill ]
+      [ @dm.showDialog, story[7] ]
+      [ @unblockInput ]
+    ]
