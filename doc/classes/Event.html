@@ -111,7 +111,7 @@
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>app&#47;models&#47;Event.coffee</td>
+          <td>app&#47;entities&#47;Event.coffee</td>
         </tr>
         <tr>
           <td>Inherits:</td>
@@ -120,58 +120,22 @@
           </td>
         </tr>
       </table>
-      <h2>Property Summary</h2>
-      <h3 class='inherited'>
-        Properties inherited from
-        <a href='../classes/Entity.html'>Entity</a>
-      </h3>
-      <p class='inherited'>
-                <a href='../classes/Entity.html#position-property'>position</a>,
-                <a href='../classes/Entity.html#size-property'>size</a>,
-        <a href='../classes/Entity.html#velocity-property'>velocity</a>
+      <h2>Direct Known Subclasses</h2>
+      <p class='children'>
+                <a href='../classes/Level1Event1.html'>Level1Event1</a>,
+                <a href='../classes/Level1NickTalking.html'>Level1NickTalking</a>,
+                <a href='../classes/Level1Prolog.html'>Level1Prolog</a>,
+        <a href='../classes/MapChanger.html'>MapChanger</a>
       </p>
       <h2>Instance Method Summary</h2>
       <ul class='summary'>
   <li>
     <span class='signature'>
       <a href='#constructor-instance'>
-        - (void) <strong>constructor</strong>(x, y, width, height, owningLevel, settings)
+        - (void) <strong>constructor</strong>(owningLevel, object)
       </a>
     </span>
     <span class='constructor note title'>Constructor</span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#onTouch-instance'>
-        - (void) <strong>onTouch</strong>()
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#onTouchBegin-instance'>
-        - (void) <strong>onTouchBegin</strong>()
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#onTouchEnd-instance'>
-        - (void) <strong>onTouchEnd</strong>()
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
     <span class='desc'>
       
     </span>
@@ -186,18 +150,17 @@
       </h3>
       <p class='inherited'>
                 <a href='../classes/Entity.html#constructor-instance'>#constructor</a>,
-                <a href='../classes/Entity.html#loadSettings-instance'>#loadSettings</a>,
+                <a href='../classes/Entity.html#addListener-instance'>#addListener</a>,
+                <a href='../classes/Entity.html#addOneTimeListener-instance'>#addOneTimeListener</a>,
+                <a href='../classes/Entity.html#fire-instance'>#fire</a>,
+                <a href='../classes/Entity.html#removeListener-instance'>#removeListener</a>,
                 <a href='../classes/Entity.html#onAction-instance'>#onAction</a>,
                 <a href='../classes/Entity.html#load-instance'>#load</a>,
                 <a href='../classes/Entity.html#kill-instance'>#kill</a>,
                 <a href='../classes/Entity.html#onPositionChange-instance'>#onPositionChange</a>,
-                <a href='../classes/Entity.html#onTouch-instance'>#onTouch</a>,
-                <a href='../classes/Entity.html#onTouchBegin-instance'>#onTouchBegin</a>,
-                <a href='../classes/Entity.html#onTouchEnd-instance'>#onTouchEnd</a>,
                 <a href='../classes/Entity.html#makeMeStatic-instance'>#makeMeStatic</a>,
                 <a href='../classes/Entity.html#makeMeDynamic-instance'>#makeMeDynamic</a>,
                 <a href='../classes/Entity.html#update-instance'>#update</a>,
-                <a href='../classes/Entity.html#addTask-instance'>#addTask</a>,
                 <a href='../classes/Entity.html#blockInput-instance'>#blockInput</a>,
         <a href='../classes/Entity.html#unblockInput-instance'>#unblockInput</a>
       </p>
@@ -213,34 +176,7 @@
       <div class='methods'>
   <div class='method_details'>
     <p class='signature' id='constructor-instance'>
-      - (void) <strong>constructor</strong>(x, y, width, height, owningLevel, settings)
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-</div>
-      <h2>Instance Method Details</h2>
-      <div class='methods'>
-  <div class='method_details'>
-    <p class='signature' id='onTouch-instance'>
-      - (void) <strong>onTouch</strong>()
-      (bound)
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='onTouchBegin-instance'>
-      - (void) <strong>onTouchBegin</strong>()
-      (bound)
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='onTouchEnd-instance'>
-      - (void) <strong>onTouchEnd</strong>()
-      (bound)
+      - (void) <strong>constructor</strong>(owningLevel, object)
     </p>
     <div class='tags'>
 </div>
@@ -249,11 +185,11 @@
     </div>
     <div id='footer'>
   Generated on
-  Fri Apr 12 2013 04:49:22 GMT+0200 (CEST)
+  Mon Oct 21 2013 02:00:40 GMT+0200 (CEST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
-  v1.6.0
-  (Node.js v0.10.3).
+  v1.9.0
+  (Node.js v0.10.21).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
   &#10034;

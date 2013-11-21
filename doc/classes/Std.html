@@ -111,7 +111,7 @@
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>app&#47;models&#47;Std.coffee</td>
+          <td>app&#47;core&#47;std.coffee</td>
         </tr>
         <tr>
           <td>Inherits:</td>
@@ -135,7 +135,7 @@
   <li>
     <span class='signature'>
       <a href='#xhrGet-instance'>
-        - (void) <strong>xhrGet</strong>(reqUri, callback, rest...)
+        - (void) <strong>xhrGet</strong>(reqUri, callback, responseType, additionalAttributes...)
       </a>
     </span>
     <span class='desc'>
@@ -154,7 +154,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='xhrGet-instance'>
-      - (void) <strong>xhrGet</strong>(reqUri, callback, rest...)
+      - (void) <strong>xhrGet</strong>(reqUri, callback, responseType, additionalAttributes...)
     </p>
     <div class='docstring'>
   <p>Starts a XMLHttpRequest and calls the given callback when finished loading.</p>
@@ -178,6 +178,20 @@
       &mdash;
       <span class='desc'>Callback function</span>
     </li>
+    <li>
+      <span class='name'>responseType</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+    </li>
+    <li>
+      <span class='name'>additionalAttributes</span>
+      <span class='type'>
+        (<tt>Objects</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>Will be added as an array to XMLHttpRequest.additionalAttributes</span>
+    </li>
   </ul>
 </div>
   </div>
@@ -185,11 +199,11 @@
     </div>
     <div id='footer'>
   Generated on
-  Fri Apr 12 2013 04:49:22 GMT+0200 (CEST)
+  Mon Oct 21 2013 02:00:40 GMT+0200 (CEST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
-  v1.6.0
-  (Node.js v0.10.3).
+  v1.9.0
+  (Node.js v0.10.21).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
   &#10034;

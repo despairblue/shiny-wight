@@ -138,61 +138,66 @@
       <h2>Direct Known Subclasses</h2>
       <p class='children'>
                 <a href='../classes/Event.html'>Event</a>,
-                <a href='../classes/MapChanger.html'>MapChanger</a>,
+                <a href='../classes/Gumba.html'>Gumba</a>,
                 <a href='../classes/Mario.html'>Mario</a>,
                 <a href='../classes/Player.html'>Player</a>,
         <a href='../classes/Yeti.html'>Yeti</a>
       </p>
-      <h2>Property Summary</h2>
-      <dl class='properties'>
-        <dt id='position-property'>
-          <span class='signature'>
-            (Object) <strong>position</strong>
-          </span>
-        </dt>
-        <dd class='desc'>
-          <p>The entity&#39;s position in pixels</p>
-        </dd>
-        <dt id='size-property'>
-          <span class='signature'>
-            (Object) <strong>size</strong>
-          </span>
-        </dt>
-        <dd class='desc'>
-          <p>The entity&#39;s size</p>
-        </dd>
-        <dt id='velocity-property'>
-          <span class='signature'>
-            (Integer) <strong>velocity</strong>
-          </span>
-        </dt>
-        <dd class='desc'>
-          <p>Entity&#39; velocity
-Standart velocity = 10</p>
-        </dd>
-      </dl>
       <h2>Instance Method Summary</h2>
       <ul class='summary'>
   <li>
     <span class='signature'>
       <a href='#constructor-instance'>
-        - (void) <strong>constructor</strong>(x, y, width, height, owningLevel, settings)
+        - (void) <strong>constructor</strong>(owningLevel, object)
       </a>
     </span>
     <span class='constructor note title'>Constructor</span>
     <span class='desc'>
-      TODO: refactor configuration loading and clean up the constructor
+      
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#loadSettings-instance'>
-        - (void) <strong>loadSettings</strong>(settings)
+      <a href='#addListener-instance'>
+        - (void) <strong>addListener</strong>(type, listener)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      Adds an event listener.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#addOneTimeListener-instance'>
+        - (void) <strong>addOneTimeListener</strong>(type, listener)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      Adds an event listener that will only be invoked once
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#fire-instance'>
+        - (void) <strong>fire</strong>(event)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      Fires an event, invoking all it&#39;s listeners.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#removeListener-instance'>
+        - (void) <strong>removeListener</strong>(type, listener)
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      Removes an event listener.
     </span>
   </li>
   <li>
@@ -241,46 +246,13 @@ Standart velocity = 10</p>
   </li>
   <li>
     <span class='signature'>
-      <a href='#onTouch-instance'>
-        - (void) <strong>onTouch</strong>()
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      TODO: move to physics mixin
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#onTouchBegin-instance'>
-        - (void) <strong>onTouchBegin</strong>()
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#onTouchEnd-instance'>
-        - (void) <strong>onTouchEnd</strong>()
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
       <a href='#makeMeStatic-instance'>
         - (void) <strong>makeMeStatic</strong>()
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      I won&#39;t move no matter what! Don&#39;t even try it.
     </span>
   </li>
   <li>
@@ -291,7 +263,7 @@ Standart velocity = 10</p>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      Light as a feather...
     </span>
   </li>
   <li>
@@ -303,17 +275,6 @@ Standart velocity = 10</p>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
       Is called each tick/frame.
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#addTask-instance'>
-        - (void) <strong>addTask</strong>(task)
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      TODO: move to taskable mixin
     </span>
   </li>
   <li>
@@ -354,23 +315,111 @@ Standart velocity = 10</p>
       <div class='methods'>
   <div class='method_details'>
     <p class='signature' id='constructor-instance'>
-      - (void) <strong>constructor</strong>(x, y, width, height, owningLevel, settings)
+      - (void) <strong>constructor</strong>(owningLevel, object)
     </p>
-    <div class='docstring'>
-  <p>TODO: refactor configuration loading and clean up the constructor</p>
-</div>
-<div class='tags'>
+    <div class='tags'>
 </div>
   </div>
 </div>
       <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='loadSettings-instance'>
-      - (void) <strong>loadSettings</strong>(settings)
+    <p class='signature' id='addListener-instance'>
+      - (void) <strong>addListener</strong>(type, listener)
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Adds an event listener.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>type</span>
+      <span class='type'>
+        (<tt>string</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The event type to listen to.</span>
+    </li>
+    <li>
+      <span class='name'>listener</span>
+      <span class='type'>
+        (<tt>function</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The Callback to be invoked.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='addOneTimeListener-instance'>
+      - (void) <strong>addOneTimeListener</strong>(type, listener)
+      (bound)
+    </p>
+    <div class='docstring'>
+  <p>Adds an event listener that will only be invoked once</p>
+</div>
+<div class='tags'>
+  <h3>See also:</h3>
+  <ul class='see'>
+    <li>
+      <a href='../classes/Entity.html#addListener-instance'>Entity#addListener</a>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='fire-instance'>
+      - (void) <strong>fire</strong>(event)
+      (bound)
+    </p>
+    <div class='docstring'>
+  <p>Fires an event, invoking all it&#39;s listeners.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>event</span>
+      <span class='type'>
+        (<tt>string</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The event type.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='removeListener-instance'>
+      - (void) <strong>removeListener</strong>(type, listener)
+      (bound)
+    </p>
+    <div class='docstring'>
+  <p>Removes an event listener.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>type</span>
+      <span class='type'>
+        (<tt>string</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The event type.</span>
+    </li>
+    <li>
+      <span class='name'>listner</span>
+      <span class='type'>
+        (<tt>function</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>The Callback to be removed.</span>
+    </li>
+  </ul>
 </div>
   </div>
   <div class='method_details'>
@@ -427,38 +476,14 @@ Standart velocity = 10</p>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='onTouch-instance'>
-      - (void) <strong>onTouch</strong>()
-      (bound)
-    </p>
-    <div class='docstring'>
-  <p>TODO: move to physics mixin</p>
-</div>
-<div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='onTouchBegin-instance'>
-      - (void) <strong>onTouchBegin</strong>()
-      (bound)
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='onTouchEnd-instance'>
-      - (void) <strong>onTouchEnd</strong>()
-      (bound)
-    </p>
-    <div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
     <p class='signature' id='makeMeStatic-instance'>
       - (void) <strong>makeMeStatic</strong>()
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>I won&#39;t move no matter what! Don&#39;t even try it.</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -466,7 +491,10 @@ Standart velocity = 10</p>
       - (void) <strong>makeMeDynamic</strong>()
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Light as a feather...</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -476,17 +504,6 @@ Standart velocity = 10</p>
     </p>
     <div class='docstring'>
   <p>Is called each tick/frame.</p>
-</div>
-<div class='tags'>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='addTask-instance'>
-      - (void) <strong>addTask</strong>(task)
-      (bound)
-    </p>
-    <div class='docstring'>
-  <p>TODO: move to taskable mixin</p>
 </div>
 <div class='tags'>
 </div>
@@ -514,11 +531,11 @@ Standart velocity = 10</p>
     </div>
     <div id='footer'>
   Generated on
-  Fri Apr 12 2013 04:49:22 GMT+0200 (CEST)
+  Mon Oct 21 2013 02:00:40 GMT+0200 (CEST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
-  v1.6.0
-  (Node.js v0.10.3).
+  v1.9.0
+  (Node.js v0.10.21).
   &#10034;
   Press Ctrl-h to see the keyboard shortcuts
   &#10034;
