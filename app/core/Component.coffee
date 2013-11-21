@@ -1,7 +1,17 @@
+###
+A Result represents the...well...result of a Task.
+
+Any function given to {Scriptable#addTask} is expected to return a {Result}.
+###
+
 module.exports = class Component
   constructor: (@owner) ->
 
-
+  ###
+  Copys all functions from the component to {#owner}.
+  Ignores functions starting with an underscore and refuses to
+  overwrite functions.
+  ###
   mount: () =>
     for method of @
       if @owner[method]?
