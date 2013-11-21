@@ -9,7 +9,7 @@
     "jquery": "~2.0.2",
     "normalize-css": "~2.1.2",
     "h5bp-helpers": "~0.1.0",
-    "handlebars.js": "*",
+    "handlebars.js": "1.0",
     "PreloadJS": "*"
   },
   "overrides": {
