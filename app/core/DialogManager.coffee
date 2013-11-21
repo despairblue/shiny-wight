@@ -5,15 +5,14 @@ mediator = Chaplin.mediator
 ###
 module.exports = class DialogManager
   constructor: ->
-    @source = document.getElementById 'dialog-template'
-    @template = Handlebars.compile(@source.innerText)
-    @canvas = document.getElementById 'game-canvas'
-    @$dialog = $('#dialog')
-    @currentSelection = 1
-    mediator.dialogManager = @
-    @didIBlock = false
-
-    @selectOption = _.debounce @_selectOption, 50, true
+    @source                 = document.getElementById 'dialog-template'
+    @template               = Handlebars.compile(@source.innerText)
+    @canvas                 = document.getElementById 'game-canvas'
+    @$dialog                = $('#dialog')
+    @currentSelection       = 1
+    mediator.dialogManager  = @
+    @didIBlock              = false
+    @selectOption           = _.debounce @_selectOption, 50, true
     @chooseCurrentSelection = _.debounce @_chooseCurrentSelection, 50, true
 
 
@@ -66,9 +65,9 @@ module.exports = class DialogManager
     console.debug 'Show dialog: %O', data
 
     result.children('.dialog-option').click (event) =>
-      @hideDialog()
       id = parseInt( $(this).prop('id') ) + 1
-      id = -1 if id == NaN
+      id = -1 if isNaN id
+      @hideDialog()
       deferred.resolve id
 
     $('#dialog').append(result).
@@ -83,8 +82,14 @@ module.exports = class DialogManager
 
 
   hideDialog: () =>
+    deferred = Q.defer()
+
     $('#dialog').empty()
     @unblockInput()
+
+    deferred.resolve()
+
+    return deferred.promise
 
 
   blockInput: =>
