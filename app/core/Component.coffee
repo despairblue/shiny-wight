@@ -14,10 +14,13 @@ module.exports = class Component
   ###
   mount: () =>
     for method of @
+      if method[0] is '_' or      # don't copy private methods
+      method == 'owner' or        # the owner property pointing to the components owner
+      method == 'constructor' or  # the constructor
+      method == 'mount'           # this method
+        continue
       if @owner[method]?
         console.debug 'Method %s exists already and will not be mounted on %O', method, @owner
-        continue
-      if method[0] is '_'
         continue
       @owner[method] = do (method) => =>
         @[method].apply @, arguments
